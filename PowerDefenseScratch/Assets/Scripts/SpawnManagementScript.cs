@@ -22,17 +22,35 @@ public class SpawnManagementScript : MonoBehaviour {
     public PathNode startNode;
     public GameObject enemyPrefab;
     public List<Wave> enemyWaves;
+
+    public bool autoAdvance = true;
+
     int currentWave = -1;
     int currentEnemy = -1;
 
-	// Use this for initialization
-	void Start ()
+    public List<GameObject> enemyTracker;
+
+    // Use this for initialization
+    void Start ()
     {
-        StartCoroutine("SpawnWave");
+        enemyTracker = new List<GameObject>();
+        Messenger<GameObject>.AddListener("Destroy Enemy", RemoveFromTracker);
+        if (autoAdvance) StartCoroutine("SpawnWave");
+    }
+
+    void RemoveFromTracker(GameObject enemy)
+    {
+        enemyTracker.Remove(enemy.transform.parent.gameObject);
+        Debug.Log(enemyTracker.Count.ToString());
+        if(enemyTracker.Count == 0)
+        {
+            Messenger.Invoke("WaveCompleted");
+        }
     }
 
     IEnumerator SpawnWave()
     {
+        Debug.Log(currentWave.ToString());
         currentWave++;
         if (currentWave >= enemyWaves.Count) yield break;
         yield return new WaitForSeconds(enemyWaves[currentWave].startDelay);
@@ -40,7 +58,7 @@ public class SpawnManagementScript : MonoBehaviour {
         {
             StartCoroutine(SubWaveCoroutine(sw));
         }
-        StartCoroutine("SpawnWave");
+        if(autoAdvance) StartCoroutine("SpawnWave");
     }
 
     /*
@@ -79,6 +97,12 @@ public class SpawnManagementScript : MonoBehaviour {
             return;
         }
         en.StartFollowing(startPoint);
+        enemyTracker.Add(newEnemy);
+    }
+
+    public void SendNextWave()
+    {
+        StartCoroutine("SpawnWave");
     }
     /*
     void SpawnEnemy()
