@@ -4,13 +4,28 @@ using UnityEngine.UI;
 
 public class TowerPowerScript : MonoBehaviour {
     private float power;
-    private bool disabled;
+    public bool disabled;
     public Image powerDisplay;
+
+    public ElectricPathNode electricSource;
 
     public float GetCurrentPower()
     {
         if (disabled) return 0;
+        if (!IsGettingPower()) return 0;
         return Mathf.Min(power, 100f);
+    }
+
+    public bool IsGettingPower()
+    {
+        if (disabled) return false;
+        return electricSource.IsGettingEnergy();
+    }
+
+    public void SetCurrentPower()
+    {
+        power = electricSource.TowerEnergyAmount();
+        powerDisplay.fillAmount = Mathf.Min(power, 100f) / 100f;
     }
 
     public void SetCurrentPower(float f)
@@ -32,5 +47,10 @@ public class TowerPowerScript : MonoBehaviour {
             Messenger<TowerPowerScript>.Invoke("Tower On", this);
             powerDisplay.fillAmount = Mathf.Min(power, 100f) / 100f;
         }
+    }
+
+    public bool IsDisabled()
+    {
+        return disabled;
     }
 }

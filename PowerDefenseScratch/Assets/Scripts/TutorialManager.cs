@@ -40,7 +40,7 @@ public class TutorialManager : MonoBehaviour {
         Messenger.RemoveListener("WaveCompleted", MoveOnWithTutorial);
         if(currentSection < sections.Count && currentStep < sections[currentSection].steps.Count && sections[currentSection].steps[currentStep].eventToListenFor != "")
         {
-            Messenger.RemoveListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStep);
+            Messenger<TowerPowerScript>.RemoveListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStepMessage);
         }
     }
 
@@ -51,7 +51,16 @@ public class TutorialManager : MonoBehaviour {
         currentStep = 0;
         messageBox.SetActive(true);
         SetUpCurrentBox();
+    }
 
+    public void NextStepMessage(TowerPowerScript tBase)
+    {
+        NextStep();
+    }
+
+    public void NextStepButton()
+    {
+        NextStep();
     }
 
     public void NextStep()
@@ -62,7 +71,7 @@ public class TutorialManager : MonoBehaviour {
         }
         else
         {
-            Messenger.RemoveListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStep);
+            Messenger<TowerPowerScript>.RemoveListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStepMessage);
         }
         currentStep++;
         if (currentStep >= sections[currentSection].steps.Count)
@@ -81,11 +90,17 @@ public class TutorialManager : MonoBehaviour {
         messageText.text = sections[currentSection].steps[currentStep].boxMessage;
         if (sections[currentSection].steps[currentStep].eventToListenFor == "")
         {
-            continueButton.SetActive(true);
+            StartCoroutine(ToggleButtonCoroutine());
         }
         else
         {
-            Messenger.AddListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStep);
+            Messenger<TowerPowerScript>.AddListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStepMessage);
         }
+    }
+
+    IEnumerator ToggleButtonCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        continueButton.SetActive(true);
     }
 }

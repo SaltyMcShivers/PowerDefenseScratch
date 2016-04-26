@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TowerRangeScript : MonoBehaviour {
     List<GameObject> enemies;
@@ -26,6 +27,11 @@ public class TowerRangeScript : MonoBehaviour {
         {
             targetedEnemy = col.gameObject;
         }
+        enemies.Sort(delegate(GameObject a, GameObject b){
+            int res = a.GetComponent<EnemyHealthScript>().GetPriorityLevel().CompareTo(b.GetComponent<EnemyHealthScript>().GetPriorityLevel());
+            if (res == 0) return enemies.IndexOf(a).CompareTo(enemies.IndexOf(b));
+            return res;
+        });
     }
 
     void OnTriggerExit2D(Collider2D col)

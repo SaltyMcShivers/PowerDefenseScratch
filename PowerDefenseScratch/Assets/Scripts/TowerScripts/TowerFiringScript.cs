@@ -3,11 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class TowerFiringScript : MonoBehaviour {
+    public enum TowerDamageType
+    {
+        Physical,
+        Electric,
+        Status
+    };
+
     public TowerRangeScript rangeManagement;
     public TowerPowerScript powerManagement;
 
     public float minimumShotInterval = 1.0f;
     public float maximumShotInterval = 1.0f;
+
+    public float explosionTime;
+    public float minimumExplosionSize;
+    public float maximumExplosionSize;
 
     public GameObject projectilePrefab;
     public float projectileForce;
@@ -18,12 +29,22 @@ public class TowerFiringScript : MonoBehaviour {
 
     public float startingCritChance;
     public float critIncement;
+
+    public TowerDamageType damageType;
     float currentCritChance;
+
+    public float maximumComboBonus;
+    public float minimumComboBuildFactor;
+    public float maximumComboBuildFactor;
+
+    float currentComboBonus;
+    GameObject lastEnemyHit;
 
 	// Use this for initialization
     void Start()
     {
         currentCritChance = startingCritChance;
+        currentComboBonus = 1f;
 	}
 	
 	// Update is called once per frame
@@ -43,29 +64,39 @@ public class TowerFiringScript : MonoBehaviour {
     void FireAtTargets()
     {
         List<GameObject> targets = rangeManagement.GetEnemies(1);
-        if (targets.Count == 0) return;
+        if (targets.Count == 0)
+        {
+            lastEnemyHit = null;
+            return;
+        }
         lastShotTime = Time.time;
         Vector3 distance = Vector3.Normalize(targets[0].transform.position - transform.position);
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as GameObject;
         float projectileDamage = minimumProjectileDamage;
         if (minimumProjectileDamage != maximumProjectileDamage)
         {
-            if (critIncement == 0f)
+            projectileDamage = Mathf.Lerp(minimumProjectileDamage, maximumProjectileDamage, powerManagement.GetCurrentPower() / 100f);
+            if (maximumComboBonus > 1f)
             {
-                projectileDamage = Mathf.Lerp(minimumProjectileDamage, maximumProjectileDamage, powerManagement.GetCurrentPower() / 100f);
-            }
-            else
-            {
-                if (CheckIfCrit())
+                if (lastEnemyHit == null || lastEnemyHit != targets[0])
                 {
-                    projectileDamage = maximumProjectileDamage;
+                    currentComboBonus = 1f;
+                    lastEnemyHit = targets[0];
+                }else{
+                    currentComboBonus = Mathf.Min(currentComboBonus + Mathf.Lerp(minimumComboBuildFactor, maximumComboBuildFactor, powerManagement.GetCurrentPower() / 100f), maximumComboBonus); 
                 }
+                projectileDamage *= currentComboBonus;
             }
         }
-        (projectile.GetComponent<ProjectileScript>() as ProjectileScript).projectileDamage = projectileDamage;
+        float explodeSize = minimumExplosionSize;
+        float timeToExplode = 0f;
         projectile.GetComponent<Rigidbody2D>().AddForce(projectileForce * distance);
+        if(minimumExplosionSize != maximumExplosionSize){
+            explodeSize = Mathf.Lerp(minimumExplosionSize, maximumExplosionSize, powerManagement.GetCurrentPower() / 100f);
+        }
+        (projectile.GetComponent<ProjectileScript>() as ProjectileScript).SetUpBullet(projectileDamage, explosionTime, explodeSize);
         EnemyHealthScript health = targets[0].GetComponentInChildren<EnemyHealthScript>();
-        health.DamageWithDelay(projectileDamage, distance.magnitude / projectileForce);
+        if(minimumExplosionSize == 0f) health.DamageWithDelay(projectileDamage, distance.magnitude / projectileForce);
     }
 
     bool CheckIfCrit()

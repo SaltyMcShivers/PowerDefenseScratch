@@ -20,6 +20,11 @@ public class TowerSelectionScript : MonoBehaviour {
             if (tow.GetTower() == null || !legalTowers.Contains(tow.GetTower())) tow.DisableButton();
         }
     }
+
+    public void RemoveMenu()
+    {
+        StartCoroutine("KillOffMenu");
+    }
 	
 	// Update is called once per frame
 	void Update ()
