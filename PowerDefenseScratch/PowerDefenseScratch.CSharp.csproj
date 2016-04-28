@@ -63,15 +63,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\EnemyHealthScript.cs" />
-    <Compile Include="Assets\Scripts\EnemyMovement.cs" />
+    <Compile Include="Assets\Scripts\ElectricPathNode.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\CircleMovementScript.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyAttackScript.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyHealthScript.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyMovement.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerInvincible.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerInvincibleManager.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerManager.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerScript.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemySpawnerScript.cs" />
+    <Compile Include="Assets\Scripts\ExplosionScript.cs" />
     <Compile Include="Assets\Scripts\MessengerScripts\Callback.cs" />
     <Compile Include="Assets\Scripts\MessengerScripts\Messenger.cs" />
     <Compile Include="Assets\Scripts\PathNode.cs" />
+    <Compile Include="Assets\Scripts\PowerSourceHealth.cs" />
+    <Compile Include="Assets\Scripts\PowerSwitchScript.cs" />
     <Compile Include="Assets\Scripts\ProjectileScript.cs" />
     <Compile Include="Assets\Scripts\SpawnManagementScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\DamageTypeScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\EnergyDamageScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\PhysicalDamageScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\SlowDownScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\TargetNumberScripts\SingleTargetScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\TargetNumberScripts\TargetNumberScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerBaseScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerButtonScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\TowerFiringAttackScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerFiringScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerManagerScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerPowerScript.cs" />
@@ -79,6 +97,14 @@
     <Compile Include="Assets\Scripts\TowerScripts\TowerSelectionScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerToggle.cs" />
     <Compile Include="Assets\Scripts\TutorialManager.cs" />
+    <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditional.cs" />
+    <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalANDCheck.cs" />
+    <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalORCheck.cs" />
+    <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalTowerCheck.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DragSelectScript.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchButtonScript.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchMenuScript.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\RadialButtonScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

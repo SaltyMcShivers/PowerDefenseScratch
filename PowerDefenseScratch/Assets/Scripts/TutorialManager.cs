@@ -27,6 +27,8 @@ public class TutorialManager : MonoBehaviour {
     int currentSection;
     int currentStep;
 
+    public List<TutorialConditional> stepsTest;
+
     // Use this for initialization
     void Start ()
     {

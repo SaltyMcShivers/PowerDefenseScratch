@@ -30,12 +30,14 @@ public class TowerPowerScript : MonoBehaviour {
 
     public void SetCurrentPower(float f)
     {
+        if (f == 0 && !electricSource.IsGettingEnergy()) disabled = false;
         power = f;
         powerDisplay.fillAmount = Mathf.Min(power, 100f) / 100f;
     }
 
     public void TogglePower()
     {
+        if (!electricSource.IsGettingEnergy()) return;
         disabled = !disabled;
         if (disabled)
         {

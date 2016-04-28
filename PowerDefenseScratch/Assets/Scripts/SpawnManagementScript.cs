@@ -31,11 +31,14 @@ public class SpawnManagementScript : MonoBehaviour {
     int currentWave = -1;
     int currentEnemy = -1;
 
-    public List<GameObject> enemyTracker;
+    List<EnemyPartnerManager> partnerManagers;
+
+    List<GameObject> enemyTracker;
 
     // Use this for initialization
     void Start ()
     {
+        partnerManagers = new List<EnemyPartnerManager>();
         enemyTracker = new List<GameObject>();
         Messenger<GameObject>.AddListener("Destroy Enemy", RemoveFromTracker);
         if (enemyWaves[currentWave + 1].autoAdvance && autoStart) StartCoroutine("SpawnWave");
@@ -63,6 +66,23 @@ public class SpawnManagementScript : MonoBehaviour {
     void RemoveFromTracker(GameObject enemy)
     {
         enemyTracker.Remove(enemy.transform.parent.gameObject);
+        EnemyPartnerScript partner = enemy.GetComponentInChildren<EnemyPartnerScript>();
+        if(partner != null)
+        {
+            foreach (EnemyPartnerManager man in partnerManagers)
+            {
+                if (man.HasPartner(partner))
+                {
+                    man.RemovePartner(partner);
+                    if (man.AllPartnersDestroyed())
+                    {
+                        partnerManagers.Remove(man);
+                        Destroy(man);
+                    }
+                    break;
+                }
+            }
+        }
         if(enemyTracker.Count == 0)
         {
             Messenger.Invoke("WaveCompleted");
@@ -116,8 +136,28 @@ public class SpawnManagementScript : MonoBehaviour {
             Debug.Log("Can't find EnemyMovementScript");
             return;
         }
+
+        EnemyPartnerScript partner = newEnemy.GetComponentInChildren<EnemyPartnerScript>();
+        if(partner != null)
+        {
+            bool partnerFound = false;
+            foreach(EnemyPartnerManager man in partnerManagers)
+            {
+                if (man.AddPartner(partner))
+                {
+                    partnerFound = true;
+                    break;
+                }
+            }
+            if (!partnerFound)
+            {
+                EnemyPartnerManager partManager = gameObject.AddComponent(System.Type.GetType(partner.classToAdd)) as EnemyPartnerManager;
+                partManager.SetUpManager(partner.GetVariables());
+                partManager.AddPartner(partner);
+                partnerManagers.Add(partManager);
+            }
+        }
         en.StartFollowing(startPoint, offset);
-        newEnemy.transform.position = startPoint.GetPathTarget(en);
         enemyTracker.Add(newEnemy);
     }
 

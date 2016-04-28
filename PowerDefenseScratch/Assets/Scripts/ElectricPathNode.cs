@@ -21,6 +21,22 @@ public class ElectricPathNode : MonoBehaviour {
         baseOfPower = tms;
     }
 
+    public void SetNextForPath(ElectricPathNode next)
+    {
+        if(next == null || !nextNodes.Contains(next))
+        {
+            nextForPath = null;
+        }
+        else
+        {
+            nextForPath = next;
+        }
+        foreach (ElectricPathNode node in nextNodes)
+        {
+            node.ChangeColoration();
+        }
+    }
+
     public void ChangeColoration()
     {
         if (IsGettingEnergy())

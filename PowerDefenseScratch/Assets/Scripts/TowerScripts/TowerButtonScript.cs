@@ -2,40 +2,18 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class TowerButtonScript : MonoBehaviour {
-    Animator anim;
+public class TowerButtonScript : RadialButtonScript
+{
     public GameObject towerToBuild;
-    void Awake()
+
+    public override void DisableIfNeeded()
     {
-        anim = GetComponent<Animator>();
-        if (towerToBuild == null) anim.SetTrigger("Disabled");
+        if (towerToBuild == null) DisableButton();
     }
 
     public GameObject GetTower()
     {
         return towerToBuild;
-    }
-
-    public void DisableButton()
-    {
-        anim.SetTrigger("Disabled");
-    }
-
-    public void HighlightButton()
-    {
-        if(anim.GetBool("Disabled")) return;
-        anim.SetTrigger("Highlighted");
-    }
-
-    public void UnhighlightButton()
-    {
-        if (anim.GetBool("Disabled")) return;
-        anim.SetTrigger("Normal");
-    }
-
-    public bool isDisabled()
-    {
-        return anim.GetBool("Disabled");
     }
 
 }

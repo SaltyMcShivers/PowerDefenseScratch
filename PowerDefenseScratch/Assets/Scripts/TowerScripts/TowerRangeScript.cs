@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class TowerRangeScript : MonoBehaviour {
+    public float minimumRange;
+    public float maximumRange;
+
     List<GameObject> enemies;
     GameObject targetedEnemy;
-
-	// Use this for initialization
+    
     void Awake()
     {
         enemies = new List<GameObject>();
@@ -15,7 +17,26 @@ public class TowerRangeScript : MonoBehaviour {
 
 	void Start () {
         Messenger<GameObject>.AddListener("Destroy Enemy", RemoveEnemy);
-	}
+        Messenger.AddListener("Priorities Changed", ReoganizeEnemies);
+        SetScale();
+    }
+
+    void OnDestroy()
+    {
+        Messenger<GameObject>.RemoveListener("Destroy Enemy", RemoveEnemy);
+        Messenger.RemoveListener("Priorities Changed", ReoganizeEnemies);
+    }
+
+    public void SetScale()
+    {
+        transform.localScale = Vector3.one * minimumRange;
+    }
+
+    public void AlterScale(float power)
+    {
+        if (minimumRange == maximumRange) return;
+        transform.localScale = Vector3.one * Mathf.Lerp(minimumRange, maximumRange, power);
+    }
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -27,7 +48,12 @@ public class TowerRangeScript : MonoBehaviour {
         {
             targetedEnemy = col.gameObject;
         }
-        enemies.Sort(delegate(GameObject a, GameObject b){
+        ReoganizeEnemies();
+    }
+
+    void ReoganizeEnemies()
+    {
+        enemies.Sort(delegate (GameObject a, GameObject b) {
             int res = a.GetComponent<EnemyHealthScript>().GetPriorityLevel().CompareTo(b.GetComponent<EnemyHealthScript>().GetPriorityLevel());
             if (res == 0) return enemies.IndexOf(a).CompareTo(enemies.IndexOf(b));
             return res;

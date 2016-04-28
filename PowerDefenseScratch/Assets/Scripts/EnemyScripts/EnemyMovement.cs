@@ -6,11 +6,15 @@ public class EnemyMovement : MonoBehaviour {
 
     public float edgeOffset;
 
+    float speedMultiplier = 1f;
+
     float currentSpeed;
+    float travelScale;
 
     Vector3 travelVector;
 
     PathNode targetPosition;
+    PathNode previousTarget;
 
     protected bool killed;
     protected bool pauseMovement;
@@ -29,9 +33,9 @@ public class EnemyMovement : MonoBehaviour {
         }
         if (killed) return;
         if (pauseMovement) return;
-        Vector3 targetDetination = targetPosition.GetPathTarget(this);
+        Vector3 targetDetination = targetPosition.GetPathTarget(this, previousTarget);
         float differenceDistance = Vector3.Distance(targetDetination, transform.position);
-        float distanceToTravel = currentSpeed * Time.deltaTime;
+        float distanceToTravel = currentSpeed * speedMultiplier * Time.deltaTime * travelScale;
         if (differenceDistance <= distanceToTravel)
         {
             distanceToTravel -= differenceDistance;
@@ -59,6 +63,11 @@ public class EnemyMovement : MonoBehaviour {
         */
     }
 
+    public void SetPauseMovement(bool pause)
+    {
+        pauseMovement = pause;
+    }
+
     public void TogglePauseMovement()
     {
         pauseMovement = !pauseMovement;
@@ -68,6 +77,7 @@ public class EnemyMovement : MonoBehaviour {
     {
         travelVector = new Vector3(0f, 0f, 0f);
         edgeOffset = offset;
+        transform.position = pn.GetPathTarget(this);
         GoToNextNode(pn);
     }
 
@@ -76,15 +86,18 @@ public class EnemyMovement : MonoBehaviour {
         PathNode next = pn.nextNode;
         if (next == null)
         {
-            transform.position = pn.GetPathTarget(this);
+            transform.position = pn.GetPathTarget(this, previousTarget);
             travelVector = Vector3.zero;
             GetComponent<EnemyAttackScript>().StartAttacking();
         }
         else
         {
+            Vector3 nextTarget = next.GetPathTarget(this, pn);
+            travelScale = Vector3.Distance(nextTarget, transform.position) / Vector3.Distance(pn.transform.position, next.transform.position);
             travelVector = next.transform.position - pn.transform.position;
             travelVector.Normalize();
         }
+        previousTarget = pn;
         targetPosition = next;
     }
 
@@ -93,6 +106,7 @@ public class EnemyMovement : MonoBehaviour {
         if(go.transform.parent.gameObject == gameObject)
         {
             KillOff();
+            Messenger<GameObject>.RemoveListener("Destroy Enemy", CheckDeath);
         }
     }
 
@@ -101,6 +115,18 @@ public class EnemyMovement : MonoBehaviour {
         killed = true;
         EnemyAttackScript attack = GetComponent<EnemyAttackScript>();
         if (attack != null) attack.StopAttacking();
-        Messenger<GameObject>.RemoveListener("Destroy Enemy", CheckDeath);
+        StopAllCoroutines();
+    }
+
+    public void SlowDownEnemy(float slowRate, float slowTime)
+    {
+        StartCoroutine(SlowDownCoroutine(slowRate, slowTime));
+    }
+
+    IEnumerator SlowDownCoroutine(float slowRate, float slowTime)
+    {
+        speedMultiplier *= slowRate;
+        yield return new WaitForSeconds(slowTime);
+        speedMultiplier /= slowRate;
     }
 }

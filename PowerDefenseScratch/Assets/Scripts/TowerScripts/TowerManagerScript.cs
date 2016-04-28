@@ -40,6 +40,7 @@ public class TowerManagerScript : MonoBehaviour {
         Messenger<TowerPowerScript>.AddListener("Tower Off", DeactivateTower);
         Messenger<TowerPowerScript>.AddListener("Tower On", ActivateTower);
         Messenger<GameObject>.AddListener("Destroy Enemy", GetEnergyFromEnemy);
+        Messenger.AddListener("Switch Flipped", FindNewActiveTowers);
         if (waveToStart > 0) GetResources();
     }
 
@@ -61,7 +62,8 @@ public class TowerManagerScript : MonoBehaviour {
             TotalMetalDisplay.color = Color.red;
         }
         allTowers.Add(tps);
-        ActivateTower(tps);
+        if (tps.IsGettingPower()) ActivateTower(tps);
+        else tps.SetCurrentPower(0f);
     }
 
     void ActivateTower(TowerPowerScript tps)
@@ -95,6 +97,7 @@ public class TowerManagerScript : MonoBehaviour {
         foreach (TowerPowerScript pow in allTowers)
         {
             if (pow.IsGettingPower()) activeTowers.Add(pow);
+            else pow.SetCurrentPower(0f);
         }
         SetActiveTowerEnergies();
     }

@@ -14,10 +14,18 @@ public class TowerBaseScript : MonoBehaviour {
     public ElectricPathNode electricSource;
 
     bool preBuiltTower;
+    bool disabled;
 
     void Start()
     {
         StartCoroutine("SetUpPreBuiltTower");
+        Messenger.AddListener("Switch Menu Added", DisableInteraction);
+        Messenger.AddListener("Switch Menu Removed", EnableInteraction);
+    }
+
+    public bool IsGettingPower()
+    {
+        return electricSource.IsGettingEnergy();
     }
 
     IEnumerator SetUpPreBuiltTower()
@@ -33,8 +41,19 @@ public class TowerBaseScript : MonoBehaviour {
         }
     }
 
+    void EnableInteraction()
+    {
+        disabled = false;
+    }
+
+    void DisableInteraction()
+    {
+        disabled = true;
+    }
+
     void OnMouseOver()
     {
+        if (disabled) return;
         if (Input.GetMouseButtonUp(0))
         {
             if (currentTower == null && menuContainer.transform.childCount == 0)

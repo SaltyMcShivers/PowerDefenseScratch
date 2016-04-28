@@ -10,19 +10,44 @@ public class EnemyHealthScript : MonoBehaviour {
     public int droppedMetal;
 
     public int firePriority;
+    public int invulnerablePriority;
+
+    int currentPriority;
 
     public Slider healthSlider;
+    public Image healthMeter;
+
+    bool invulnerable;
+
+    public Color defaultColor;
+    public Color invincibleColor;
+
+    void Awake()
+    {
+        currentPriority = firePriority;
+    }
 
 	// Use this for initialization
 	void Start () {
         currentHealth = maxHealth;
         healthSlider.value = (float) currentHealth / (float) maxHealth;
+        if(invulnerable) healthMeter.color = invincibleColor;
+        else healthMeter.color = defaultColor;
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    public void MakeInvincible()
+    {
+        invulnerable = true;
+        currentPriority = invulnerablePriority;
+        healthMeter.color = invincibleColor;
+    }
+
+    public void MakeVulnerable()
+    {
+        invulnerable = false;
+        currentPriority = firePriority;
+        healthMeter.color = defaultColor;
+    }
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -45,6 +70,7 @@ public class EnemyHealthScript : MonoBehaviour {
     {
         yield return new WaitForSeconds(damageDelay);
         if (currentHealth <= 0) yield break;
+        if (invulnerable) yield break;
         currentHealth -= damageToDo;
         healthSlider.value = (float)currentHealth / (float)maxHealth;
         if (currentHealth <= 0) StartCoroutine("KillEnemy");
@@ -66,6 +92,6 @@ public class EnemyHealthScript : MonoBehaviour {
 
     public int GetPriorityLevel()
     {
-        return firePriority;
+        return currentPriority;
     }
 }

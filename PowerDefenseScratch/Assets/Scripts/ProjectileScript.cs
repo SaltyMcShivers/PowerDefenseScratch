@@ -5,13 +5,15 @@ public class ProjectileScript : MonoBehaviour {
     public float projectileDamage;
     float detonationTime = 0f;
     float explosionRadius;
+    float slowDownRate;
     public GameObject deathPrefab;
 
-    public void SetUpBullet(float damage, float boom, float rad)
+    public void SetUpBullet(float damage, float boom, float rad, float slow)
     {
         projectileDamage = damage;
         detonationTime = boom;
         explosionRadius = rad;
+        slowDownRate = slow;
         if(explosionRadius != 0f){
             GetComponent<Collider2D>().enabled = false;
             StartCoroutine(ExplodeCoroutine());
@@ -27,7 +29,7 @@ public class ProjectileScript : MonoBehaviour {
             ExplosionScript exp = deadObject.GetComponent<ExplosionScript>();
             if (exp != null)
             {
-                exp.SetUpExplosion(projectileDamage, explosionRadius);
+                exp.SetUpExplosion(projectileDamage, explosionRadius, slowDownRate);
             }
         }
         Destroy(gameObject);
