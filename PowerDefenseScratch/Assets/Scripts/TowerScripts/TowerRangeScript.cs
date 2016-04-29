@@ -9,6 +9,8 @@ public class TowerRangeScript : MonoBehaviour {
 
     List<GameObject> enemies;
     GameObject targetedEnemy;
+
+    bool towerActive;
     
     void Awake()
     {
@@ -102,5 +104,19 @@ public class TowerRangeScript : MonoBehaviour {
         {
             if (em == null) enemies.Remove(em);
         }
+    }
+
+    public void DisableTower()
+    {
+        if (!towerActive) return;
+        towerActive = false;
+        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.4f);
+    }
+
+    public void EnableTower()
+    {
+        if (towerActive) return;
+        towerActive = true;
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

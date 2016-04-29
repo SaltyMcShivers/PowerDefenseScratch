@@ -52,7 +52,13 @@ public class TowerFiringScript : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (powerManagement.GetCurrentPower() == 0) return;
+        if (powerManagement.GetCurrentPower() == 0)
+        {
+            rangeManagement.DisableTower();
+            return;
+        }
+
+        rangeManagement.EnableTower();
 
         rangeManagement.AlterScale(GetPowerPercent());
 

@@ -6,10 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{2882FA1A-AAE1-3A2B-D4EB-4F99D96038EE}</ProjectGuid>
+    <ProjectGuid>{B400CBAC-64DD-8650-E8B4-1EE90CA49FC3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -45,54 +45,44 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ElectricPathNode.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\CircleMovementScript.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyAttackScript.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyHealthScript.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyMovement.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerInvincible.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerInvincibleManager.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerManager.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerScript.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemySpawnerScript.cs" />
-     <Compile Include="Assets\Scripts\ExplosionScript.cs" />
-     <Compile Include="Assets\Scripts\MessengerScripts\Callback.cs" />
-     <Compile Include="Assets\Scripts\MessengerScripts\Messenger.cs" />
-     <Compile Include="Assets\Scripts\PathNode.cs" />
-     <Compile Include="Assets\Scripts\PowerSourceHealth.cs" />
-     <Compile Include="Assets\Scripts\PowerSwitchScript.cs" />
-     <Compile Include="Assets\Scripts\ProjectileScript.cs" />
-     <Compile Include="Assets\Scripts\SpawnManagementScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\DamageTypeScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\EnergyDamageScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\PhysicalDamageScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\SlowDownScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TargetNumberScripts\SingleTargetScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TargetNumberScripts\TargetNumberScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerBaseScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerButtonScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerFiringAttackScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerFiringScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerManagerScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerPowerScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerRangeScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerSelectionScript.cs" />
-     <Compile Include="Assets\Scripts\TowerScripts\TowerToggle.cs" />
-     <Compile Include="Assets\Scripts\TutorialManager.cs" />
-     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditional.cs" />
-     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalANDCheck.cs" />
-     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalORCheck.cs" />
-     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalTowerCheck.cs" />
-     <Compile Include="Assets\Scripts\UIScripts\DragSelectScript.cs" />
-     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchButtonScript.cs" />
-     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchMenuScript.cs" />
-     <Compile Include="Assets\Scripts\UIScripts\RadialButtonScript.cs" />
+     <Compile Include="Assets\Editor\ScriptableObjectUtility.cs" />
+ <Reference Include="UnityEditor.Advertisements">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
+ </Reference>
+ <Reference Include="nunit.framework">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/nunit.framework.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.EditorTestsRunner">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/UnityEditor.EditorTestsRunner.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.Networking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TreeEditor">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Android.Extensions">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{2882FA1A-AAE1-3A2B-D4EB-4F99D96038EE}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
