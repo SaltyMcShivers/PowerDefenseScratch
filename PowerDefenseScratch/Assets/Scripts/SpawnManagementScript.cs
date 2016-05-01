@@ -30,10 +30,16 @@ public class SpawnManagementScript : MonoBehaviour {
 
     int currentWave = -1;
     int currentEnemy = -1;
+    bool allWavesSpawned;
 
     List<EnemyPartnerManager> partnerManagers;
 
-    List<GameObject> enemyTracker;
+    public List<GameObject> enemyTracker;
+
+    void Awake()
+    {
+        currentWave = -1;
+    }
 
     // Use this for initialization
     void Start ()
@@ -42,6 +48,11 @@ public class SpawnManagementScript : MonoBehaviour {
         enemyTracker = new List<GameObject>();
         Messenger<GameObject>.AddListener("Destroy Enemy", RemoveFromTracker);
         if (enemyWaves[currentWave + 1].autoAdvance && autoStart) StartCoroutine("SpawnWave");
+    }
+
+    void OnDestroy()
+    {
+        Messenger<GameObject>.RemoveListener("Destroy Enemy", RemoveFromTracker);
     }
 
     public Vector2 SkipToWave(int wave)
@@ -86,19 +97,31 @@ public class SpawnManagementScript : MonoBehaviour {
         if(enemyTracker.Count == 0)
         {
             Messenger.Invoke("WaveCompleted");
+            if(allWavesSpawned)
+            {
+                Messenger<bool>.Invoke("End Game", true);
+            }
         }
     }
 
     IEnumerator SpawnWave()
     {
         currentWave++;
-        if (currentWave >= enemyWaves.Count) yield break;
+        if (currentWave >= enemyWaves.Count)
+        {
+            allWavesSpawned = true;
+            yield break;
+        }
         yield return new WaitForSeconds(enemyWaves[currentWave].startDelay);
         foreach (SubWave sw in enemyWaves[currentWave].waves)
         {
             StartCoroutine(SubWaveCoroutine(sw));
         }
         if (currentWave < enemyWaves.Count - 1 && enemyWaves[currentWave + 1].autoAdvance) StartCoroutine("SpawnWave");
+        else if (currentWave + 1 >= enemyWaves.Count)
+        {
+            allWavesSpawned = true;
+        }
     }
 
     /*

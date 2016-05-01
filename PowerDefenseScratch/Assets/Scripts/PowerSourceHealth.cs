@@ -22,8 +22,10 @@ public class PowerSourceHealth : MonoBehaviour {
     void RemoveHealth(float f){
         if(currentHealth <= 0) return;
         currentHealth -= f;
-        if(currentHealth <= 0){
-            Debug.Log("Game Over");
+        if(currentHealth <= 0)
+        {
+            Messenger<bool>.Invoke("End Game", false);
+            Time.timeScale = 0;
         }
         healthSlider.value = Mathf.Max(0f, currentHealth / maximumHealth);
     }

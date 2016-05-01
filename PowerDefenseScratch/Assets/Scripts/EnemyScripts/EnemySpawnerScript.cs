@@ -29,6 +29,11 @@ public class EnemySpawnerScript : MonoBehaviour {
         Messenger<GameObject>.AddListener("Destroy Enemy", CheckDeath);
 	}
 
+    void OnDestroy()
+    {
+        Messenger<GameObject>.RemoveListener("Destroy Enemy", CheckDeath);
+    }
+
     IEnumerator SpawningCoroutine()
     {
         yield return new WaitForSeconds(spawnInterval);

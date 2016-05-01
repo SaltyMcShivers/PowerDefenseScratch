@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class TutorialConditionalORCheck : MonoBehaviour {
+[System.Serializable]
+public class TutorialConditionalORCheck {
+    public List<TutorialConditionalANDCheck> requirements;
 
-	// Use this for initialization
-	void Start () {
+    public bool IsValid()
+    {
+        foreach(TutorialConditionalANDCheck option in requirements)
+        {
+            if (option.IsValid()) return true;
+        }
+        return false;
+    }
 	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

@@ -104,6 +104,9 @@
     <Compile Include="Assets\Scripts\UIScripts\DragSelectScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchButtonScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchMenuScript.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\EndMissionMenu.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\NextSceneButton.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\QuitGameMenuScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\RadialButtonScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

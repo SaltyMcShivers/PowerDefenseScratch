@@ -32,6 +32,7 @@ public class EnemyPartnerInvincible : EnemyPartnerScript {
     //Start Up Transition for partner interaction
     public override void StartTransition()
     {
+        health.VulnerableTransition();
         move.SetPauseMovement(true);
     }
 

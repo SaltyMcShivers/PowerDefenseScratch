@@ -8,6 +8,7 @@ public struct TutorialStep
 {
     public string boxMessage;
     public string eventToListenFor;
+    public TutorialConditionalORCheck conditions;
 }
 
 [System.Serializable]
@@ -73,7 +74,7 @@ public class TutorialManager : MonoBehaviour {
         }
         else
         {
-            Messenger<TowerPowerScript>.RemoveListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStepMessage);
+            //Messenger<TowerPowerScript>.RemoveListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStepMessage);
         }
         currentStep++;
         if (currentStep >= sections[currentSection].steps.Count)
@@ -90,6 +91,7 @@ public class TutorialManager : MonoBehaviour {
     void SetUpCurrentBox()
     {
         messageText.text = sections[currentSection].steps[currentStep].boxMessage;
+        /*
         if (sections[currentSection].steps[currentStep].eventToListenFor == "")
         {
             StartCoroutine(ToggleButtonCoroutine());
@@ -98,11 +100,48 @@ public class TutorialManager : MonoBehaviour {
         {
             Messenger<TowerPowerScript>.AddListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStepMessage);
         }
+        */
+        if (sections[currentSection].steps[currentStep].conditions.requirements.Count == 0)
+        {
+            StartCoroutine(ToggleButtonCoroutine());
+        }
+        else
+        {
+            SetTriggers();
+        }
+    }
+
+    void CheckConditionsTPS(TowerPowerScript tps)
+    {
+        CheckConditions();
+    }
+
+    void CheckConditions()
+    {
+        if(sections[currentSection].steps[currentStep].conditions.IsValid())
+        {
+            RemoveTriggers();
+            NextStep();
+        }
     }
 
     IEnumerator ToggleButtonCoroutine()
     {
         yield return new WaitForSeconds(0.1f);
         continueButton.SetActive(true);
+    }
+
+    void SetTriggers()
+    {
+        Messenger<TowerPowerScript>.AddListener("Tower Built", CheckConditionsTPS);
+        Messenger<TowerPowerScript>.AddListener("Tower Off", CheckConditionsTPS);
+        Messenger.AddListener("Switch Flipped", CheckConditions);
+    }
+
+    void RemoveTriggers()
+    {
+        Messenger<TowerPowerScript>.RemoveListener("Tower Built", CheckConditionsTPS);
+        Messenger<TowerPowerScript>.RemoveListener("Tower Off", CheckConditionsTPS);
+        Messenger.RemoveListener("Switch Flipped", CheckConditions);
     }
 }

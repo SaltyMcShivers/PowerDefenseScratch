@@ -24,6 +24,11 @@ public class EnemyMovement : MonoBehaviour {
         currentSpeed = baseSpeed;
         Messenger<GameObject>.AddListener("Destroy Enemy", CheckDeath);
     }
+
+    public void OnDestroy()
+    {
+        Messenger<GameObject>.RemoveListener("Destroy Enemy", CheckDeath);
+    }
 	
 
 	public virtual void Update () {

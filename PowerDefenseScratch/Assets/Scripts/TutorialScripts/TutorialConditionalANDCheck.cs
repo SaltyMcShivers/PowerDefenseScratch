@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class TutorialConditionalANDCheck:TutorialConditional {
+public class TutorialConditionalANDCheck
+{
+    public List<TutorialConditionalTowerCheck> requirements;
 
-    public List<TutorialConditional> conditions;
-	
-    public override bool IsValid()
+    public bool IsValid()
     {
-        foreach(TutorialConditional cond in conditions)
+        foreach (TutorialConditionalTowerCheck option in requirements)
         {
-            if (!cond.IsValid()) return false;
+            if (!option.IsValid()) return false;
         }
         return true;
     }

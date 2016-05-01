@@ -44,6 +44,17 @@ public class TowerManagerScript : MonoBehaviour {
         if (waveToStart > 0) GetResources();
     }
 
+    void OnDestroy()
+    {
+
+        Messenger<TowerPowerScript>.RemoveListener("Tower Built", AddNewTower);
+        Messenger<TowerPowerScript>.RemoveListener("Tower Destroyed", RemoveTower);
+        Messenger<TowerPowerScript>.RemoveListener("Tower Off", DeactivateTower);
+        Messenger<TowerPowerScript>.RemoveListener("Tower On", ActivateTower);
+        Messenger<GameObject>.RemoveListener("Destroy Enemy", GetEnergyFromEnemy);
+        Messenger.RemoveListener("Switch Flipped", FindNewActiveTowers);
+    }
+
     void GetResources()
     {
         Vector2 addedResources = GameObject.Find("SpawnManager").GetComponent<SpawnManagementScript>().SkipToWave(waveToStart);

@@ -17,21 +17,30 @@ public class EnemyHealthScript : MonoBehaviour {
     public Slider healthSlider;
     public Image healthMeter;
 
+    public float minMeterWidth;
+    public float meterWidth;
+
     bool invulnerable;
 
     public Color defaultColor;
     public Color invincibleColor;
 
+    Animator anim;
+
     void Awake()
     {
+        anim = GetComponentInParent<Animator>();
         currentPriority = firePriority;
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        healthSlider.transform.parent.GetComponent<RectTransform>().localScale = new Vector2(minMeterWidth + (1.0f * maxHealth) / meterWidth, 1.0f);
         currentHealth = maxHealth;
         healthSlider.value = (float) currentHealth / (float) maxHealth;
-        if(invulnerable) healthMeter.color = invincibleColor;
+        healthSlider.gameObject.SetActive(false);
+        if (invulnerable) healthMeter.color = invincibleColor;
         else healthMeter.color = defaultColor;
     }
 
@@ -40,6 +49,8 @@ public class EnemyHealthScript : MonoBehaviour {
         invulnerable = true;
         currentPriority = invulnerablePriority;
         healthMeter.color = invincibleColor;
+        anim.SetBool("ShieldOn", true);
+        anim.SetBool("SheildTransition", false);
     }
 
     public void MakeVulnerable()
@@ -47,6 +58,13 @@ public class EnemyHealthScript : MonoBehaviour {
         invulnerable = false;
         currentPriority = firePriority;
         healthMeter.color = defaultColor;
+        anim.SetBool("ShieldOn", false);
+        anim.SetBool("SheildTransition", false);
+    }
+
+    public void VulnerableTransition()
+    {
+        anim.SetBool("SheildTransition", true);
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -71,6 +89,10 @@ public class EnemyHealthScript : MonoBehaviour {
         yield return new WaitForSeconds(damageDelay);
         if (currentHealth <= 0) yield break;
         if (invulnerable) yield break;
+        if(currentHealth == maxHealth)
+        {
+            healthSlider.gameObject.SetActive(true);
+        }
         currentHealth -= damageToDo;
         healthSlider.value = (float)currentHealth / (float)maxHealth;
         if (currentHealth <= 0) StartCoroutine("KillEnemy");
@@ -79,6 +101,11 @@ public class EnemyHealthScript : MonoBehaviour {
     IEnumerator KillEnemy()
     {
         Messenger<GameObject>.Invoke("Destroy Enemy", gameObject);
+        if(anim != null)
+        {
+            anim.SetBool("ShieldOn", false);
+            anim.SetBool("SheildTransition", false);
+        }
         transform.parent.SetParent(null);
         healthSlider.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
