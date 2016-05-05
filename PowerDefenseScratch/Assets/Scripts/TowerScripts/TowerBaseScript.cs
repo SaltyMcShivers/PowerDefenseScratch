@@ -54,6 +54,7 @@ public class TowerBaseScript : MonoBehaviour {
     void OnMouseOver()
     {
         if (disabled) return;
+        if (Time.timeScale == 0) return;
         if (Input.GetMouseButtonUp(0))
         {
             if (currentTower == null && menuContainer.transform.childCount == 0)

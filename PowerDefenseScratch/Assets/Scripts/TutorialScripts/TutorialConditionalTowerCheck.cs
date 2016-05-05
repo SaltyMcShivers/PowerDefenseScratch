@@ -6,6 +6,7 @@ public class TutorialConditionalTowerCheck {
     public TowerBaseScript towerBase;
     public GameObject towerType;
     public bool gettingPower;
+    public bool careAboutPower;
 
     public bool IsValid()
     {
@@ -18,6 +19,10 @@ public class TutorialConditionalTowerCheck {
         {
             return false;
         }
-        return pow.IsGettingPower() == gettingPower && pow.gameObject.name.Contains(towerType.name);
+        if(careAboutPower && pow.IsGettingPower() != gettingPower)
+        {
+            return false;
+        }
+        return pow.gameObject.name.Contains(towerType.name);
     }
 }

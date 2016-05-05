@@ -28,13 +28,15 @@ public class SpawnManagementScript : MonoBehaviour {
     public bool autoAdvance = true;
     public bool autoStart = true;
 
+    public List<IncomingEnemyDisplay> incomings;
+
     int currentWave = -1;
-    int currentEnemy = -1;
+    //int currentEnemy = -1;
     bool allWavesSpawned;
 
     List<EnemyPartnerManager> partnerManagers;
 
-    public List<GameObject> enemyTracker;
+    List<GameObject> enemyTracker;
 
     void Awake()
     {
@@ -47,17 +49,29 @@ public class SpawnManagementScript : MonoBehaviour {
         partnerManagers = new List<EnemyPartnerManager>();
         enemyTracker = new List<GameObject>();
         Messenger<GameObject>.AddListener("Destroy Enemy", RemoveFromTracker);
+        Messenger<GameObject>.AddListener("CreepSpawnsEnemy", AddExtraEnemy);
         if (enemyWaves[currentWave + 1].autoAdvance && autoStart) StartCoroutine("SpawnWave");
+        else {
+            foreach (IncomingEnemyDisplay dis in incomings)
+            {
+                dis.SetUpDisplay(enemyWaves[currentWave + 1]);
+            }
+        }
+    }
+
+    void AddExtraEnemy(GameObject enemy)
+    {
+        enemyTracker.Add(enemy);
     }
 
     void OnDestroy()
     {
         Messenger<GameObject>.RemoveListener("Destroy Enemy", RemoveFromTracker);
+        Messenger<GameObject>.RemoveListener("CreepSpawnsEnemy", AddExtraEnemy);
     }
 
     public Vector2 SkipToWave(int wave)
     {
-        TowerManagerScript towerSystem = GameObject.Find("TowerManager").GetComponent<TowerManagerScript>();
         Vector2 res = Vector2.zero;
         for (int i = 0; i < wave; i++)
         {
@@ -99,7 +113,14 @@ public class SpawnManagementScript : MonoBehaviour {
             Messenger.Invoke("WaveCompleted");
             if(allWavesSpawned)
             {
-                Messenger<bool>.Invoke("End Game", true);
+                if(enemyWaves[enemyWaves.Count-1].autoAdvance) Messenger<bool>.Invoke("End Game", true);
+            }
+            else
+            {
+                foreach (IncomingEnemyDisplay dis in incomings)
+                {
+                    dis.SetUpDisplay(enemyWaves[currentWave+1]);
+                }
             }
         }
     }
@@ -109,15 +130,28 @@ public class SpawnManagementScript : MonoBehaviour {
         currentWave++;
         if (currentWave >= enemyWaves.Count)
         {
+            if (allWavesSpawned)
+            {
+                Messenger<bool>.Invoke("End Game", true);
+            }
             allWavesSpawned = true;
             yield break;
         }
+
+        foreach(IncomingEnemyDisplay dis in incomings)
+        {
+            if(dis.SetUpDisplay(enemyWaves[currentWave])) dis.StartUpTimer(enemyWaves[currentWave].startDelay);
+        }
+
         yield return new WaitForSeconds(enemyWaves[currentWave].startDelay);
         foreach (SubWave sw in enemyWaves[currentWave].waves)
         {
             StartCoroutine(SubWaveCoroutine(sw));
         }
-        if (currentWave < enemyWaves.Count - 1 && enemyWaves[currentWave + 1].autoAdvance) StartCoroutine("SpawnWave");
+        if (currentWave < enemyWaves.Count - 1 && enemyWaves[currentWave + 1].autoAdvance)
+        {
+            StartCoroutine("SpawnWave");
+        }
         else if (currentWave + 1 >= enemyWaves.Count)
         {
             allWavesSpawned = true;
@@ -154,6 +188,7 @@ public class SpawnManagementScript : MonoBehaviour {
     {
         GameObject newEnemy = Instantiate(enemy, startPoint.transform.position, Quaternion.identity) as GameObject;
         EnemyMovement en = newEnemy.GetComponent<EnemyMovement>();
+
         if (en == null)
         {
             Debug.Log("Can't find EnemyMovementScript");
@@ -178,6 +213,15 @@ public class SpawnManagementScript : MonoBehaviour {
                 partManager.SetUpManager(partner.GetVariables());
                 partManager.AddPartner(partner);
                 partnerManagers.Add(partManager);
+            }
+        }
+
+        foreach (IncomingEnemyDisplay dis in incomings)
+        {
+            if (dis.startPoint == startPoint)
+            {
+                dis.RemoveEnemy(enemy);
+                break;
             }
         }
         en.StartFollowing(startPoint, offset);

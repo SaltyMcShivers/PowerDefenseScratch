@@ -9,7 +9,7 @@ public class PowerSwitchScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        switchGraphic.transform.rotation = Quaternion.LookRotation(Vector3.forward, sourceNode.previousNode.transform.position - sourceNode.transform.position);
+        if(sourceNode.previousNode != null) switchGraphic.transform.rotation = Quaternion.LookRotation(Vector3.forward, sourceNode.previousNode.transform.position - sourceNode.transform.position);
         menu.gameObject.SetActive(false);
 	}
     

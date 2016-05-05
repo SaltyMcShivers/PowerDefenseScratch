@@ -12,7 +12,7 @@ public class ElectricPathNode : MonoBehaviour {
     public Color activeEnergyColor;
     public Color unactiveEnergyColor;
 
-    ElectricPathNode nextForPath;
+    public ElectricPathNode nextForPath;
 
     TowerManagerScript baseOfPower;
 
@@ -122,6 +122,18 @@ public class ElectricPathNode : MonoBehaviour {
     {
         if (previousNode == null) return true;
         if (nextNodes.Count > 1 && nextForPath == null) return true;
-        return nextForPath == from;
+        if (nextForPath != from) return false;
+        return previousNode.IsGettingEnergy(this);
+    }
+
+    public void ToggleEnergy()
+    {
+        if (nextForPath == null) nextForPath = nextNodes[0];
+        else nextForPath = null;
+
+        foreach (ElectricPathNode node in nextNodes)
+        {
+            node.ChangeColoration();
+        }
     }
 }

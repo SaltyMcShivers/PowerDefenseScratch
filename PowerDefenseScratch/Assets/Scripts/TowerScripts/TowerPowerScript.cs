@@ -19,6 +19,7 @@ public class TowerPowerScript : MonoBehaviour {
     public bool IsGettingPower()
     {
         if (disabled) return false;
+        if (electricSource == null) return false;
         return electricSource.IsGettingEnergy();
     }
 

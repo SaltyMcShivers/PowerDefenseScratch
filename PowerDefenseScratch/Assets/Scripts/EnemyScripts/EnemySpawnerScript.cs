@@ -48,6 +48,7 @@ public class EnemySpawnerScript : MonoBehaviour {
                 enemySpawned.transform.SetParent(spawnLocation);
                 enemies.Add(enemySpawned);
             }
+            Messenger<GameObject>.Invoke("CreepSpawnsEnemy", enemySpawned);
             yield return new WaitForSeconds(spawnTimePerEnemy);
         }
         if (mover != null) mover.TogglePauseMovement();

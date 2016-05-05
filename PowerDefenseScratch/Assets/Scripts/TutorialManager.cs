@@ -107,7 +107,14 @@ public class TutorialManager : MonoBehaviour {
         }
         else
         {
-            SetTriggers();
+            if (sections[currentSection].steps[currentStep].conditions.IsValid())
+            {
+                NextStep();
+            }
+            else
+            {
+                SetTriggers();
+            }
         }
     }
 
@@ -135,6 +142,7 @@ public class TutorialManager : MonoBehaviour {
     {
         Messenger<TowerPowerScript>.AddListener("Tower Built", CheckConditionsTPS);
         Messenger<TowerPowerScript>.AddListener("Tower Off", CheckConditionsTPS);
+        Messenger<TowerPowerScript>.AddListener("Tower On", CheckConditionsTPS);
         Messenger.AddListener("Switch Flipped", CheckConditions);
     }
 
@@ -142,6 +150,7 @@ public class TutorialManager : MonoBehaviour {
     {
         Messenger<TowerPowerScript>.RemoveListener("Tower Built", CheckConditionsTPS);
         Messenger<TowerPowerScript>.RemoveListener("Tower Off", CheckConditionsTPS);
+        Messenger<TowerPowerScript>.RemoveListener("Tower On", CheckConditionsTPS);
         Messenger.RemoveListener("Switch Flipped", CheckConditions);
     }
 }

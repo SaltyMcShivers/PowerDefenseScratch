@@ -1,0 +1,240 @@
+fileFormatVersion: 2
+guid: faae682833f26d04f88f3e303df53a66
+timeCreated: 1462404969
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: DialogUI
+    21300002: StatsBackground
+    21300004: MenuOverlay
+    21300006: MenuBackground
+    21300008: MenuButton_Default
+    21300010: MenuButton_Hover
+    21300012: IncomingBackground
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: DialogUI
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 736
+        width: 1004
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 510, y: 45, z: 368, w: 70}
+      outline:
+      - - {x: 495, y: -123}
+        - {x: 502, y: -116}
+        - {x: 502, y: 106}
+        - {x: 486, y: 123}
+        - {x: 483, y: 124}
+        - {x: 275, y: 124}
+        - {x: 258, y: 108}
+        - {x: -155, y: 108}
+        - {x: -158, y: 111}
+        - {x: -159, y: 111}
+        - {x: -165, y: 117}
+        - {x: -169, y: 119}
+        - {x: -173, y: 122}
+        - {x: -174, y: 122}
+        - {x: -180, y: 128}
+        - {x: -184, y: 130}
+        - {x: -188, y: 133}
+        - {x: -189, y: 133}
+        - {x: -192, y: 136}
+        - {x: -193, y: 136}
+        - {x: -195, y: 139}
+        - {x: -474, y: 139}
+        - {x: -502, y: 112}
+        - {x: -502, y: -117}
+        - {x: -492, y: -126}
+        - {x: -491, y: -126}
+        - {x: -486, y: -131}
+        - {x: -485, y: -131}
+        - {x: -481, y: -135}
+        - {x: -480, y: -135}
+        - {x: -476, y: -139}
+        - {x: 477, y: -139}
+        - {x: 484, y: -132}
+        - {x: 485, y: -132}
+        - {x: 494, y: -123}
+    - name: StatsBackground
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 487
+        width: 508
+        height: 238
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 221, y: -91}
+        - {x: 223, y: -83}
+        - {x: 225, y: -72}
+        - {x: 227, y: -68}
+        - {x: 228, y: -64}
+        - {x: 232, y: -59}
+        - {x: 242, y: -51}
+        - {x: 254, y: -41}
+        - {x: 254, y: -22}
+        - {x: 242, y: 38}
+        - {x: 238, y: 43}
+        - {x: 234, y: 44}
+        - {x: 218, y: 49}
+        - {x: 211, y: 51}
+        - {x: 202, y: 55}
+        - {x: 188, y: 83}
+        - {x: 186, y: 85}
+        - {x: 179, y: 100}
+        - {x: 173, y: 111}
+        - {x: 170, y: 113}
+        - {x: -29, y: 113}
+        - {x: -30, y: 115}
+        - {x: -37, y: 119}
+        - {x: -242, y: 119}
+        - {x: -247, y: 114}
+        - {x: -254, y: 106}
+        - {x: -254, y: -48}
+        - {x: -231, y: -60}
+        - {x: -228, y: -66}
+        - {x: -227, y: -71}
+        - {x: -225, y: -79}
+        - {x: -219, y: -106}
+        - {x: -217, y: -114}
+        - {x: -216, y: -119}
+        - {x: 213, y: -119}
+        - {x: 214, y: -117}
+        - {x: 217, y: -106}
+        - {x: 219, y: -95}
+    - name: MenuOverlay
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 8
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: MenuBackground
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 456
+        width: 301
+        height: 269
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 144, y: 135, z: 144, w: 122}
+      outline:
+      - - {x: 145.5, y: 96.5}
+        - {x: 113.5, y: 128.5}
+        - {x: 112.5, y: 128.5}
+        - {x: 107.5, y: 134.5}
+        - {x: -114.5, y: 134.5}
+        - {x: -150.5, y: 98.5}
+        - {x: -150.5, y: -91.5}
+        - {x: -107.5, y: -134.5}
+        - {x: 95.5, y: -134.5}
+        - {x: 145.5, y: -84.5}
+    - name: MenuButton_Default
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 679
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 21, y: 21, z: 21, w: 21}
+      outline:
+      - - {x: -21, y: 23}
+        - {x: -21, y: -22}
+        - {x: -20, y: -23}
+        - {x: 21, y: -23}
+        - {x: 21, y: 23}
+    - name: MenuButton_Hover
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 623
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 21, y: 21, z: 21, w: 21}
+      outline:
+      - - {x: -21, y: 23}
+        - {x: -21, y: -22}
+        - {x: -20, y: -23}
+        - {x: 21, y: -23}
+        - {x: 21, y: 23}
+    - name: IncomingBackground
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 661
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 16, y: 16, z: 16, w: 37}
+      outline:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 31, y: -32}
+        - {x: 32, y: -30}
+        - {x: 32, y: 29}
+        - {x: 29, y: 32}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

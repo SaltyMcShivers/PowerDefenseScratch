@@ -25,7 +25,7 @@ public class ProjectileScript : MonoBehaviour {
         yield return new WaitForSeconds(detonationTime);
         if (deathPrefab != null)
         {
-            GameObject deadObject = Instantiate(deathPrefab, transform.position, Quaternion.identity) as GameObject;
+            GameObject deadObject = Instantiate(deathPrefab, transform.position + Vector3.forward, Quaternion.identity) as GameObject;
             ExplosionScript exp = deadObject.GetComponent<ExplosionScript>();
             if (exp != null)
             {

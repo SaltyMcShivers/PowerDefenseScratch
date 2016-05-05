@@ -65,8 +65,10 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\ElectricPathNode.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\CircleMovementScript.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyAOEScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyAttackScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyHealthScript.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyInfoScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyMovement.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerInvincible.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerInvincibleManager.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Assets\Scripts\PathNode.cs" />
     <Compile Include="Assets\Scripts\PowerSourceHealth.cs" />
     <Compile Include="Assets\Scripts\PowerSwitchScript.cs" />
+    <Compile Include="Assets\Scripts\PowerToggleScript.cs" />
     <Compile Include="Assets\Scripts\ProjectileScript.cs" />
     <Compile Include="Assets\Scripts\SpawnManagementScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\DamageTypeScript.cs" />
@@ -105,7 +108,10 @@
     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchButtonScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchMenuScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\EndMissionMenu.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\IncomingEnemyDisplay.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\IncomingEnemyElement.cs" />
     <Compile Include="Assets\Scripts\UIScripts\NextSceneButton.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\PauseMenuScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\QuitGameMenuScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\RadialButtonScript.cs" />
   </ItemGroup>

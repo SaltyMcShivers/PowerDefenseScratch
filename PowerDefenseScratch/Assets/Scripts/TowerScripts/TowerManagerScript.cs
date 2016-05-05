@@ -19,6 +19,11 @@ public class TowerManagerScript : MonoBehaviour {
     public int startingMetal;
 
     public int waveToStart;
+
+    public Color textColor;
+    public Color lowMetalColor;
+    public Color overloadEnergyColor;
+
     int currentMetal;
 
     List<TowerPowerScript> allTowers;
@@ -70,7 +75,7 @@ public class TowerManagerScript : MonoBehaviour {
         TotalMetalDisplay.text = currentMetal.ToString() + " Metal";
         if (!CanBuildTower())
         {
-            TotalMetalDisplay.color = Color.red;
+            TotalMetalDisplay.color = lowMetalColor;
         }
         allTowers.Add(tps);
         if (tps.IsGettingPower()) ActivateTower(tps);
@@ -95,7 +100,7 @@ public class TowerManagerScript : MonoBehaviour {
         TotalMetalDisplay.text = currentMetal.ToString() + " Metal";
         if (CanBuildTower())
         {
-            TotalMetalDisplay.color = Color.black;
+            TotalMetalDisplay.color = textColor;
         }
         activeTowers.Remove(tps);
         allTowers.Remove(tps);
@@ -123,7 +128,7 @@ public class TowerManagerScript : MonoBehaviour {
         TotalMetalDisplay.text = currentMetal.ToString() + " Metal";
         if (CanBuildTower())
         {
-            TotalMetalDisplay.color = Color.black;
+            TotalMetalDisplay.color = textColor;
         }
         SetActiveTowerEnergies();
     }
@@ -141,6 +146,18 @@ public class TowerManagerScript : MonoBehaviour {
             powerPerTower = currentPower / activeTowers.Count;
         }
         PowerDistributeDisplay.text = powerPerTower.ToString("F0") + "%";
+        if(powerPerTower == 0f)
+        {
+            PowerDistributeDisplay.color = lowMetalColor;
+        }
+        else if(powerPerTower > 100)
+        {
+            PowerDistributeDisplay.color = overloadEnergyColor;
+        }
+        else
+        {
+            PowerDistributeDisplay.color = textColor;
+        }
         foreach (TowerPowerScript tp in activeTowers)
         {
             tp.SetCurrentPower(powerPerTower);

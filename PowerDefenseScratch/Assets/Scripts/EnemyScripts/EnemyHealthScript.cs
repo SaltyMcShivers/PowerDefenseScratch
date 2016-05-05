@@ -89,7 +89,7 @@ public class EnemyHealthScript : MonoBehaviour {
         yield return new WaitForSeconds(damageDelay);
         if (currentHealth <= 0) yield break;
         if (invulnerable) yield break;
-        if(currentHealth == maxHealth)
+        if (currentHealth == maxHealth && damageToDo > 0)
         {
             healthSlider.gameObject.SetActive(true);
         }

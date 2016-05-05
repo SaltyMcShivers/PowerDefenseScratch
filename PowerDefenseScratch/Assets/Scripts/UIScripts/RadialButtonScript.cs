@@ -17,6 +17,7 @@ public class RadialButtonScript : MonoBehaviour {
 
     public void DisableButton()
     {
+        if (anim == null) anim = GetComponent<Animator>();
         anim.SetTrigger("Disabled");
     }
 
