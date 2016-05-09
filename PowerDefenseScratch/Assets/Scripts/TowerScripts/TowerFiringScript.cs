@@ -67,13 +67,22 @@ public class TowerFiringScript : MonoBehaviour {
         {
             shotInterval = Mathf.Lerp(maximumShotInterval, minimumShotInterval, GetPowerPercent());
         }
-	    if(Time.time - lastShotTime > shotInterval)
+        float timeSinceLastShot = Time.time - lastShotTime;
+        if (timeSinceLastShot > shotInterval)
         {
-            FireAtTargets();
+            if (timeSinceLastShot > shotInterval * 2)
+            {
+                FireAtTargets();
+            }
+            else
+            {
+                FireAtTargets(timeSinceLastShot - shotInterval);
+            }
+
         }
 	}
 
-    void FireAtTargets()
+    void FireAtTargets(float overTime=0f)
     {
         List<GameObject> targets = rangeManagement.GetEnemies(targetsToHit);
         if (targets.Count == 0)
@@ -81,7 +90,7 @@ public class TowerFiringScript : MonoBehaviour {
             lastEnemyHit = null;
             return;
         }
-        lastShotTime = Time.time;
+        lastShotTime = Time.time - overTime;
         Vector3 distance = Vector3.Normalize(targets[0].transform.position - transform.position);
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as GameObject;
         float projectileDamage = minimumProjectileDamage;

@@ -14,6 +14,8 @@ public class ElectricPathNode : MonoBehaviour {
 
     public ElectricPathNode nextForPath;
 
+    public List<Animator> highlightAnims;
+
     TowerManagerScript baseOfPower;
 
     public void SetUpStart(TowerManagerScript tms)
@@ -134,6 +136,14 @@ public class ElectricPathNode : MonoBehaviour {
         foreach (ElectricPathNode node in nextNodes)
         {
             node.ChangeColoration();
+        }
+    }
+
+    public void DisableHighlight()
+    {
+        foreach (Animator highlightAnim in highlightAnims)
+        {
+            highlightAnim.SetTrigger("HighlightSwitch");
         }
     }
 }

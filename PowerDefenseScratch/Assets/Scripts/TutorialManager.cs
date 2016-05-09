@@ -9,6 +9,7 @@ public struct TutorialStep
     public string boxMessage;
     public string eventToListenFor;
     public TutorialConditionalORCheck conditions;
+    public List<TutorialActionEnableObject> actions;
 }
 
 [System.Serializable]
@@ -30,10 +31,19 @@ public class TutorialManager : MonoBehaviour {
 
     public List<TutorialConditional> stepsTest;
 
+    public void SetCurrentSection(int i)
+    {
+        currentSection = i - 1;
+    }
+
+    void Awake()
+    {
+        currentSection = -1;
+    }
+
     // Use this for initialization
     void Start ()
     {
-        currentSection = -1;
         Messenger.AddListener("WaveCompleted", MoveOnWithTutorial);
         MoveOnWithTutorial();
     }
@@ -68,7 +78,7 @@ public class TutorialManager : MonoBehaviour {
 
     public void NextStep()
     {
-        if (sections[currentSection].steps[currentStep].eventToListenFor == "")
+        if (sections[currentSection].steps[currentStep].conditions.requirements.Count == 0)
         {
             continueButton.SetActive(false);
         }
@@ -101,6 +111,10 @@ public class TutorialManager : MonoBehaviour {
             Messenger<TowerPowerScript>.AddListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStepMessage);
         }
         */
+        foreach (TutorialActionEnableObject en in sections[currentSection].steps[currentStep].actions)
+        {
+            en.DoAction();
+        }
         if (sections[currentSection].steps[currentStep].conditions.requirements.Count == 0)
         {
             StartCoroutine(ToggleButtonCoroutine());

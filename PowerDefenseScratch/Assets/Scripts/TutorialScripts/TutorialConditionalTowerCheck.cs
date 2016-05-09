@@ -7,11 +7,14 @@ public class TutorialConditionalTowerCheck {
     public GameObject towerType;
     public bool gettingPower;
     public bool careAboutPower;
+    public bool nullTower;
 
     public bool IsValid()
     {
-        if(towerType == null)
+        if (nullTower) return towerBase.GetComponentInChildren<TowerPowerScript>() == null;
+        if (towerType == null)
         {
+            if (!careAboutPower) return true;
             return gettingPower == towerBase.IsGettingPower();
         }
         TowerPowerScript pow = towerBase.GetComponentInChildren<TowerPowerScript>();

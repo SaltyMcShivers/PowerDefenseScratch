@@ -13,6 +13,7 @@ public class QuitGameMenuScript : MonoBehaviour {
 
     public void QuitGame()
     {
+        /*
         if (Application.isEditor)
         {
             UnityEditor.EditorApplication.isPlaying = false;
@@ -21,6 +22,7 @@ public class QuitGameMenuScript : MonoBehaviour {
         {
             Application.Quit();
         }
-        //Application.Quit();
+        */
+        Application.Quit();
     }
 }

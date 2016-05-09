@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPartnerScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemySpawnerScript.cs" />
     <Compile Include="Assets\Scripts\ExplosionScript.cs" />
+    <Compile Include="Assets\Scripts\FastForwardScript.cs" />
     <Compile Include="Assets\Scripts\MessengerScripts\Callback.cs" />
     <Compile Include="Assets\Scripts\MessengerScripts\Messenger.cs" />
     <Compile Include="Assets\Scripts\PathNode.cs" />
@@ -100,6 +101,8 @@
     <Compile Include="Assets\Scripts\TowerScripts\TowerSelectionScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerToggle.cs" />
     <Compile Include="Assets\Scripts\TutorialManager.cs" />
+    <Compile Include="Assets\Scripts\TutorialScripts\TutorialAction.cs" />
+    <Compile Include="Assets\Scripts\TutorialScripts\TutorialActionEnableObject.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditional.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalANDCheck.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalORCheck.cs" />

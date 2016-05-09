@@ -62,11 +62,17 @@ public class TowerManagerScript : MonoBehaviour {
 
     void GetResources()
     {
-        Vector2 addedResources = GameObject.Find("SpawnManager").GetComponent<SpawnManagementScript>().SkipToWave(waveToStart);
+        GameObject spawner = GameObject.Find("SpawnManager");
+        Vector2 addedResources = spawner.GetComponent<SpawnManagementScript>().SkipToWave(waveToStart);
         currentPower += addedResources.x;
         currentMetal += (int)addedResources.y;
         TotalPowerDisplay.text = currentPower.ToString() + " Jolts";
         TotalMetalDisplay.text = currentMetal.ToString() + " Metal";
+        TutorialManager tut = spawner.GetComponent<TutorialManager>();
+        if(tut != null)
+        {
+            tut.SetCurrentSection(waveToStart);
+        }
     }
 	
     void AddNewTower(TowerPowerScript tps)

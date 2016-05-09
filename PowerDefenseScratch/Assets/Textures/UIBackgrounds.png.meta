@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: faae682833f26d04f88f3e303df53a66
-timeCreated: 1462404969
+timeCreated: 1462643481
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -11,6 +11,12 @@ TextureImporter:
     21300008: MenuButton_Default
     21300010: MenuButton_Hover
     21300012: IncomingBackground
+    21300014: TutorialTargeter_Main
+    21300016: UI_Highlight
+    21300018: TutorialTargeter_Right
+    21300020: TutorialTargeter_Left
+    21300022: TutorialTargeter_Top
+    21300024: TutorialTargeter_Bottom
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -233,6 +239,75 @@ TextureImporter:
         - {x: 32, y: -30}
         - {x: 32, y: 29}
         - {x: 29, y: 32}
+    - name: TutorialTargeter_Main
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 203
+        width: 244
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 122, y: 47}
+        - {x: 95, y: 115}
+        - {x: 54, y: 122}
+        - {x: -43, y: 122}
+        - {x: -122, y: 22}
+        - {x: -122, y: -17}
+        - {x: -120, y: -17}
+        - {x: -87, y: -69}
+        - {x: -18, y: -122}
+        - {x: 17, y: -122}
+        - {x: 17, y: -120}
+        - {x: 47, y: -101}
+        - {x: 122, y: -49}
+      - - {x: -91, y: -74}
+        - {x: -95, y: -77}
+        - {x: -95, y: -80}
+        - {x: -80, y: -95}
+        - {x: -76, y: -95}
+        - {x: -74, y: -93}
+        - {x: -74, y: -74}
+      - - {x: 91, y: -74}
+        - {x: 75, y: -74}
+        - {x: 74, y: -75}
+        - {x: 74, y: -91}
+        - {x: 77, y: -95}
+        - {x: 80, y: -95}
+        - {x: 95, y: -80}
+        - {x: 95, y: -77}
+      - - {x: -92, y: 74}
+        - {x: -74, y: 74}
+        - {x: -74, y: 95}
+        - {x: -80, y: 95}
+        - {x: -95, y: 84}
+        - {x: -95, y: 77}
+      - - {x: 95, y: 74}
+        - {x: 95, y: 81}
+        - {x: 85, y: 95}
+        - {x: 76, y: 95}
+        - {x: 74, y: 94}
+        - {x: 74, y: 74}
+    - name: UI_Highlight
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 528
+        width: 82
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 36, y: 36, z: 36, w: 36}
+      outline:
+      - - {x: -35, y: 41}
+        - {x: -41, y: 36}
+        - {x: -41, y: -36}
+        - {x: -36, y: -41}
+        - {x: 41, y: -41}
+        - {x: 41, y: 38}
+        - {x: 35, y: 41}
     outline: []
   spritePackingTag: 
   userData: 
