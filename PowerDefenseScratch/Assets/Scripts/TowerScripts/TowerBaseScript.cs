@@ -9,7 +9,8 @@ public class TowerBaseScript : MonoBehaviour {
 
     public GameObject towerSelectionUI;
 
-    public Canvas menuContainer;
+    public Transform menuContainer;
+    public GameObject towerReadyIcon;
 
     public ElectricPathNode electricSource;
 
@@ -57,11 +58,11 @@ public class TowerBaseScript : MonoBehaviour {
         if (Time.timeScale == 0) return;
         if (Input.GetMouseButtonUp(0))
         {
-            if (currentTower == null && menuContainer.transform.childCount == 0)
+            if (currentTower == null && menuContainer.childCount == 0)
             {
                 if (!manager.CanBuildTower()) return;
                 GameObject newTS = Instantiate(towerSelectionUI, transform.position, Quaternion.identity) as GameObject;
-                newTS.transform.SetParent(menuContainer.transform);
+                newTS.transform.SetParent(menuContainer);
                 newTS.GetComponent<TowerSelectionScript>().SetUpTowerSelection(this, manager.legalTowers);
                 /*
                 GameObject newTower = Instantiate(towerToBuild, transform.position, Quaternion.identity) as GameObject;
@@ -69,7 +70,7 @@ public class TowerBaseScript : MonoBehaviour {
                 Messenger<TowerPowerScript>.Invoke("Tower Built", currentTower);
                 */
             }
-            else if (menuContainer.transform.childCount == 1)
+            else if (menuContainer.childCount == 1)
             {
                 menuContainer.GetComponentInChildren<TowerSelectionScript>().RemoveMenu();
             }
@@ -102,6 +103,12 @@ public class TowerBaseScript : MonoBehaviour {
         currentTower = newTower.GetComponent<TowerPowerScript>();
         currentTower.electricSource = electricSource;
         newTower.transform.SetParent(transform);
+        if (!manager.CanBuildTower()) SetBuildReadyIcon();
         Messenger<TowerPowerScript>.Invoke("Tower Built", currentTower);
+    }
+
+    public void SetBuildReadyIcon(bool makeActive = false)
+    {
+        towerReadyIcon.SetActive(makeActive && currentTower == null);
     }
 }

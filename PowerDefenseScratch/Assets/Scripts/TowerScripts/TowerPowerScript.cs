@@ -7,6 +7,10 @@ public class TowerPowerScript : MonoBehaviour {
     public bool disabled;
     public Image powerDisplay;
 
+    public SpriteRenderer towerImageTemp;
+    public Color32 towerColorActiveTemp;
+    public Color32 towerColorInactiveTemp;
+
     public ElectricPathNode electricSource;
 
     public float GetCurrentPower()
@@ -32,6 +36,14 @@ public class TowerPowerScript : MonoBehaviour {
     public void SetCurrentPower(float f)
     {
         //if (f == 0 && !electricSource.IsGettingEnergy()) disabled = false;
+        if(f == 0 || !electricSource.IsGettingEnergy())
+        {
+            if(towerImageTemp != null) towerImageTemp.color = towerColorInactiveTemp;
+        }
+        else
+        {
+            if (towerImageTemp != null) towerImageTemp.color = towerColorActiveTemp;
+        }
         power = f;
         powerDisplay.fillAmount = Mathf.Min(power, 100f) / 100f;
     }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1288d765513deca498a5296f8eb39734
-timeCreated: 1462404032
+timeCreated: 1463076746
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,7 @@ TextureImporter:
     21300002: ToughIcon
     21300004: HiveIcon
     21300006: GeminiIcon
+    21300008: RallyBotIcon
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -128,6 +129,22 @@ TextureImporter:
         - {x: 19, y: -16}
         - {x: 19, y: 13}
         - {x: 18, y: 18}
+    - name: RallyBotIcon
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18, y: 14}
+        - {x: -18, y: -14}
+        - {x: 16, y: -14}
+        - {x: 16, y: 8}
+        - {x: 14, y: 14}
     outline: []
   spritePackingTag: 
   userData: 

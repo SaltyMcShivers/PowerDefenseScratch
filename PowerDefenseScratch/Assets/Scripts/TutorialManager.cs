@@ -60,7 +60,11 @@ public class TutorialManager : MonoBehaviour {
     void MoveOnWithTutorial()
     {
         currentSection++;
-        if (currentSection >= sections.Count) return;
+        if (currentSection >= sections.Count)
+        {
+            spawner.SendNextWave();
+            return;
+        }
         currentStep = 0;
         messageBox.SetActive(true);
         SetUpCurrentBox();

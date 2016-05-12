@@ -123,7 +123,7 @@ public class ElectricPathNode : MonoBehaviour {
     public bool IsGettingEnergy(ElectricPathNode from)
     {
         if (previousNode == null) return true;
-        if (nextNodes.Count > 1 && nextForPath == null) return true;
+        if (nextNodes.Count > 1 && nextForPath == null) return previousNode.IsGettingEnergy(this);
         if (nextForPath != from) return false;
         return previousNode.IsGettingEnergy(this);
     }

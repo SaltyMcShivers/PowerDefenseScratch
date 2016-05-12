@@ -99,12 +99,14 @@ public class TowerSelectionScript : MonoBehaviour {
 
     void HighlightButton(int i)
     {
+        if (i >= buttons.Count) return;
         buttons[i].HighlightButton();
         GetComponent<Animator>().SetInteger("HoverChoice", Mathf.FloorToInt(i / 3f));
     }
 
     void UnhighlightButton(int i)
     {
+        if (i >= buttons.Count) return;
         buttons[i].UnhighlightButton();
     }
 }

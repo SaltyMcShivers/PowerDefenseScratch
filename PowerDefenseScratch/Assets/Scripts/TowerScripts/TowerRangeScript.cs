@@ -7,6 +7,9 @@ public class TowerRangeScript : MonoBehaviour {
     public float minimumRange;
     public float maximumRange;
 
+    public Color activeColorTemp;
+    public Color inactiveColorTemp;
+
     List<GameObject> enemies;
     GameObject targetedEnemy;
 
@@ -15,6 +18,7 @@ public class TowerRangeScript : MonoBehaviour {
     void Awake()
     {
         enemies = new List<GameObject>();
+        EnableTower();
     }
 
 	void Start () {
@@ -110,13 +114,13 @@ public class TowerRangeScript : MonoBehaviour {
     {
         if (!towerActive) return;
         towerActive = false;
-        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.4f);
+        GetComponent<SpriteRenderer>().color = inactiveColorTemp;
     }
 
     public void EnableTower()
     {
         if (towerActive) return;
         towerActive = true;
-        GetComponent<SpriteRenderer>().color = Color.white;
+        GetComponent<SpriteRenderer>().color = activeColorTemp;
     }
 }

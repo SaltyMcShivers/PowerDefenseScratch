@@ -31,6 +31,23 @@ public class CircleMovementScript : EnemyMovement {
         currentAngle = (currentAngle + anglesPerSecond * Time.deltaTime) % (2f * Mathf.PI);
         transform.localPosition = new Vector3(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle)) * travelRadius;
 	}
+    
 
-
+    public override Vector3 PredictPosition(float timePassed)
+    {
+        if (killed || pauseMovement) return transform.position;
+        Vector3 parentPos;
+        EnemyMovement parentMovement = transform.parent.gameObject.GetComponentInParent<EnemyMovement>();
+        if(parentMovement == null)
+        {
+            Debug.Log("Wrong Object");
+            parentPos = transform.parent.position;
+        }
+        else
+        {
+            parentPos = parentMovement.PredictPosition(timePassed);
+        }
+        float predictedAngle = currentAngle + timePassed * anglesPerSecond;
+        return parentPos + new Vector3(Mathf.Cos(predictedAngle), Mathf.Sin(predictedAngle)) * travelRadius;
+    }
 }

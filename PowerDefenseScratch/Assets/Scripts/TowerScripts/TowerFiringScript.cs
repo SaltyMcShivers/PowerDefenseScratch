@@ -49,6 +49,10 @@ public class TowerFiringScript : MonoBehaviour {
     {
         currentCritChance = startingCritChance;
         currentComboBonus = 1f;
+        if (powerManagement.GetCurrentPower() == 0)
+        {
+            rangeManagement.DisableTower();
+        }
 	}
 	
 	void Update () {
@@ -91,8 +95,21 @@ public class TowerFiringScript : MonoBehaviour {
             return;
         }
         lastShotTime = Time.time - overTime;
-        Vector3 distance = Vector3.Normalize(targets[0].transform.position - transform.position);
+        Vector3 targetPosition;
+        EnemyMovement enMov = targets[0].GetComponentInParent<EnemyMovement>();
+        if(enMov == null)
+        {
+            targetPosition = targets[0].transform.position;
+        }
+        else
+        {
+            targetPosition = enMov.PredictPosition(0.2f);
+        }
+        Vector3 distance = Vector3.Normalize(targetPosition - transform.position);
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as GameObject;
+
+        projectile.transform.Rotate(Vector3.back, Vector3.Angle(Vector3.left, distance) * Mathf.Sign(distance.y) + 180);
+
         float projectileDamage = minimumProjectileDamage;
         if (minimumProjectileDamage != maximumProjectileDamage)
         {
@@ -110,13 +127,14 @@ public class TowerFiringScript : MonoBehaviour {
             }
         }
         float explodeSize = minimumExplosionSize;
-        projectile.GetComponent<Rigidbody2D>().AddForce(projectileForce * distance);
+        //projectile.GetComponent<Rigidbody2D>().AddForce(projectileForce * distance);
         if(minimumExplosionSize != maximumExplosionSize){
             explodeSize = Mathf.Lerp(minimumExplosionSize, maximumExplosionSize, GetPowerPercent());
         }
 
         float slowAmount = Mathf.Lerp(minimumSlow, maximumSlow, GetPowerPercent());
-        (projectile.GetComponent<ProjectileScript>() as ProjectileScript).SetUpBullet(projectileDamage, explosionTime, explodeSize, slowAmount);
+        (projectile.GetComponent<ProjectileScript>() as ProjectileScript).SetUpBullet(projectileDamage, explosionTime, explodeSize, slowAmount, GetPowerPercent(), targets[0].GetComponentInChildren<Rigidbody2D>().gameObject);
+        (projectile.GetComponent<ProjectileScript>() as ProjectileScript).SetSpeed(projectileForce / 50f);
         EnemyHealthScript health = targets[0].GetComponentInChildren<EnemyHealthScript>();
         if(minimumExplosionSize == 0f) health.DamageWithDelay(projectileDamage, distance.magnitude / projectileForce);
     }

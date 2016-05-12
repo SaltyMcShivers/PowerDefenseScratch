@@ -47,6 +47,7 @@ public class TowerManagerScript : MonoBehaviour {
         Messenger<GameObject>.AddListener("Destroy Enemy", GetEnergyFromEnemy);
         Messenger.AddListener("Switch Flipped", FindNewActiveTowers);
         if (waveToStart > 0) GetResources();
+        TowerReadyToBuild();
     }
 
     void OnDestroy()
@@ -73,6 +74,7 @@ public class TowerManagerScript : MonoBehaviour {
         {
             tut.SetCurrentSection(waveToStart);
         }
+        TowerReadyToBuild();
     }
 	
     void AddNewTower(TowerPowerScript tps)
@@ -86,6 +88,7 @@ public class TowerManagerScript : MonoBehaviour {
         allTowers.Add(tps);
         if (tps.IsGettingPower()) ActivateTower(tps);
         else tps.SetCurrentPower(0f);
+        TowerReadyToBuild();
     }
 
     void ActivateTower(TowerPowerScript tps)
@@ -111,6 +114,7 @@ public class TowerManagerScript : MonoBehaviour {
         activeTowers.Remove(tps);
         allTowers.Remove(tps);
         SetActiveTowerEnergies();
+        TowerReadyToBuild();
     }
 
     void FindNewActiveTowers()
@@ -137,6 +141,7 @@ public class TowerManagerScript : MonoBehaviour {
             TotalMetalDisplay.color = textColor;
         }
         SetActiveTowerEnergies();
+        TowerReadyToBuild();
     }
 
     void SetActiveTowerEnergies()
@@ -194,5 +199,13 @@ public class TowerManagerScript : MonoBehaviour {
     public bool CanBuildTower()
     {
         return currentMetal >= metalToBuild;
+    }
+
+    void TowerReadyToBuild()
+    {
+        foreach (TowerBaseScript towerBase in GetComponentsInChildren<TowerBaseScript>())
+        {
+            towerBase.SetBuildReadyIcon(CanBuildTower());
+        }
     }
 }

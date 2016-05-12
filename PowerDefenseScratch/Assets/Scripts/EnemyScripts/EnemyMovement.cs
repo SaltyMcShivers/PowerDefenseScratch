@@ -134,4 +134,10 @@ public class EnemyMovement : MonoBehaviour {
         yield return new WaitForSeconds(slowTime);
         speedMultiplier /= slowRate;
     }
+
+    public virtual Vector3 PredictPosition(float timePassed)
+    {
+        if (killed || pauseMovement) return transform.position;
+        return transform.position + timePassed * travelVector * speedMultiplier;
+    }
 }

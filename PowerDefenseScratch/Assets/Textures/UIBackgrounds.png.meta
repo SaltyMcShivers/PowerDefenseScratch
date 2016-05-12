@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: faae682833f26d04f88f3e303df53a66
-timeCreated: 1462643481
+timeCreated: 1463080482
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -17,6 +17,7 @@ TextureImporter:
     21300020: TutorialTargeter_Left
     21300022: TutorialTargeter_Top
     21300024: TutorialTargeter_Bottom
+    21300026: TowerBuildable_Icon
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -308,6 +309,27 @@ TextureImporter:
         - {x: 41, y: -41}
         - {x: 41, y: 38}
         - {x: 35, y: 41}
+    - name: TowerBuildable_Icon
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 340
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 54, y: -35}
+        - {x: 57, y: 10}
+        - {x: 57, y: 57}
+        - {x: -51, y: 57}
+        - {x: -57, y: 53}
+        - {x: -57, y: -57}
+        - {x: 51, y: -57}
+        - {x: 56, y: -54}
+        - {x: 57, y: -50}
+        - {x: 57, y: -38}
     outline: []
   spritePackingTag: 
   userData: 

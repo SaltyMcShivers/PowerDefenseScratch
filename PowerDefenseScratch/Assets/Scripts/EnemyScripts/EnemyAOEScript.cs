@@ -21,7 +21,7 @@ public class EnemyAOEScript : MonoBehaviour {
 
     IEnumerator SlowDownCoroutine()
     {
-        GameObject newBoom = Instantiate(slowEffectPrefab, transform.position, Quaternion.identity) as GameObject;
+        GameObject newBoom = Instantiate(slowEffectPrefab, transform.position + Vector3.forward, Quaternion.identity) as GameObject;
         newBoom.transform.SetParent(transform);
         ExplosionScript boomCS = newBoom.GetComponent<ExplosionScript>();
         boomCS.SetUpExplosion(0f, explosionSize, speedUpAmount);

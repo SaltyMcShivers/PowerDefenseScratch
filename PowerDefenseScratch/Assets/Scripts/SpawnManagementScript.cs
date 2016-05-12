@@ -117,6 +117,7 @@ public class SpawnManagementScript : MonoBehaviour {
             }
             else
             {
+                if (enemyWaves[currentWave].autoAdvance && currentWave + 1 >= enemyWaves.Count) return;
                 foreach (IncomingEnemyDisplay dis in incomings)
                 {
                     dis.SetUpDisplay(enemyWaves[currentWave+1]);

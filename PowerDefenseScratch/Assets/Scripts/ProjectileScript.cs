@@ -1,22 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class ParticleAdjustments
+{
+    public ParticleSystem sys;
+    public Color32 lowColor;
+    public Color32 highColor;
+    public float lowSize;
+    public float highSize;
+}
 
 public class ProjectileScript : MonoBehaviour {
     public float projectileDamage;
     float detonationTime = 0f;
     float explosionRadius;
     float slowDownRate;
+    GameObject target;
     public GameObject deathPrefab;
+    public List<ParticleAdjustments> parts;
+    float bulletSpeed;
 
-    public void SetUpBullet(float damage, float boom, float rad, float slow)
+    public void SetSpeed(float speed)
+    {
+        bulletSpeed = speed;
+    }
+
+    public void SetUpBullet(float damage, float boom, float rad, float slow, float pow=0, GameObject targ=null)
     {
         projectileDamage = damage;
         detonationTime = boom;
         explosionRadius = rad;
         slowDownRate = slow;
-        if(explosionRadius != 0f){
+        target = targ;
+        if (explosionRadius != 0f){
             GetComponent<Collider2D>().enabled = false;
             StartCoroutine(ExplodeCoroutine());
+        }
+        foreach(ParticleAdjustments part in parts)
+        {
+            part.sys.startColor = Color32.Lerp(part.lowColor, part.highColor, pow);
+            part.sys.startSize = Mathf.Lerp(part.lowSize, part.highSize, pow);
+            part.sys.Play();
         }
     }
 
@@ -37,6 +63,38 @@ public class ProjectileScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        if(deathPrefab != null)
+        {
+            if(deathPrefab.GetComponent<ExplosionScript>() == null)
+            {
+                GameObject deadObject = Instantiate(deathPrefab, transform.position + Vector3.forward, Quaternion.identity) as GameObject;
+                deadObject.transform.eulerAngles = transform.eulerAngles + Vector3.back * 180f;
+                Destroy(deadObject, 1f);
+            }
+        }
         Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (target == null) return;
+        if (target != col.gameObject) return;
+        if (deathPrefab != null)
+        {
+            if (deathPrefab.GetComponent<ExplosionScript>() == null)
+            {
+                GameObject deadObject = Instantiate(deathPrefab, transform.position + Vector3.forward, Quaternion.identity) as GameObject;
+                deadObject.transform.eulerAngles = transform.eulerAngles + Vector3.back * 180f;
+                Destroy(deadObject, 2f);
+            }
+        }
+        Destroy(gameObject);
+    }
+
+    void Update()
+    {
+        if (bulletSpeed == 0) return;
+        Vector3 trajectory = (target.transform.position - transform.position).normalized;
+        transform.position += trajectory * bulletSpeed * Time.deltaTime;
     }
 }
