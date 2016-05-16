@@ -31,7 +31,7 @@ public class SpawnManagementScript : MonoBehaviour {
     public List<IncomingEnemyDisplay> incomings;
 
     int currentWave = -1;
-    //int currentEnemy = -1;
+    bool disableWaveCheck;
     bool allWavesSpawned;
 
     List<EnemyPartnerManager> partnerManagers;
@@ -108,8 +108,15 @@ public class SpawnManagementScript : MonoBehaviour {
                 }
             }
         }
-        if(enemyTracker.Count == 0)
+        if (enemy.GetComponentInParent<EnemyDeathSpawnScript>() != null)
         {
+            StopCoroutine("CompleteDisableCoroutine");
+            disableWaveCheck = true;
+            StartCoroutine("CompleteDisableCoroutine");
+        }
+        if (enemyTracker.Count == 0)
+        {
+            if (disableWaveCheck) return;
             Messenger.Invoke("WaveCompleted");
             if(allWavesSpawned)
             {
@@ -124,6 +131,12 @@ public class SpawnManagementScript : MonoBehaviour {
                 }
             }
         }
+    }
+
+    IEnumerator CompleteDisableCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        disableWaveCheck = false;
     }
 
     IEnumerator SpawnWave()
@@ -158,22 +171,6 @@ public class SpawnManagementScript : MonoBehaviour {
             allWavesSpawned = true;
         }
     }
-
-    /*
-    IEnumerator SpawnCoroutine()
-    {
-        currentEnemy++;
-        if (currentEnemy >= enemyWaves[currentWave].enemies.Count)
-        {
-            currentEnemy = -1;
-            StartCoroutine("SpawnWave");
-            yield break;
-        }
-        SpawnEnemy();
-        yield return new WaitForSeconds(enemyWaves[currentWave].spawnInterval);
-        StartCoroutine("SpawnCoroutine");
-    }
-    */
 
     IEnumerator SubWaveCoroutine(SubWave sw)
     {
@@ -233,17 +230,4 @@ public class SpawnManagementScript : MonoBehaviour {
     {
         StartCoroutine("SpawnWave");
     }
-    /*
-    void SpawnEnemy()
-    {
-        GameObject newEnemy = Instantiate(enemyWaves[currentWave].enemies[currentEnemy], startNode.transform.position, Quaternion.identity) as GameObject;
-        EnemyMovement en = newEnemy.GetComponent<EnemyMovement>();
-        if(en == null)
-        {
-            Debug.Log("Can't find EnemyMovementScript");
-            return;
-        }
-        en.StartFollowing(startNode);
-    }
-    */
 }

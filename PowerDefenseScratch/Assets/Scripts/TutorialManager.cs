@@ -51,10 +51,7 @@ public class TutorialManager : MonoBehaviour {
     void OnDestroy()
     {
         Messenger.RemoveListener("WaveCompleted", MoveOnWithTutorial);
-        if(currentSection < sections.Count && currentStep < sections[currentSection].steps.Count && sections[currentSection].steps[currentStep].eventToListenFor != "")
-        {
-            Messenger<TowerPowerScript>.RemoveListener(sections[currentSection].steps[currentStep].eventToListenFor, NextStepMessage);
-        }
+        RemoveTriggers();
     }
 
     void MoveOnWithTutorial()

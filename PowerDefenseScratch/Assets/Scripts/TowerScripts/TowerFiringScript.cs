@@ -136,7 +136,7 @@ public class TowerFiringScript : MonoBehaviour {
         (projectile.GetComponent<ProjectileScript>() as ProjectileScript).SetUpBullet(projectileDamage, explosionTime, explodeSize, slowAmount, GetPowerPercent(), targets[0].GetComponentInChildren<Rigidbody2D>().gameObject);
         (projectile.GetComponent<ProjectileScript>() as ProjectileScript).SetSpeed(projectileForce / 50f);
         EnemyHealthScript health = targets[0].GetComponentInChildren<EnemyHealthScript>();
-        if(minimumExplosionSize == 0f) health.DamageWithDelay(projectileDamage, distance.magnitude / projectileForce);
+        //if(minimumExplosionSize == 0f) health.DamageWithDelay(projectileDamage, distance.magnitude / projectileForce);
     }
 
     bool CheckIfCrit()

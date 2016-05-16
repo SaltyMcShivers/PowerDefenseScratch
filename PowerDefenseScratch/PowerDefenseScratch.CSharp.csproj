@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\EnemyScripts\CircleMovementScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyAOEScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyAttackScript.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\EnemyDeathSpawnScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyHealthScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyInfoScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyMovement.cs" />

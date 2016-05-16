@@ -78,11 +78,11 @@ public class EnemyMovement : MonoBehaviour {
         pauseMovement = !pauseMovement;
     }
 
-    public void StartFollowing(PathNode pn, float offset)
+    public void StartFollowing(PathNode pn, float offset, bool keepPosition=false)
     {
         travelVector = new Vector3(0f, 0f, 0f);
         edgeOffset = offset;
-        transform.position = pn.GetPathTarget(this);
+        if(!keepPosition) transform.position = pn.GetPathTarget(this);
         GoToNextNode(pn);
     }
 
@@ -98,7 +98,7 @@ public class EnemyMovement : MonoBehaviour {
         else
         {
             Vector3 nextTarget = next.GetPathTarget(this, pn);
-            travelScale = Vector3.Distance(nextTarget, transform.position) / Vector3.Distance(pn.transform.position, next.transform.position);
+            travelScale = Vector3.Distance(nextTarget, pn.GetPathTarget(this)) / Vector3.Distance(pn.transform.position, next.transform.position);
             travelVector = next.transform.position - pn.transform.position;
             travelVector.Normalize();
         }
@@ -139,5 +139,10 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (killed || pauseMovement) return transform.position;
         return transform.position + timePassed * travelVector * speedMultiplier;
+    }
+
+    public PathNode GetTarget()
+    {
+        return previousTarget;
     }
 }

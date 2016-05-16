@@ -88,6 +88,11 @@ public class ProjectileScript : MonoBehaviour {
                 Destroy(deadObject, 2f);
             }
         }
+        EnemyHealthScript health = target.GetComponent<EnemyHealthScript>();
+        if(health != null)
+        {
+            health.DoDamage(projectileDamage);
+        }
         Destroy(gameObject);
     }
 

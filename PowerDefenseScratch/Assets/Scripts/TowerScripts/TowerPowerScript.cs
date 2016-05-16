@@ -50,12 +50,18 @@ public class TowerPowerScript : MonoBehaviour {
 
     public void TogglePower()
     {
+        TogglePower(!disabled);
+    }
+
+    public void TogglePower(bool pow)
+    {
+        if (pow == disabled) return;
+        disabled = pow;
         if (!electricSource.IsGettingEnergy())
         {
             electricSource.DisableHighlight();
             return;
         }
-        disabled = !disabled;
         if (disabled)
         {
             Messenger<TowerPowerScript>.Invoke("Tower Off", this);

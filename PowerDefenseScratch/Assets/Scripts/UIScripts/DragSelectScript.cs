@@ -7,15 +7,25 @@ public class DragSelectScript : MonoBehaviour {
     public RectTransform highlightObject;
     public TowerManagerScript towers;
 
+    public Color enableColor;
+    public Color disableColor;
+
     Vector3 startPosition;
+    bool dragging;
+    bool leftDrag;
 
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
+            if (dragging) return;
+            dragging = true;
+            leftDrag = Input.GetMouseButtonDown(0);
             startPosition = Input.mousePosition;
+            if (leftDrag) highlightObject.GetComponent<Image>().color = enableColor;
+            else highlightObject.GetComponent<Image>().color = disableColor;
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
             if (Vector2.Distance(Input.mousePosition, startPosition) > minDistance && !highlightObject.GetComponent<Image>().enabled)
             {
@@ -24,13 +34,15 @@ public class DragSelectScript : MonoBehaviour {
             highlightObject.position = (Input.mousePosition + startPosition) * 0.5f;
             highlightObject.sizeDelta = new Vector2(Mathf.Abs(Input.mousePosition.x - startPosition.x), Mathf.Abs(Input.mousePosition.y - startPosition.y));
         }
-        if (Input.GetMouseButtonUp(0))
+        if (dragging && leftDrag && Input.GetMouseButtonUp(0))
         {
-            highlightObject.GetComponent<Image>().enabled = false;
-            Bounds dragBounds = GetViewportBounds(Camera.main, startPosition, Input.mousePosition);
-            towers.FindTowersWithinBounds(dragBounds);
+            FinalizeDrag();
         }
-	}
+        if (dragging && !leftDrag && Input.GetMouseButtonUp(1))
+        {
+            FinalizeDrag();
+        }
+    }
 
     public static Bounds GetViewportBounds(Camera camera, Vector3 screenPosition1, Vector3 screenPosition2)
     {
@@ -44,5 +56,13 @@ public class DragSelectScript : MonoBehaviour {
         var bounds = new Bounds();
         bounds.SetMinMax(min, max);
         return bounds;
+    }
+
+    void FinalizeDrag()
+    {
+        dragging = false;
+        highlightObject.GetComponent<Image>().enabled = false;
+        Bounds dragBounds = GetViewportBounds(Camera.main, startPosition, Input.mousePosition);
+        towers.FindTowersWithinBounds(dragBounds, !leftDrag);
     }
 }
