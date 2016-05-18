@@ -65,11 +65,13 @@ public class TowerPowerScript : MonoBehaviour {
         if (disabled)
         {
             Messenger<TowerPowerScript>.Invoke("Tower Off", this);
+            if (towerImageTemp != null) towerImageTemp.color = towerColorInactiveTemp;
             powerDisplay.fillAmount = 0f;
         }
         else
         {
             Messenger<TowerPowerScript>.Invoke("Tower On", this);
+            if (towerImageTemp != null) towerImageTemp.color = towerColorActiveTemp;
             powerDisplay.fillAmount = Mathf.Min(power, 100f) / 100f;
         }
     }
