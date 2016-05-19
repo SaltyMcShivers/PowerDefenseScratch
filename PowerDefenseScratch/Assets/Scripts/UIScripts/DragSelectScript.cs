@@ -9,6 +9,7 @@ public class DragSelectScript : MonoBehaviour {
 
     public Color enableColor;
     public Color disableColor;
+    public Color swapColor;
 
     Vector3 startPosition;
     bool dragging;
@@ -16,17 +17,32 @@ public class DragSelectScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             if (dragging) return;
             dragging = true;
-            leftDrag = Input.GetMouseButtonDown(0);
+            leftDrag = true;
             startPosition = Input.mousePosition;
-            if (leftDrag) highlightObject.GetComponent<Image>().color = enableColor;
-            else highlightObject.GetComponent<Image>().color = disableColor;
+            highlightObject.GetComponent<Image>().color = enableColor;
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (dragging && !leftDrag) return;
+            if (dragging)
+            {
+                highlightObject.GetComponent<Image>().color = swapColor;
+            }
+            else
+            {
+                dragging = true;
+                leftDrag = false;
+                startPosition = Input.mousePosition;
+                highlightObject.GetComponent<Image>().color = disableColor;
+            }
         }
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
+            if (!dragging) return;
             if (Vector2.Distance(Input.mousePosition, startPosition) > minDistance && !highlightObject.GetComponent<Image>().enabled)
             {
                 highlightObject.GetComponent<Image>().enabled = true;
@@ -36,11 +52,15 @@ public class DragSelectScript : MonoBehaviour {
         }
         if (dragging && leftDrag && Input.GetMouseButtonUp(0))
         {
-            FinalizeDrag();
+            FinalizeDrag(Input.GetMouseButton(1));
         }
         if (dragging && !leftDrag && Input.GetMouseButtonUp(1))
         {
             FinalizeDrag();
+        }
+        if (dragging && leftDrag && Input.GetMouseButtonUp(1))
+        {
+            highlightObject.GetComponent<Image>().color = enableColor;
         }
     }
 
@@ -58,11 +78,11 @@ public class DragSelectScript : MonoBehaviour {
         return bounds;
     }
 
-    void FinalizeDrag()
+    void FinalizeDrag(bool swapDrag=false)
     {
         dragging = false;
         highlightObject.GetComponent<Image>().enabled = false;
         Bounds dragBounds = GetViewportBounds(Camera.main, startPosition, Input.mousePosition);
-        towers.FindTowersWithinBounds(dragBounds, !leftDrag);
+        towers.FindTowersWithinBounds(dragBounds, !leftDrag, swapDrag);
     }
 }

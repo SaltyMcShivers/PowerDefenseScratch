@@ -175,7 +175,7 @@ public class TowerManagerScript : MonoBehaviour {
         }
     }
 
-    public void FindTowersWithinBounds(Bounds highlight, bool activate=false)
+    public void FindTowersWithinBounds(Bounds highlight, bool activate, bool swap=false)
     {
         List<TowerPowerScript> hTowers = new List<TowerPowerScript>();
         foreach (TowerPowerScript pow in allTowers)
@@ -187,7 +187,8 @@ public class TowerManagerScript : MonoBehaviour {
         //bool powerOn = false;
         foreach (TowerPowerScript powah in hTowers)
         {
-            powah.TogglePower(activate);
+            if (swap) powah.TogglePower();
+            else powah.TogglePower(activate);
             /*if (powah.IsDisabled())
             {
                 powerOn = true;
