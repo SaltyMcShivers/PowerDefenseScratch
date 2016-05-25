@@ -95,10 +95,10 @@ public class EnemyHealthScript : MonoBehaviour {
         }
         currentHealth -= damageToDo;
         healthSlider.value = (float)currentHealth / (float)maxHealth;
-        if (currentHealth <= 0) StartCoroutine("KillEnemy");
+        if (currentHealth <= 0) StartCoroutine("KillEnemyCoroutine");
     }
 
-    IEnumerator KillEnemy()
+    IEnumerator KillEnemyCoroutine()
     {
         Messenger<GameObject>.Invoke("Destroy Enemy", gameObject);
         if(anim != null)
@@ -120,5 +120,10 @@ public class EnemyHealthScript : MonoBehaviour {
     public int GetPriorityLevel()
     {
         return currentPriority;
+    }
+
+    public void KillEnemy()
+    {
+        DoDamage(maxHealth);
     }
 }

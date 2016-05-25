@@ -18,6 +18,7 @@ public class SubWave
     public float spawnInterval;
     public PathNode startNode;
     public float edgeOffset;
+    public float endOffset;
 }
 
 public class SpawnManagementScript : MonoBehaviour {
@@ -177,12 +178,12 @@ public class SpawnManagementScript : MonoBehaviour {
         yield return new WaitForSeconds(sw.startDelay);
         foreach (GameObject em in sw.enemies)
         {
-            SpawnEnemy(em, sw.startNode, sw.edgeOffset);
+            SpawnEnemy(em, sw.startNode, sw.edgeOffset, sw.endOffset);
             yield return new WaitForSeconds(sw.spawnInterval);
         }
     }
 
-    void SpawnEnemy(GameObject enemy, PathNode startPoint, float offset)
+    void SpawnEnemy(GameObject enemy, PathNode startPoint, float offset, float backOffset)
     {
         GameObject newEnemy = Instantiate(enemy, startPoint.transform.position, Quaternion.identity) as GameObject;
         EnemyMovement en = newEnemy.GetComponent<EnemyMovement>();
@@ -222,7 +223,7 @@ public class SpawnManagementScript : MonoBehaviour {
                 break;
             }
         }
-        en.StartFollowing(startPoint, offset);
+        en.StartFollowing(startPoint, offset, backOffset);
         enemyTracker.Add(newEnemy);
     }
 

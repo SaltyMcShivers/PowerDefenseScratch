@@ -1,7 +1,8 @@
 ﻿<Properties StartupItem="PowerDefenseScratch.CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TowerScripts\TowerBaseScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SpawnManagementScript.cs">
     <Files>
+      <File FileName="Assets\Scripts\SpawnManagementScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\TowerScripts\TowerBaseScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\TowerScripts\TowerSelectionScript.cs" Line="1" Column="1" />
     </Files>

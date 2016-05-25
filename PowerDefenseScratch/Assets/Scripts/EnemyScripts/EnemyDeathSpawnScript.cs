@@ -51,7 +51,7 @@ public class EnemyDeathSpawnScript : MonoBehaviour {
         EnemyMovement sourceMover = GetComponent<EnemyMovement>();
         if (sourceMover == null) yield break;
         GameObject newEnemy = Instantiate(spawner.enemy, transform.position, Quaternion.identity) as GameObject;
-        newEnemy.GetComponent<EnemyMovement>().StartFollowing(sourceMover.GetTarget(), spawner.offset + sourceMover.edgeOffset, true);
+        newEnemy.GetComponent<EnemyMovement>().StartFollowing(sourceMover.GetTarget(), spawner.offset + sourceMover.edgeOffset, 0, true);
         Messenger<GameObject>.Invoke("CreepSpawnsEnemy", newEnemy);
     }
 }

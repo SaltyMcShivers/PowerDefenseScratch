@@ -19,6 +19,7 @@ public class TowerSelectionScript : MonoBehaviour {
         {
             if (tow.GetTower() == null || !legalTowers.Contains(tow.GetTower())) tow.DisableButton();
         }
+        PointerEnter();
     }
 
     public void RemoveMenu()
@@ -70,7 +71,7 @@ public class TowerSelectionScript : MonoBehaviour {
     IEnumerator KillOffMenu()
     {
         GetComponent<Animator>().SetTrigger("SelectionMade");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
 
@@ -82,6 +83,7 @@ public class TowerSelectionScript : MonoBehaviour {
 
     public void PointerExit()
     {
+        Debug.Log("Exit");
         cursorOver = false;
     }
 

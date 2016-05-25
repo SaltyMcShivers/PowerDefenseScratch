@@ -61,12 +61,7 @@ public class EnemySpawnerScript : MonoBehaviour {
         {
             foreach (GameObject en in enemies)
             {
-                en.transform.SetParent(null);
-                EnemyMovement childMove = en.GetComponent<EnemyMovement>();
-                if (childMove != null)
-                {
-                    childMove.TogglePauseMovement();
-                }
+                en.GetComponentInChildren<EnemyHealthScript>().KillEnemy();
             }
             StopAllCoroutines();
             Messenger<GameObject>.RemoveListener("Destroy Enemy", CheckDeath);

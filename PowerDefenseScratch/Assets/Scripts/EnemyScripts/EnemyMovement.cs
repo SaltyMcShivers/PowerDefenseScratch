@@ -78,11 +78,11 @@ public class EnemyMovement : MonoBehaviour {
         pauseMovement = !pauseMovement;
     }
 
-    public void StartFollowing(PathNode pn, float offset, bool keepPosition=false)
+    public void StartFollowing(PathNode pn, float offset, float fallBackOffset, bool keepPosition=false)
     {
         travelVector = new Vector3(0f, 0f, 0f);
         edgeOffset = offset;
-        if(!keepPosition) transform.position = pn.GetPathTarget(this);
+        if(!keepPosition) transform.position = pn.GetPathTarget(this) + (pn.nextNode.transform.position - pn.transform.position).normalized * fallBackOffset;
         GoToNextNode(pn);
     }
 
