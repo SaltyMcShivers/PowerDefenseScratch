@@ -33,6 +33,7 @@ public class TowerFiringScript : MonoBehaviour {
     public TowerDamageType damageType;
     float currentCritChance;
 
+    public float minimumComboBonus = 1;
     public float maximumComboBonus;
     public float minimumComboBuildFactor;
     public float maximumComboBuildFactor;
@@ -42,13 +43,13 @@ public class TowerFiringScript : MonoBehaviour {
     public float minimumSlow;
     public float maximumSlow;
 
-    float currentComboBonus;
+    int currentComboBonus;
     GameObject lastEnemyHit;
     
     void Start()
     {
         currentCritChance = startingCritChance;
-        currentComboBonus = 1f;
+        currentComboBonus = 0;
         if (powerManagement.GetCurrentPower() == 0)
         {
             rangeManagement.DisableTower();
@@ -116,14 +117,18 @@ public class TowerFiringScript : MonoBehaviour {
             projectileDamage = Mathf.Lerp(minimumProjectileDamage, maximumProjectileDamage, GetPowerPercent());
             if (maximumComboBonus > 1f)
             {
+                float comboBonus;
                 if (lastEnemyHit == null || lastEnemyHit != targets[0])
                 {
-                    currentComboBonus = 1f;
+                    currentComboBonus = 0;
+                    comboBonus = 1f;
                     lastEnemyHit = targets[0];
                 }else{
-                    currentComboBonus = Mathf.Min(currentComboBonus + Mathf.Lerp(minimumComboBuildFactor, maximumComboBuildFactor, GetPowerPercent()), maximumComboBonus); 
+                    float percent = GetPowerPercent();
+                    currentComboBonus = Mathf.FloorToInt(Mathf.Min(currentComboBonus + 1, 5));
+                    comboBonus = 1 + currentComboBonus * Mathf.Lerp(minimumComboBuildFactor, maximumComboBuildFactor, percent);
                 }
-                projectileDamage *= currentComboBonus;
+                projectileDamage *= comboBonus;
             }
         }
         float explodeSize = minimumExplosionSize;
