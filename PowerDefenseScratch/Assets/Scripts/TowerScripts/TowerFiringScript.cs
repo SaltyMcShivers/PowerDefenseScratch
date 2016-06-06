@@ -45,6 +45,9 @@ public class TowerFiringScript : MonoBehaviour {
 
     int currentComboBonus;
     GameObject lastEnemyHit;
+
+    public Transform turretJoint;
+    public Transform projectileSource;
     
     void Start()
     {
@@ -85,7 +88,20 @@ public class TowerFiringScript : MonoBehaviour {
             }
 
         }
+
+        if(turretJoint != null)
+        {
+            CalculateModelRotations();
+        }
 	}
+
+    void CalculateModelRotations()
+    {
+        List<GameObject> targets = rangeManagement.GetEnemies(targetsToHit);
+        if (targets.Count == 0) return;
+        float rotDifference = Vector3.Angle(Vector3.left, transform.position - targets[0].transform.position) * -Mathf.Sign(transform.position.y - targets[0].transform.position.y);
+        turretJoint.localEulerAngles = new Vector3(rotDifference, 0f, 0f);
+    }
 
     void FireAtTargets(float overTime=0f)
     {
@@ -106,8 +122,12 @@ public class TowerFiringScript : MonoBehaviour {
         {
             targetPosition = enMov.PredictPosition(0.2f);
         }
-        Vector3 distance = Vector3.Normalize(targetPosition - transform.position);
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity) as GameObject;
+        Transform sourceForShot = transform;
+        if (projectileSource != null) sourceForShot = projectileSource;
+
+        Vector3 distance = Vector3.Normalize(targetPosition - sourceForShot.position);
+        
+        GameObject projectile = Instantiate(projectilePrefab, sourceForShot.position, Quaternion.identity) as GameObject;
 
         projectile.transform.Rotate(Vector3.back, Vector3.Angle(Vector3.left, distance) * Mathf.Sign(distance.y) + 180);
 

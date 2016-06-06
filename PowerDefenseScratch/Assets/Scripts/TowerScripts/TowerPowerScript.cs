@@ -13,6 +13,17 @@ public class TowerPowerScript : MonoBehaviour {
 
     public ElectricPathNode electricSource;
 
+    Renderer towerRenderer;
+    public Color lightColorBase;
+    public float offIntensity;
+    public float minPowIntensity;
+    public float maxPowIntensity;
+
+    void Awake()
+    {
+        towerRenderer = GetComponentInChildren<Renderer>();
+    }
+
     public float GetCurrentPower()
     {
         if (disabled) return 0;
@@ -30,7 +41,7 @@ public class TowerPowerScript : MonoBehaviour {
     public void SetCurrentPower()
     {
         power = electricSource.TowerEnergyAmount();
-        powerDisplay.fillAmount = Mathf.Min(power, 100f) / 100f;
+        VisualizePowerAmount(Mathf.Min(power, 100f) / 100f);
     }
 
     public void SetCurrentPower(float f)
@@ -45,7 +56,7 @@ public class TowerPowerScript : MonoBehaviour {
             if (towerImageTemp != null) towerImageTemp.color = towerColorActiveTemp;
         }
         power = f;
-        powerDisplay.fillAmount = Mathf.Min(power, 100f) / 100f;
+        VisualizePowerAmount(Mathf.Min(power, 100f) / 100f);
     }
 
     public void TogglePower()
@@ -66,18 +77,31 @@ public class TowerPowerScript : MonoBehaviour {
         {
             Messenger<TowerPowerScript>.Invoke("Tower Off", this);
             if (towerImageTemp != null) towerImageTemp.color = towerColorInactiveTemp;
-            powerDisplay.fillAmount = 0f;
+            VisualizePowerAmount(0f);
         }
         else
         {
             Messenger<TowerPowerScript>.Invoke("Tower On", this);
             if (towerImageTemp != null) towerImageTemp.color = towerColorActiveTemp;
-            powerDisplay.fillAmount = Mathf.Min(power, 100f) / 100f;
+            VisualizePowerAmount(Mathf.Min(power, 100f) / 100f);
         }
     }
 
     public bool IsDisabled()
     {
         return disabled;
+    }
+
+    void VisualizePowerAmount(float power)
+    {
+        powerDisplay.fillAmount = power;
+        if (towerRenderer == null)
+        {
+            return;
+        }
+        float intensity;
+        if (power == 0) intensity = offIntensity;
+        else intensity = Mathf.Lerp(minPowIntensity, maxPowIntensity, power);
+        towerRenderer.material.SetColor("_EmissionColor", lightColorBase * intensity);
     }
 }
