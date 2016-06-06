@@ -48,6 +48,7 @@ public class TowerFiringScript : MonoBehaviour {
 
     public Transform turretJoint;
     public Transform projectileSource;
+    public List<Transform> projectileSources;
     
     void Start()
     {
@@ -56,6 +57,10 @@ public class TowerFiringScript : MonoBehaviour {
         if (powerManagement.GetCurrentPower() == 0)
         {
             rangeManagement.DisableTower();
+        }
+        if(projectileSources.Count == 0 && projectileSource != null)
+        {
+            projectileSources.Add(projectileSource);
         }
 	}
 	
@@ -123,7 +128,12 @@ public class TowerFiringScript : MonoBehaviour {
             targetPosition = enMov.PredictPosition(0.2f);
         }
         Transform sourceForShot = transform;
-        if (projectileSource != null) sourceForShot = projectileSource;
+        if (projectileSources.Count > 0)
+        {
+            sourceForShot = projectileSources[0];
+            projectileSources.RemoveAt(0);
+            projectileSources.Add(sourceForShot);
+        }
 
         Vector3 distance = Vector3.Normalize(targetPosition - sourceForShot.position);
         

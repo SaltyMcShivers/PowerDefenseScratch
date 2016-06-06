@@ -100,8 +100,16 @@ public class TowerPowerScript : MonoBehaviour {
             return;
         }
         float intensity;
-        if (power == 0) intensity = offIntensity;
-        else intensity = Mathf.Lerp(minPowIntensity, maxPowIntensity, power);
+        if (power == 0)
+        {
+            powerDisplay.transform.parent.gameObject.SetActive(false);
+            intensity = offIntensity;
+        }
+        else
+        {
+            powerDisplay.transform.parent.gameObject.SetActive(true);
+            intensity = Mathf.Lerp(minPowIntensity, maxPowIntensity, power);
+        }
         towerRenderer.material.SetColor("_EmissionColor", lightColorBase * intensity);
     }
 }
