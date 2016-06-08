@@ -24,6 +24,8 @@ public class TowerManagerScript : MonoBehaviour {
     public Color lowMetalColor;
     public Color overloadEnergyColor;
 
+    public DestroyTowerButton destroyMobile;
+
     int currentMetal;
 
     List<TowerPowerScript> allTowers;
@@ -235,5 +237,10 @@ public class TowerManagerScript : MonoBehaviour {
         allTowers.Remove(tow);
         activeTowers.Remove(tow);
         SetActiveTowerEnergies();
+    }
+
+    public bool IsTowerDeleting()
+    {
+        return destroyMobile != null && destroyMobile.DeletingTower();
     }
 }

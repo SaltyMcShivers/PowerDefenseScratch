@@ -74,6 +74,10 @@ public class TowerBaseScript : MonoBehaviour {
             {
                 menuContainer.GetComponentInChildren<TowerSelectionScript>().RemoveMenu();
             }
+            else if (manager.IsTowerDeleting())
+            {
+                RemoveTower();
+            }
             else
             {
                 currentTower.TogglePower();

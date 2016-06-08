@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalORCheck.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalTowerCheck.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialSaveProgress.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DestroyTowerButton.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DragSelectScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchButtonScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchMenuScript.cs" />
