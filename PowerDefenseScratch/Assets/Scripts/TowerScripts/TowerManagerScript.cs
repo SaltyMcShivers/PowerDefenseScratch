@@ -209,4 +209,31 @@ public class TowerManagerScript : MonoBehaviour {
             towerBase.SetBuildReadyIcon(CanBuildTower());
         }
     }
+
+    public void SetCurrentResources(float e, int m)
+    {
+        currentPower = e;
+        currentMetal = m;
+        if (CanBuildTower())
+        {
+            TotalMetalDisplay.color = textColor;
+        }
+        else
+        {
+            TotalMetalDisplay.color = lowMetalColor;
+        }
+        TotalPowerDisplay.text = currentPower.ToString() + " Jolts";
+        TotalMetalDisplay.text = currentMetal.ToString() + " Metal";
+        SetActiveTowerEnergies();
+
+
+        TowerReadyToBuild();
+    }
+
+    public void RemoveTowerFromList(TowerPowerScript tow)
+    {
+        allTowers.Remove(tow);
+        activeTowers.Remove(tow);
+        SetActiveTowerEnergies();
+    }
 }

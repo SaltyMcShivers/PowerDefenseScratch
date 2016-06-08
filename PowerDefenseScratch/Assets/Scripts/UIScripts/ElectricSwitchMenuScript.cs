@@ -23,8 +23,8 @@ public class ElectricSwitchMenuScript : MonoBehaviour {
         if (Input.GetMouseButtonUp(0))
         {
             Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward * 10f;
-            if (Vector3.Distance(currentMousePosition, transform.position) < limits.x) return;
-            int hoverPick = FindPick(currentMousePosition);
+            if (Vector3.Distance(currentMousePosition, transform.position + Vector3.back * transform.position.z) < limits.x) return;
+            int hoverPick = FindPick(currentMousePosition - Vector3.back * transform.position.z);
             if (hoverPick >= 0)
             {
                 if (!buttons[hoverPick].isDisabled())
@@ -38,7 +38,7 @@ public class ElectricSwitchMenuScript : MonoBehaviour {
         if (cursorOver)
         {
             Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            int hoverPick = FindPick(new Vector3(currentMousePosition.x, currentMousePosition.y, 0f));
+            int hoverPick = FindPick(new Vector3(currentMousePosition.x, currentMousePosition.y, transform.position.z));
             if (hoverPick < 0)
             {
                 if (lastPick != hoverPick)

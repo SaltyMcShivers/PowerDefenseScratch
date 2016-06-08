@@ -96,6 +96,20 @@ public class ProjectileScript : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    void Start() {
+        Messenger.AddListener("ResetWave", ClearTarget);
+    }
+
+    void OnDestroy()
+    {
+        Messenger.RemoveListener("ResetWave", ClearTarget);
+    }
+
+    void ClearTarget()
+    {
+        DestroyImmediate(this.gameObject);
+    }
+
     void Update()
     {
         if (bulletSpeed == 0) return;

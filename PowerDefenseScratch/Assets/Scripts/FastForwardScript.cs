@@ -7,6 +7,7 @@ public class FastForwardScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Time.timeScale == 0) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Time.timeScale = fastForwardSpeed;

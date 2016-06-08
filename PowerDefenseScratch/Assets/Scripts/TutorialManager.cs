@@ -23,6 +23,8 @@ public class TutorialManager : MonoBehaviour {
     public List<TutorialSection> sections;
     public SpawnManagementScript spawner;
 
+    public TutorialSaveProgress progress;
+
     public GameObject messageBox;
     public Text messageText;
 
@@ -34,6 +36,7 @@ public class TutorialManager : MonoBehaviour {
     public void SetCurrentSection(int i)
     {
         currentSection = i - 1;
+        currentStep = 0;
     }
 
     void Awake()
@@ -54,9 +57,15 @@ public class TutorialManager : MonoBehaviour {
         RemoveTriggers();
     }
 
+    public void ActivateTutorial()
+    {
+        MoveOnWithTutorial();
+    }
+
     void MoveOnWithTutorial()
     {
         currentSection++;
+        progress.SaveWave(currentSection);
         if (currentSection >= sections.Count)
         {
             spawner.SendNextWave();

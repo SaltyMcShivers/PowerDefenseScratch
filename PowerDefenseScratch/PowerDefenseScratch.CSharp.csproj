@@ -108,6 +108,7 @@
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalANDCheck.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalORCheck.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalTowerCheck.cs" />
+    <Compile Include="Assets\Scripts\TutorialScripts\TutorialSaveProgress.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DragSelectScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchButtonScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\ElectricSwitchMenuScript.cs" />
@@ -118,6 +119,10 @@
     <Compile Include="Assets\Scripts\UIScripts\PauseMenuScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\QuitGameMenuScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\RadialButtonScript.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\GridTest.shader" />
+    <None Include="Assets\Shaders\OutlineOnlyShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

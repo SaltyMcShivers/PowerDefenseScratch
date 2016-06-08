@@ -83,7 +83,6 @@ public class TowerSelectionScript : MonoBehaviour {
 
     public void PointerExit()
     {
-        Debug.Log("Exit");
         cursorOver = false;
     }
 

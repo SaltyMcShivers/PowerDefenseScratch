@@ -136,4 +136,16 @@ public class IncomingEnemyDisplay : MonoBehaviour {
         StartUpTimer(newWave.nextWave.startDelay - timeSinceCall);
 
     }
+
+    public void ClearDisplay()
+    {
+        currentWave = null;
+        StopAllCoroutines();
+        nextWaves.Clear();
+        foreach(IncomingEnemyElement ele in gridContainer.GetComponentsInChildren<IncomingEnemyElement>())
+        {
+            DestroyImmediate(ele.gameObject);
+        }
+        elementContainer.SetActive(false);
+    }
 }

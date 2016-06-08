@@ -81,11 +81,16 @@ public class TowerBaseScript : MonoBehaviour {
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            if (currentTower == null) return;
-            if (preBuiltTower) return;
-            Messenger<TowerPowerScript>.Invoke("Tower Destroyed", currentTower.GetComponentInChildren<TowerPowerScript>());
-            StartCoroutine("KillTowerCoroutine");
+            RemoveTower();
         }
+    }
+
+    public void RemoveTower()
+    {
+        if (currentTower == null) return;
+        if (preBuiltTower) return;
+        Messenger<TowerPowerScript>.Invoke("Tower Destroyed", currentTower.GetComponentInChildren<TowerPowerScript>());
+        StartCoroutine("KillTowerCoroutine");
     }
 
     IEnumerator KillTowerCoroutine()
@@ -110,5 +115,12 @@ public class TowerBaseScript : MonoBehaviour {
     public void SetBuildReadyIcon(bool makeActive = false)
     {
         towerReadyIcon.SetActive(makeActive && currentTower == null);
+    }
+
+    public void RemoveTowerReset()
+    {
+        GameObject oldTower = currentTower.gameObject;
+        currentTower = null;
+        DestroyImmediate(oldTower);
     }
 }

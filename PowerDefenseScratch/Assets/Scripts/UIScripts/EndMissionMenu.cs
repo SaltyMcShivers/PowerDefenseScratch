@@ -8,6 +8,8 @@ public class EndMissionMenu : MonoBehaviour {
     public Text missionText;
 
     public List<GameObject> failList;
+    public GameObject replayWaveButton;
+    public TutorialSaveProgress tutorialProgress;
 
     void Start()
     {
@@ -25,10 +27,15 @@ public class EndMissionMenu : MonoBehaviour {
         GetComponent<Image>().enabled = true;
         if (passed)
         {
+            replayWaveButton.SetActive(false);
             missionText.text = "Generator Protected";
         }
         else
         {
+            if(tutorialProgress != null)
+            {
+                replayWaveButton.SetActive(true);
+            }
             foreach(GameObject go in failList)
             {
                 go.SetActive(false);
@@ -41,5 +48,13 @@ public class EndMissionMenu : MonoBehaviour {
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(scene);
+    }
+
+    public void ResetWave()
+    {
+        Time.timeScale = 1;
+        menu.SetActive(false);
+        GetComponent<Image>().enabled = false;
+        tutorialProgress.RevertToWave();
     }
 }

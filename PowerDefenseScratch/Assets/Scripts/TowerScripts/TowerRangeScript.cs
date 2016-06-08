@@ -24,6 +24,7 @@ public class TowerRangeScript : MonoBehaviour {
 	void Start () {
         Messenger<GameObject>.AddListener("Destroy Enemy", RemoveEnemy);
         Messenger.AddListener("Priorities Changed", ReoganizeEnemies);
+        Messenger.AddListener("ResetWave", ClearTargets);
         SetScale();
     }
 
@@ -31,6 +32,12 @@ public class TowerRangeScript : MonoBehaviour {
     {
         Messenger<GameObject>.RemoveListener("Destroy Enemy", RemoveEnemy);
         Messenger.RemoveListener("Priorities Changed", ReoganizeEnemies);
+        Messenger.RemoveListener("ResetWave", ClearTargets);
+    }
+
+    void ClearTargets()
+    {
+        enemies.Clear();
     }
 
     public void SetScale()
@@ -115,6 +122,10 @@ public class TowerRangeScript : MonoBehaviour {
         if (!towerActive) return;
         towerActive = false;
         GetComponent<SpriteRenderer>().color = inactiveColorTemp;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
     public void EnableTower()
@@ -122,5 +133,9 @@ public class TowerRangeScript : MonoBehaviour {
         if (towerActive) return;
         towerActive = true;
         GetComponent<SpriteRenderer>().color = activeColorTemp;
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
 }

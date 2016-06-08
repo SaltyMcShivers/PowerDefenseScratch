@@ -19,6 +19,20 @@ public class PowerSourceHealth : MonoBehaviour {
         Messenger<float>.RemoveListener("Enemy Attacks", RemoveHealth);
     }
 
+    public float GetHealth()
+    {
+        return currentHealth;
+    }
+
+    public void SetHealth(float health)
+    {
+        currentHealth = health;
+        foreach (Slider slide in healthSliders)
+        {
+            slide.value = Mathf.Max(0f, currentHealth / maximumHealth);
+        }
+    }
+
     void ResetHealth()
     {
         currentHealth = maximumHealth;

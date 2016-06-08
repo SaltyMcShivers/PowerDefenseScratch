@@ -71,7 +71,7 @@ public class SpawnManagementScript : MonoBehaviour {
         Messenger<GameObject>.RemoveListener("CreepSpawnsEnemy", AddExtraEnemy);
     }
 
-    public Vector2 SkipToWave(int wave)
+    public Vector2 GetWaveResources(int wave)
     {
         Vector2 res = Vector2.zero;
         for (int i = 0; i < wave; i++)
@@ -85,6 +85,12 @@ public class SpawnManagementScript : MonoBehaviour {
                 }
             }
         }
+        return res;
+    }
+
+    public Vector2 SkipToWave(int wave)
+    {
+        Vector2 res = GetWaveResources(wave);
         currentWave = wave - 1;
         return res;
     }
@@ -230,5 +236,25 @@ public class SpawnManagementScript : MonoBehaviour {
     public void SendNextWave()
     {
         StartCoroutine("SpawnWave");
+    }
+
+    public void ClearAllEnemies()
+    {
+        StopAllCoroutines();
+        foreach(GameObject enemy in enemyTracker)
+        {
+            Destroy(enemy);
+        }
+        enemyTracker.Clear();
+        foreach (EnemyPartnerManager man in partnerManagers)
+        {
+            Destroy(man);
+        }
+        partnerManagers.Clear();
+        foreach (IncomingEnemyDisplay dis in incomings)
+        {
+            dis.ClearDisplay();
+            dis.SetUpDisplay(enemyWaves[currentWave + 1]);
+        }
     }
 }

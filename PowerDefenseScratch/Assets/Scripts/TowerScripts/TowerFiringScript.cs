@@ -62,7 +62,7 @@ public class TowerFiringScript : MonoBehaviour {
         {
             projectileSources.Add(projectileSource);
         }
-	}
+    }
 	
 	void Update () {
         if (powerManagement.GetCurrentPower() == 0)
@@ -168,8 +168,13 @@ public class TowerFiringScript : MonoBehaviour {
         }
 
         float slowAmount = Mathf.Lerp(minimumSlow, maximumSlow, GetPowerPercent());
-        (projectile.GetComponent<ProjectileScript>() as ProjectileScript).SetUpBullet(projectileDamage, explosionTime, explodeSize, slowAmount, GetPowerPercent(), targets[0].GetComponentInChildren<Rigidbody2D>().gameObject);
-        (projectile.GetComponent<ProjectileScript>() as ProjectileScript).SetSpeed(projectileForce / 50f);
+        ProjectileScript proj = projectile.GetComponent<ProjectileScript>();
+        proj.SetUpBullet(projectileDamage, explosionTime, explodeSize, slowAmount, GetPowerPercent(), targets[0].GetComponentInChildren<Rigidbody2D>().gameObject);
+        if (explosionTime < 0.2f) proj.SetSpeed(projectileForce / 50f);
+        else
+        {
+            proj.SetSpeed(distance.magnitude / explosionTime);
+        }
         EnemyHealthScript health = targets[0].GetComponentInChildren<EnemyHealthScript>();
         //if(minimumExplosionSize == 0f) health.DamageWithDelay(projectileDamage, distance.magnitude / projectileForce);
     }
