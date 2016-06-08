@@ -58,7 +58,15 @@ public class TowerBaseScript : MonoBehaviour {
         if (Time.timeScale == 0) return;
         if (Input.GetMouseButtonUp(0))
         {
-            if (currentTower == null && menuContainer.childCount == 0)
+            if (manager.DestroyingTower())
+            {
+                if (menuContainer.childCount == 1)
+                {
+                    menuContainer.GetComponentInChildren<TowerSelectionScript>().RemoveMenu();
+                }
+                else UnbuildTower();
+            }
+            else if (currentTower == null && menuContainer.childCount == 0)
             {
                 if (!manager.CanBuildTower()) return;
                 GameObject newTS = Instantiate(towerSelectionUI, transform.position, Quaternion.identity) as GameObject;
@@ -81,11 +89,16 @@ public class TowerBaseScript : MonoBehaviour {
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            if (currentTower == null) return;
-            if (preBuiltTower) return;
-            Messenger<TowerPowerScript>.Invoke("Tower Destroyed", currentTower.GetComponentInChildren<TowerPowerScript>());
-            StartCoroutine("KillTowerCoroutine");
+            UnbuildTower();
         }
+    }
+
+    public void UnbuildTower()
+    {
+        if (currentTower == null) return;
+        if (preBuiltTower) return;
+        Messenger<TowerPowerScript>.Invoke("Tower Destroyed", currentTower.GetComponentInChildren<TowerPowerScript>());
+        StartCoroutine("KillTowerCoroutine");
     }
 
     IEnumerator KillTowerCoroutine()

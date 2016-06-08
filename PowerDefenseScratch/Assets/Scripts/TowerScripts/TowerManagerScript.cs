@@ -24,6 +24,8 @@ public class TowerManagerScript : MonoBehaviour {
     public Color lowMetalColor;
     public Color overloadEnergyColor;
 
+    public DestroyTowerButton deleteMobile;
+
     int currentMetal;
 
     List<TowerPowerScript> allTowers;
@@ -208,5 +210,10 @@ public class TowerManagerScript : MonoBehaviour {
         {
             towerBase.SetBuildReadyIcon(CanBuildTower());
         }
+    }
+
+    public bool DestroyingTower()
+    {
+        return deleteMobile != null && deleteMobile.DeletingTower();
     }
 }
