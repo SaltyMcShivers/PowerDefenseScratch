@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\DeathParticleScript.cs" />
     <Compile Include="Assets\Scripts\ElectricPathNode.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\CircleMovementScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnemyAOEScript.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Scripts\PowerSwitchScript.cs" />
     <Compile Include="Assets\Scripts\PowerToggleScript.cs" />
     <Compile Include="Assets\Scripts\ProjectileScript.cs" />
+    <Compile Include="Assets\Scripts\ScaleSystemsScript.cs" />
     <Compile Include="Assets\Scripts\SpawnManagementScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\DamageTypeScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\EnergyDamageScript.cs" />
@@ -122,8 +124,11 @@
     <Compile Include="Assets\Scripts\UIScripts\RadialButtonScript.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shaders\FogShader.shader" />
     <None Include="Assets\Shaders\GridTest.shader" />
     <None Include="Assets\Shaders\OutlineOnlyShader.shader" />
+    <None Include="Assets\Shaders\SpiderWebShader.shader" />
+    <None Include="Assets\Standard Assets\ParticleSystems\ParticleSystemsGuidelines.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

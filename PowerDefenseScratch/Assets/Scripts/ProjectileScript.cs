@@ -21,6 +21,7 @@ public class ProjectileScript : MonoBehaviour {
     public GameObject deathPrefab;
     public List<ParticleAdjustments> parts;
     float bulletSpeed;
+    float energyPower;
 
     public void SetSpeed(float speed)
     {
@@ -38,10 +39,11 @@ public class ProjectileScript : MonoBehaviour {
             GetComponent<Collider2D>().enabled = false;
             StartCoroutine(ExplodeCoroutine());
         }
-        foreach(ParticleAdjustments part in parts)
+        energyPower = pow;
+        foreach (ParticleAdjustments part in parts)
         {
-            part.sys.startColor = Color32.Lerp(part.lowColor, part.highColor, pow);
-            part.sys.startSize = Mathf.Lerp(part.lowSize, part.highSize, pow);
+            part.sys.startColor = Color32.Lerp(part.lowColor, part.highColor, energyPower);
+            part.sys.startSize = Mathf.Lerp(part.lowSize, part.highSize, energyPower);
             part.sys.Play();
         }
     }
@@ -57,6 +59,11 @@ public class ProjectileScript : MonoBehaviour {
             {
                 exp.SetUpExplosion(projectileDamage, explosionRadius, slowDownRate);
             }
+            DeathParticleScript deathPart = deadObject.GetComponent<DeathParticleScript>();
+            if (deathPart != null)
+            {
+                deathPart.ScaleParticles(energyPower);
+            }
         }
         Destroy(gameObject);
     }
@@ -70,6 +77,11 @@ public class ProjectileScript : MonoBehaviour {
                 GameObject deadObject = Instantiate(deathPrefab, transform.position + Vector3.forward, Quaternion.identity) as GameObject;
                 deadObject.transform.eulerAngles = transform.eulerAngles + Vector3.back * 180f;
                 Destroy(deadObject, 1f);
+                DeathParticleScript deathPart = deadObject.GetComponent<DeathParticleScript>();
+                if (deathPart != null)
+                {
+                    deathPart.ScaleParticles(energyPower);
+                }
             }
         }
         Destroy(gameObject);
@@ -86,6 +98,11 @@ public class ProjectileScript : MonoBehaviour {
                 GameObject deadObject = Instantiate(deathPrefab, transform.position + Vector3.forward, Quaternion.identity) as GameObject;
                 deadObject.transform.eulerAngles = transform.eulerAngles + Vector3.back * 180f;
                 Destroy(deadObject, 2f);
+                DeathParticleScript deathPart = deadObject.GetComponent<DeathParticleScript>();
+                if (deathPart != null)
+                {
+                    deathPart.ScaleParticles(energyPower);
+                }
             }
         }
         EnemyHealthScript health = target.GetComponent<EnemyHealthScript>();

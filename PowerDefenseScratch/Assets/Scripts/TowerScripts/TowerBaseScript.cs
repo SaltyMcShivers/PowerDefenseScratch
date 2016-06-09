@@ -52,6 +52,39 @@ public class TowerBaseScript : MonoBehaviour {
         disabled = true;
     }
 
+    void Update()
+    {
+        if (Application.platform != RuntimePlatform.IPhonePlayer) return;
+        foreach(Touch t in Input.touches)
+        {
+            Vector3 wp = Camera.main.ScreenToWorldPoint(t.position);
+            Vector2 touchPos = new Vector2(wp.x, wp.y);
+            if (gameObject.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
+            {
+                if (currentTower == null && menuContainer.childCount == 0)
+                {
+                    if (!manager.CanBuildTower()) return;
+                    GameObject newTS = Instantiate(towerSelectionUI, transform.position, Quaternion.identity) as GameObject;
+                    newTS.transform.SetParent(menuContainer);
+                    newTS.GetComponent<TowerSelectionScript>().SetUpTowerSelection(this, manager.legalTowers);
+                }
+                else if (menuContainer.childCount == 1)
+                {
+                    menuContainer.GetComponentInChildren<TowerSelectionScript>().RemoveMenu();
+                }
+                else if (manager.IsTowerDeleting())
+                {
+                    RemoveTower();
+                }
+                else
+                {
+                    currentTower.TogglePower();
+                }
+                return;
+            }
+        }
+    }
+
     void OnMouseOver()
     {
         if (disabled) return;
