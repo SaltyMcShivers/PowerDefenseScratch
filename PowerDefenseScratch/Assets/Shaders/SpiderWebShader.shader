@@ -11,6 +11,13 @@
 		_GridOffsetAngle("Grid Offset Angle", Float) = 0
 		_GridColour("Grid Colour", Color) = (0.5, 1.0, 1.0, 1.0)
 		_BaseColour("Base Colour", Color) = (0.0, 0.0, 0.0, 0.0)
+		_GridColourOff("Grid Colour Off", Color) = (0.5, 1.0, 1.0, 1.0)
+		_BaseColourOff("Base Colour Off", Color) = (0.0, 0.0, 0.0, 0.0)
+
+		_StartOffset("Start Offset", Float) = -10.0
+		_EndOffset("End Offset", Float) = -10.0
+		_TransitionSpeed("Transition Speed", Float) = 1.0
+		_TransitionSize("Transistion Size", Float) = 0.0
 	}
 
 	SubShader{
@@ -35,6 +42,13 @@
 			uniform float _GridOffsetAngle;
 			uniform float4 _GridColour;
 			uniform float4 _BaseColour;
+			uniform float4 _GridColourOff;
+			uniform float4 _BaseColourOff;
+
+			uniform float _StartOffset;
+			uniform float _EndOffset;
+			uniform float _TransitionSpeed;
+			uniform float _TransitionSize;
 
 			// Input into the vertex shader
 			struct vertexInput {
@@ -63,8 +77,34 @@
 
 				float2 origin2D = float2(objectOrigin.x, objectOrigin.y);
 				float2 input2D = float2(input.worldPos.x, input.worldPos.y);
+
+				float trans;
+				if (_StartOffset > _EndOffset) {
+					if (distance(origin2D, input2D) > (_Time.y - _StartOffset) * _TransitionSpeed) {
+						trans = 0;
+					}
+					else if (distance(origin2D, input2D) + _TransitionSize > (_Time.y - _StartOffset) * _TransitionSpeed) {
+						trans = ((_Time.y - _StartOffset) * _TransitionSpeed - distance(origin2D, input2D)) / _TransitionSize;
+					}
+					else 
+					{
+						trans = 1;
+					}
+				}
+				else
+				{
+					if (distance(origin2D, input2D) > (_Time.y - _EndOffset) * _TransitionSpeed) {
+						trans = 1;
+					}
+					else if (distance(origin2D, input2D) + _TransitionSize > (_Time.y - _EndOffset) * _TransitionSpeed) {
+						trans = 1 - ((_Time.y - _EndOffset) * _TransitionSpeed - distance(origin2D, input2D)) / _TransitionSize;
+					}
+					else {
+						trans = 0;
+					}
+				}
 				if (frac((distance(origin2D, input2D) + _GridOffsetRadius) / _GridSpacingRadius) < (_GridThicknessRadius / _GridSpacingRadius)) {
-					return _GridColour;
+					return lerp(_GridColourOff, _GridColour, trans);
 				}
 				else {
 					float2 refVector = float2(1.0, 0.0);
@@ -81,21 +121,12 @@
 					float2 radianPoint = float2(origin2D.x + cos(closestRadian) * distance(origin2D, input2D), origin2D.y + sin(closestRadian) * distance(origin2D, input2D));
 
 					if (distance(radianPoint, input2D) < (_GridThicknessAngle)) {
-						return _GridColour;
+						return lerp(_GridColourOff, _GridColour, trans);
 					}
 					else {
-						return _BaseColour;
+						return lerp(_BaseColourOff, _BaseColour, trans);
 					}
 				}
-				/*
-				if (frac((input.worldPos.x + _GridOffsetX) / _GridSpacingX) < (_GridThickness / _GridSpacingX) ||
-				frac((input.worldPos.y + _GridOffsetY) / _GridSpacingY) < (_GridThickness / _GridSpacingY)) {
-					return _GridColour;
-				}
-				else {
-					return _BaseColour;
-				}
-				*/
 			}
 			ENDCG
 		}

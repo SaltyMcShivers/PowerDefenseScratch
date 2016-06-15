@@ -27,6 +27,10 @@ public class EndMissionMenu : MonoBehaviour {
         GetComponent<Image>().enabled = true;
         if (passed)
         {
+            foreach (GameObject go in failList)
+            {
+                go.SetActive(true);
+            }
             replayWaveButton.SetActive(false);
             missionText.text = "Generator Protected";
         }

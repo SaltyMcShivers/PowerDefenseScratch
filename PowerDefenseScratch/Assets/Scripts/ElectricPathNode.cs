@@ -16,7 +16,10 @@ public class ElectricPathNode : MonoBehaviour {
 
     public List<Animator> highlightAnims;
 
+    public float activeEffectSpeed = 1.0f;
+
     TowerManagerScript baseOfPower;
+    LineRenderer activeEffect;
 
     public void SetUpStart(TowerManagerScript tms)
     {
@@ -44,12 +47,15 @@ public class ElectricPathNode : MonoBehaviour {
         if (IsGettingEnergy())
         {
             centerSprite.color = activeEnergyColor;
-            lineSprite.color = activeEnergyColor;
+            activeEffect.gameObject.SetActive(true);
+            //lineSprite.color = activeEnergyColor;
+
         }
         else
         {
             centerSprite.color = unactiveEnergyColor;
-            lineSprite.color = unactiveEnergyColor;
+            activeEffect.gameObject.SetActive(false);
+            //lineSprite.color = unactiveEnergyColor;
         }
         foreach (ElectricPathNode node in nextNodes)
         {
@@ -64,7 +70,7 @@ public class ElectricPathNode : MonoBehaviour {
             nextForPath = nextNodes[0];
         }
         centerSprite.color = activeEnergyColor;
-        lineSprite.color = activeEnergyColor;
+        //lineSprite.color = activeEnergyColor;
         if (previousNode == null)
         {
             lineSprite.transform.parent.localScale = Vector3.zero;
@@ -77,7 +83,20 @@ public class ElectricPathNode : MonoBehaviour {
             //if (cross.y < 0) angle = -angle;
             if (previousNode.transform.position.y > transform.position.y) lineSprite.transform.parent.Rotate(Vector3.back, 180f);
         }
-	}
+        activeEffect = GetComponentInChildren<LineRenderer>();
+        if (activeEffect != null)
+        {
+            activeEffect.material.SetTextureScale("_MainTex", lineSprite.transform.parent.localScale);
+        }
+    }
+
+    void Update()
+    {
+        if (activeEffect != null)
+        {
+            activeEffect.material.SetTextureOffset("_MainTex", activeEffect.material.GetTextureOffset("_MainTex") + Vector2.right * activeEffectSpeed * Time.deltaTime);
+        }
+    }
 
     public void ChangeTarget(ElectricPathNode ele)
     {

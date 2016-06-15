@@ -10,6 +10,8 @@ public class TowerRangeScript : MonoBehaviour {
     public Color activeColorTemp;
     public Color inactiveColorTemp;
 
+    public TowerEffectScript towEffect;
+
     List<GameObject> enemies;
     GameObject targetedEnemy;
 
@@ -38,6 +40,10 @@ public class TowerRangeScript : MonoBehaviour {
     void ClearTargets()
     {
         enemies.Clear();
+        if(towEffect != null)
+        {
+            towEffect.SetUpOccupiedEffect(false);
+        }
     }
 
     public void SetScale()
@@ -56,6 +62,13 @@ public class TowerRangeScript : MonoBehaviour {
         EnemyHealthScript em = col.gameObject.GetComponent<EnemyHealthScript>();
         if (em == null) return;
         if (em.IsDead()) return;
+        if(enemies.Count == 0)
+        {
+            if (towEffect != null)
+            {
+                towEffect.SetUpOccupiedEffect(true);
+            }
+        }
         enemies.Add(col.gameObject);
         if(targetedEnemy == null)
         {
@@ -100,6 +113,13 @@ public class TowerRangeScript : MonoBehaviour {
             else
             {
                 targetedEnemy = enemies[0];
+            }
+        }
+        if (enemies.Count == 0)
+        {
+            if (towEffect != null)
+            {
+                towEffect.SetUpOccupiedEffect(false);
             }
         }
     }

@@ -19,6 +19,8 @@ public class TowerPowerScript : MonoBehaviour {
     public float minPowIntensity;
     public float maxPowIntensity;
 
+    public TowerEffectScript towEffect;
+
     void Awake()
     {
         towerRenderer = GetComponentInChildren<Renderer>();
@@ -95,6 +97,10 @@ public class TowerPowerScript : MonoBehaviour {
     void VisualizePowerAmount(float power)
     {
         powerDisplay.fillAmount = power;
+        if(towEffect != null)
+        {
+            towEffect.SetUpEffect(power);
+        }
         if (towerRenderer == null)
         {
             return;

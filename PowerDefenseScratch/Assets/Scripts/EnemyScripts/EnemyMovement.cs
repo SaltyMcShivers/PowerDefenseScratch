@@ -6,7 +6,17 @@ public class EnemyMovement : MonoBehaviour {
 
     public float edgeOffset;
 
+    public ParticleSystem mainSlowEffect;
+    public Color slowCloudColorLow;
+    public Color slowCloudColorHigh;
+
+    public ParticleSystem slowStreakEffect;
+    public int streaksAmountLow;
+    public int streaksAmountHigh;
+
     float speedMultiplier = 1f;
+
+    float slowAmount = 1f;
 
     float currentSpeed;
     float travelScale;
@@ -125,14 +135,31 @@ public class EnemyMovement : MonoBehaviour {
 
     public void SlowDownEnemy(float slowRate, float slowTime)
     {
+        if (killed) return;
         StartCoroutine(SlowDownCoroutine(slowRate, slowTime));
     }
 
     IEnumerator SlowDownCoroutine(float slowRate, float slowTime)
     {
         speedMultiplier *= slowRate;
+        if (slowRate < 1f)
+        {
+            slowAmount *= slowRate;
+            if (mainSlowEffect != null && slowStreakEffect != null)
+            {
+                SlowParticles();
+            }
+        }
         yield return new WaitForSeconds(slowTime);
         speedMultiplier /= slowRate;
+        if (slowRate < 1f)
+        {
+            slowAmount /= slowRate;
+            if (mainSlowEffect != null && slowStreakEffect != null)
+            {
+                SlowParticles();
+            }
+        }
     }
 
     public virtual Vector3 PredictPosition(float timePassed)
@@ -144,5 +171,22 @@ public class EnemyMovement : MonoBehaviour {
     public PathNode GetTarget()
     {
         return previousTarget;
+    }
+
+    void SlowParticles()
+    {
+        if (!mainSlowEffect.isPlaying)
+        {
+            mainSlowEffect.Play();
+        }
+        if (slowAmount == 1f)
+        {
+            mainSlowEffect.Stop();
+        }
+        mainSlowEffect.startColor = Color.Lerp(slowCloudColorHigh, slowCloudColorLow, slowAmount);
+        var streakEmission = slowStreakEffect.emission;
+        var streakRate = streakEmission.rate;
+        streakRate.constantMax = Mathf.Lerp(streaksAmountHigh, streaksAmountLow, slowAmount);
+        streakEmission.rate = streakRate;
     }
 }

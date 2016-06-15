@@ -91,11 +91,14 @@
     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\DamageTypeScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\EnergyDamageScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\DamageTypeScripts\PhysicalDamageScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\RingGrowthScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\SlowDownScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\SlowTowerVisual.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TargetNumberScripts\SingleTargetScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TargetNumberScripts\TargetNumberScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerBaseScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerButtonScript.cs" />
+    <Compile Include="Assets\Scripts\TowerScripts\TowerEffectScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerFiringAttackScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerFiringScript.cs" />
     <Compile Include="Assets\Scripts\TowerScripts\TowerManagerScript.cs" />

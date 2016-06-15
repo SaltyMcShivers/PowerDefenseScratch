@@ -75,6 +75,11 @@ public class TowerFiringScript : MonoBehaviour {
 
         rangeManagement.AlterScale(GetPowerPercent());
 
+        if (turretJoint != null)
+        {
+            CalculateModelRotations();
+        }
+
         float shotInterval = minimumShotInterval;
         if (minimumShotInterval != maximumShotInterval)
         {
@@ -92,11 +97,6 @@ public class TowerFiringScript : MonoBehaviour {
                 FireAtTargets(timeSinceLastShot - shotInterval);
             }
 
-        }
-
-        if(turretJoint != null)
-        {
-            CalculateModelRotations();
         }
 	}
 
@@ -133,6 +133,11 @@ public class TowerFiringScript : MonoBehaviour {
             sourceForShot = projectileSources[0];
             projectileSources.RemoveAt(0);
             projectileSources.Add(sourceForShot);
+        }
+
+        if(sourceForShot.gameObject.GetComponentInChildren<ParticleSystem>() != null)
+        {
+            sourceForShot.gameObject.GetComponentInChildren<ParticleSystem>().Play();
         }
 
         Vector3 distance = Vector3.Normalize(targetPosition - sourceForShot.position);

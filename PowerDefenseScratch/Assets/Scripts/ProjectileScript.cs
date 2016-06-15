@@ -65,7 +65,7 @@ public class ProjectileScript : MonoBehaviour {
                 deathPart.ScaleParticles(energyPower);
             }
         }
-        Destroy(gameObject);
+        ClearProjectile();
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -84,7 +84,7 @@ public class ProjectileScript : MonoBehaviour {
                 }
             }
         }
-        Destroy(gameObject);
+        ClearProjectile();
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -110,7 +110,7 @@ public class ProjectileScript : MonoBehaviour {
         {
             health.DoDamage(projectileDamage);
         }
-        Destroy(gameObject);
+        ClearProjectile();
     }
 
     void Start() {
@@ -132,5 +132,21 @@ public class ProjectileScript : MonoBehaviour {
         if (bulletSpeed == 0) return;
         Vector3 trajectory = (target.transform.position - transform.position).normalized;
         transform.position += trajectory * bulletSpeed * Time.deltaTime;
+        transform.eulerAngles = new Vector3(0f, 0f, Vector3.Angle(Vector3.left, transform.position - target.transform.position) * Mathf.Sign(target.transform.position.y - transform.position.y));
+    }
+
+    void ClearProjectile()
+    {
+        GetComponent<Collider2D>().enabled = false;
+        bulletSpeed = 0;
+        foreach(ParticleSystem part in GetComponentsInChildren<ParticleSystem>())
+        {
+            part.Stop();
+        }
+        foreach (MeshRenderer mesh in GetComponentsInChildren<MeshRenderer>())
+        {
+            mesh.enabled = false;
+        }
+        Destroy(gameObject, 1.2f);
     }
 }
