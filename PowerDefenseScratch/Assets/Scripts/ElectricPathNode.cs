@@ -9,6 +9,7 @@ public class ElectricPathNode : MonoBehaviour {
     public SpriteRenderer centerSprite;
     public SpriteRenderer lineSprite;
 
+    public Color highEnergyColor;
     public Color activeEnergyColor;
     public Color unactiveEnergyColor;
 
@@ -95,6 +96,10 @@ public class ElectricPathNode : MonoBehaviour {
         if (activeEffect != null)
         {
             activeEffect.material.SetTextureOffset("_MainTex", activeEffect.material.GetTextureOffset("_MainTex") + Vector2.right * activeEffectSpeed * Time.deltaTime);
+        }
+        if (IsGettingEnergy())
+        {
+            centerSprite.color = Color.Lerp(activeEnergyColor, highEnergyColor, Mathf.PingPong(Time.time * activeEffectSpeed * 2, 1.0f));
         }
     }
 

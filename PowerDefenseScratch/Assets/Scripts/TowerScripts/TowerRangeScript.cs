@@ -141,9 +141,14 @@ public class TowerRangeScript : MonoBehaviour {
     {
         if (!towerActive) return;
         towerActive = false;
-        GetComponent<SpriteRenderer>().color = inactiveColorTemp;
+        if (GetComponent<Animator>() != null)
+            GetComponent<Animator>().speed = 0;
+        foreach (SpriteRenderer spr in GetComponentsInChildren<SpriteRenderer>()) {
+            spr.color = inactiveColorTemp;
+        }
         for (int i = 0; i < transform.childCount; i++)
         {
+            if (transform.GetChild(i).GetComponent<SpriteRenderer>() != null) continue;
             transform.GetChild(i).gameObject.SetActive(false);
         }
     }
@@ -152,9 +157,15 @@ public class TowerRangeScript : MonoBehaviour {
     {
         if (towerActive) return;
         towerActive = true;
-        GetComponent<SpriteRenderer>().color = activeColorTemp;
-        for(int i = 0; i < transform.childCount; i++)
+        foreach (SpriteRenderer spr in GetComponentsInChildren<SpriteRenderer>())
         {
+            spr.color = activeColorTemp;
+        }
+        if (GetComponent<Animator>() != null)
+            GetComponent<Animator>().speed = 0.06f;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<SpriteRenderer>() != null) continue;
             transform.GetChild(i).gameObject.SetActive(true);
         }
     }

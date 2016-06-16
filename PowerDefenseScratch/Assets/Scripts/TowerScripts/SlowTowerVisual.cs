@@ -61,7 +61,7 @@ public class SlowTowerVisual : TowerEffectScript
         if (occupied && webOn)
         {
             fireSystem.Play();
-            manipulativeMaterial.SetFloat("_StartOffset", Time.time);
+            manipulativeMaterial.SetFloat("_StartOffset", Time.timeSinceLevelLoad);
             StartCoroutine("RingCoroutine");
         }
         else
@@ -74,7 +74,7 @@ public class SlowTowerVisual : TowerEffectScript
     {
         StopAllCoroutines();
         fireSystem.Stop();
-        manipulativeMaterial.SetFloat("_EndOffset", Time.time);
+        manipulativeMaterial.SetFloat("_EndOffset", Time.timeSinceLevelLoad);
     }
 
     IEnumerator RingCoroutine()

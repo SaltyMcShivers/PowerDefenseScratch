@@ -7,6 +7,7 @@ public class EnemyAOEScript : MonoBehaviour {
     public float speedUpAmount;
     public float fireRate;
 
+    public ParticleSystem speedParticles;
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class EnemyAOEScript : MonoBehaviour {
         if (go.transform.parent == transform)
         {
             StopAllCoroutines();
+            speedParticles.Stop();
         }
     }
 }

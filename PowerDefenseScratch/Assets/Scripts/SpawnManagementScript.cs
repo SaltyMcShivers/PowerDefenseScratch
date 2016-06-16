@@ -28,6 +28,7 @@ public class SpawnManagementScript : MonoBehaviour {
 
     public bool autoAdvance = true;
     public bool autoStart = true;
+    public bool autoEnd = true;
 
     public List<IncomingEnemyDisplay> incomings;
 
@@ -125,7 +126,7 @@ public class SpawnManagementScript : MonoBehaviour {
         {
             if (disableWaveCheck) return;
             Messenger.Invoke("WaveCompleted");
-            if(allWavesSpawned)
+            if(allWavesSpawned && autoEnd)
             {
                 if(enemyWaves[enemyWaves.Count-1].autoAdvance) Messenger<bool>.Invoke("End Game", true);
             }
@@ -235,7 +236,8 @@ public class SpawnManagementScript : MonoBehaviour {
 
     public void SendNextWave()
     {
-        StartCoroutine("SpawnWave");
+        if (allWavesSpawned && autoEnd) Messenger<bool>.Invoke("End Game", true);
+        else StartCoroutine("SpawnWave");
     }
 
     public void ClearAllEnemies()

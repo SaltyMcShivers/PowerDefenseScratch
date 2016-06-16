@@ -131,6 +131,7 @@ public class EnemyMovement : MonoBehaviour {
         EnemyAttackScript attack = GetComponent<EnemyAttackScript>();
         if (attack != null) attack.StopAttacking();
         StopAllCoroutines();
+        mainSlowEffect.Stop();
     }
 
     public void SlowDownEnemy(float slowRate, float slowTime)
