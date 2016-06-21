@@ -243,6 +243,7 @@ public class SpawnManagementScript : MonoBehaviour {
     public void ClearAllEnemies()
     {
         StopAllCoroutines();
+        allWavesSpawned = false;
         foreach(GameObject enemy in enemyTracker)
         {
             Destroy(enemy);

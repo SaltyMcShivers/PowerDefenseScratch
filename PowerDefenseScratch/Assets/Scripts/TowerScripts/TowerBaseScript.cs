@@ -64,7 +64,7 @@ public class TowerBaseScript : MonoBehaviour {
                 if (currentTower == null && menuContainer.childCount == 0)
                 {
                     if (!manager.CanBuildTower()) return;
-                    GameObject newTS = Instantiate(towerSelectionUI, transform.position, Quaternion.identity) as GameObject;
+                    GameObject newTS = Instantiate(towerSelectionUI, transform.position + Vector3.back * menuContainer.position.z, Quaternion.identity) as GameObject;
                     newTS.transform.SetParent(menuContainer);
                     newTS.GetComponent<TowerSelectionScript>().SetUpTowerSelection(this, manager.legalTowers);
                 }
