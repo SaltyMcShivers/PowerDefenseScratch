@@ -68,13 +68,11 @@ public class DragSelectScript : MonoBehaviour {
         //Left Mouse Lift - Default
         if (dragging && leftDrag && Input.GetMouseButtonUp(0))
         {
-            Debug.Log("C");
             FinalizeDrag(Input.GetMouseButton(1) || usedKeyboard);
         }
         //Left Mouse Lift - Shift
         if (dragging && usedKeyboard && !leftDrag && Input.GetMouseButtonUp(0))
         {
-            Debug.Log("D");
             FinalizeDrag(Input.GetMouseButton(1));
         }
         //Right Mouse Lift - Left Mouse Down

@@ -9,6 +9,14 @@ public class PowerSourceHealth : MonoBehaviour {
     public Color baseColor;
     public float minGlow;
     public float maxGlow;
+
+    public Color healthyColor;
+    public Color unhealthyColor;
+    public float blinkRateBase;
+    public Color warningColor;
+    public float warningHealth;
+    public float blinkRateWorst;
+
     float currentHealth;
 
     Material glowMat;
@@ -26,6 +34,22 @@ public class PowerSourceHealth : MonoBehaviour {
         Messenger<float>.RemoveListener("Enemy Attacks", RemoveHealth);
     }
 
+    void Update()
+    {
+        if (glowMat == null) return;
+        if (currentHealth == maximumHealth) return;
+        if (currentHealth > warningHealth)
+        {
+            Color currentMinColor = Color.Lerp(unhealthyColor, healthyColor, (currentHealth - warningHealth) / (maximumHealth - warningHealth));
+            glowMat.SetColor("_EmissionColor", Color32.Lerp(currentMinColor, healthyColor, Mathf.PingPong(Time.time * blinkRateBase, 1.0f)));
+        }
+        else
+        {
+            float currentBlinkRate = Mathf.Lerp(blinkRateWorst, blinkRateBase, currentHealth / warningHealth);
+            glowMat.SetColor("_EmissionColor", Color32.Lerp(unhealthyColor, warningColor, Mathf.PingPong(Time.time * currentBlinkRate, 1.0f)));
+        }
+    }
+
     public float GetHealth()
     {
         return currentHealth;
@@ -38,12 +62,13 @@ public class PowerSourceHealth : MonoBehaviour {
         {
             slide.value = Mathf.Max(0f, currentHealth / maximumHealth);
         }
-
+        /*
         if (glowMat != null)
         {
             float intensity = Mathf.Lerp(minGlow, maxGlow, currentHealth / maximumHealth);
             glowMat.SetColor("_EmissionColor", baseColor * intensity);
         }
+        */
     }
 
     void ResetHealth()
@@ -53,10 +78,10 @@ public class PowerSourceHealth : MonoBehaviour {
         {
             slide.value = 1.0f;
         }
-
         if (glowMat != null)
         {
-            glowMat.SetColor("_EmissionColor", baseColor * maxGlow);
+            glowMat.SetColor("_EmissionColor", healthyColor);
+            //glowMat.SetColor("_EmissionColor", baseColor * maxGlow);
         }
     }
 
@@ -68,7 +93,7 @@ public class PowerSourceHealth : MonoBehaviour {
             Messenger<bool>.Invoke("End Game", false);
             Time.timeScale = 0;
         }
-
+        /*
         if (glowMat != null)
         {
             if (currentHealth == 0)
@@ -81,8 +106,8 @@ public class PowerSourceHealth : MonoBehaviour {
                 glowMat.SetColor("_EmissionColor", baseColor * intensity);
             }
         }
-
-        foreach (Slider slide in healthSliders)
+        */
+            foreach (Slider slide in healthSliders)
         {
             if (!slide.gameObject.activeSelf) slide.gameObject.SetActive(true);
             slide.value = Mathf.Max(0f, currentHealth / maximumHealth);
