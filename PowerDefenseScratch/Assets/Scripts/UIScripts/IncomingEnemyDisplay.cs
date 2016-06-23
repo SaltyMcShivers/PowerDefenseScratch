@@ -65,6 +65,7 @@ public class IncomingEnemyDisplay : MonoBehaviour {
         }
         if(enemiesToSpawn.Count == 0)
         {
+            Debug.Log("No Enemies to Spawn");
             return true;
         }
 
@@ -119,7 +120,8 @@ public class IncomingEnemyDisplay : MonoBehaviour {
         }
         if(gridContainer.childCount <= 0){
             elementContainer.SetActive(false);
-            if (nextWaves.Count > 0) StartCoroutine(PauseDelayCoroutine());
+            if (nextWaves.Count > 0)
+            StartCoroutine(PauseDelayCoroutine());
         }
     }
 
@@ -129,8 +131,14 @@ public class IncomingEnemyDisplay : MonoBehaviour {
         if (nextWaves.Count == 0) yield break;
         IncomingWave newWave = nextWaves[0];
         nextWaves.RemoveAt(0);
-
         SetUpDisplay(newWave.nextWave);
+
+        while (!elementContainer.activeSelf && nextWaves.Count > 0)
+        {
+            newWave = nextWaves[0];
+            nextWaves.RemoveAt(0);
+            SetUpDisplay(newWave.nextWave);
+        }
 
         float timeSinceCall = Time.time - newWave.queueTime;
         StartUpTimer(newWave.nextWave.startDelay - timeSinceCall);
@@ -139,6 +147,7 @@ public class IncomingEnemyDisplay : MonoBehaviour {
 
     public void ClearDisplay()
     {
+        
         currentWave = null;
         StopAllCoroutines();
         nextWaves.Clear();

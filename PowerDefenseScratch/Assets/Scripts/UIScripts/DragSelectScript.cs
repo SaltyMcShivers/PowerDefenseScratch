@@ -14,6 +14,7 @@ public class DragSelectScript : MonoBehaviour {
     Vector3 startPosition;
     bool dragging;
     bool leftDrag;
+    bool usedKeyboard;
 
 	// Update is called once per frame
 	void Update () {
@@ -21,23 +22,33 @@ public class DragSelectScript : MonoBehaviour {
         {
             if (dragging) return;
             dragging = true;
-            leftDrag = true;
-            startPosition = Input.mousePosition;
-            highlightObject.GetComponent<Image>().color = enableColor;
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                usedKeyboard = true;
+                startPosition = Input.mousePosition;
+                SwapAllSetup();
+            }
+            else if (Input.GetKey(KeyCode.LeftShift))
+            {
+                usedKeyboard = true;
+                TurnOffAllSetup();
+            }
+            else
+            {
+                TurnOnAllSetup();
+            }
         }
         if (Input.GetMouseButtonDown(1))
         {
             if (dragging && !leftDrag) return;
             if (dragging)
             {
-                highlightObject.GetComponent<Image>().color = swapColor;
+                SwapAllSetup();
             }
             else
             {
                 dragging = true;
-                leftDrag = false;
-                startPosition = Input.mousePosition;
-                highlightObject.GetComponent<Image>().color = disableColor;
+                TurnOffAllSetup();
             }
         }
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
@@ -47,21 +58,54 @@ public class DragSelectScript : MonoBehaviour {
             {
                 highlightObject.GetComponent<Image>().enabled = true;
             }
+            else if (Vector2.Distance(Input.mousePosition, startPosition) < minDistance && highlightObject.GetComponent<Image>().enabled)
+            {
+                highlightObject.GetComponent<Image>().enabled = false;
+            }
             highlightObject.position = (Input.mousePosition + startPosition) * 0.5f;
             highlightObject.sizeDelta = new Vector2(Mathf.Abs(Input.mousePosition.x - startPosition.x), Mathf.Abs(Input.mousePosition.y - startPosition.y));
         }
+        //Left Mouse Lift - Default
         if (dragging && leftDrag && Input.GetMouseButtonUp(0))
         {
+            Debug.Log("C");
+            FinalizeDrag(Input.GetMouseButton(1) || usedKeyboard);
+        }
+        //Left Mouse Lift - Shift
+        if (dragging && usedKeyboard && !leftDrag && Input.GetMouseButtonUp(0))
+        {
+            Debug.Log("D");
             FinalizeDrag(Input.GetMouseButton(1));
         }
+        //Right Mouse Lift - Left Mouse Down
         if (dragging && !leftDrag && Input.GetMouseButtonUp(1))
         {
             FinalizeDrag();
         }
+        //Right Mouse Lift - Default
         if (dragging && leftDrag && Input.GetMouseButtonUp(1))
         {
             highlightObject.GetComponent<Image>().color = enableColor;
         }
+    }
+
+    void TurnOnAllSetup()
+    {
+        leftDrag = true;
+        startPosition = Input.mousePosition;
+        highlightObject.GetComponent<Image>().color = enableColor;
+    }
+
+    void TurnOffAllSetup()
+    {
+        leftDrag = false;
+        startPosition = Input.mousePosition;
+        highlightObject.GetComponent<Image>().color = disableColor;
+    }
+
+    void SwapAllSetup()
+    {
+        highlightObject.GetComponent<Image>().color = swapColor;
     }
 
     public static Bounds GetViewportBounds(Camera camera, Vector3 screenPosition1, Vector3 screenPosition2)
@@ -81,7 +125,12 @@ public class DragSelectScript : MonoBehaviour {
     void FinalizeDrag(bool swapDrag=false)
     {
         dragging = false;
+        usedKeyboard = false;
         highlightObject.GetComponent<Image>().enabled = false;
+        if (Vector2.Distance(Input.mousePosition, startPosition) < minDistance)
+        {
+            return;
+        }
         Bounds dragBounds = GetViewportBounds(Camera.main, startPosition, Input.mousePosition);
         towers.FindTowersWithinBounds(dragBounds, !leftDrag, swapDrag);
     }

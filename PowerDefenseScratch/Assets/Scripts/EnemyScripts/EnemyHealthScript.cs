@@ -106,6 +106,7 @@ public class EnemyHealthScript : MonoBehaviour {
             anim.SetBool("ShieldOn", false);
             anim.SetBool("SheildTransition", false);
         }
+        transform.parent.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
         transform.parent.SetParent(null);
         healthSlider.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);

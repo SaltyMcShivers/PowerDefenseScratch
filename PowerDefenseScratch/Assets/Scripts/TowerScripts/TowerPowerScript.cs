@@ -20,6 +20,7 @@ public class TowerPowerScript : MonoBehaviour {
     public float maxPowIntensity;
 
     public TowerEffectScript towEffect;
+    public ParticleSystem towerOnPart;
 
     void Awake()
     {
@@ -110,11 +111,19 @@ public class TowerPowerScript : MonoBehaviour {
         {
             powerDisplay.transform.parent.gameObject.SetActive(false);
             intensity = offIntensity;
+            if (towerOnPart != null) {
+                towerOnPart.Stop();
+                towerOnPart.Clear();
+            }
         }
         else
         {
             powerDisplay.transform.parent.gameObject.SetActive(true);
             intensity = Mathf.Lerp(minPowIntensity, maxPowIntensity, power);
+            if (towerOnPart != null)
+            {
+                towerOnPart.Play();
+            }
         }
         towerRenderer.material.SetColor("_EmissionColor", lightColorBase * intensity);
     }
