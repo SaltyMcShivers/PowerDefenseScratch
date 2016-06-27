@@ -65,7 +65,6 @@ public class IncomingEnemyDisplay : MonoBehaviour {
         }
         if(enemiesToSpawn.Count == 0)
         {
-            Debug.Log("No Enemies to Spawn");
             return true;
         }
 
