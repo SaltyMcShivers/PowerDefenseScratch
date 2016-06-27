@@ -8,6 +8,7 @@ public class EnemyPartnerManager : MonoBehaviour
 
     protected List<EnemyPartnerScript> partners;
     protected bool allPartnersFound;
+    bool emp;
 
     public virtual void SetUpManager(List<float> vars)
     {
@@ -65,10 +66,24 @@ public class EnemyPartnerManager : MonoBehaviour
     //If one partner is left, remove any effects the partner script is causing
     public virtual void RevertRemainingPartner()
     {
-        if (partners.Count == 0) return;
+        if (partners.Count == 0 || emp) return;
         partners[0].Revert();
         partners[0].StopTransition();
         StopAllCoroutines();
         //Destroy(this);
+    }
+
+    public virtual void EMPStart()
+    {
+        emp = true;
+    }
+
+    public virtual void EMPStop()
+    {
+        emp = false;
+        if(partners.Count == 0)
+        {
+            RevertRemainingPartner();
+        }
     }
 }

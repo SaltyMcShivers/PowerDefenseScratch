@@ -18,6 +18,10 @@ public class EnemySpawnerScript : MonoBehaviour {
 
     public float spawnTimePerEnemy;
 
+    float movementStartTime;
+    bool activatedEMP;
+    IEnumerator spawnCoroutine;
+
     List<GameObject> enemies;
 
 
@@ -25,19 +29,23 @@ public class EnemySpawnerScript : MonoBehaviour {
     void Start()
     {
         enemies = new List<GameObject>();
-        StartCoroutine(SpawningCoroutine());
+        movementStartTime = Time.time;
+        spawnCoroutine = SpawningCoroutine(spawnInterval);
+        StartCoroutine(spawnCoroutine);
         Messenger<GameObject>.AddListener("Destroy Enemy", CheckDeath);
-	}
+        //Messenger<float>.AddListener("Launch EMP", EMPAction);
+    }
 
     void OnDestroy()
     {
         Messenger<GameObject>.RemoveListener("Destroy Enemy", CheckDeath);
+        //Messenger<float>.RemoveListener("Launch EMP", EMPAction);
     }
 
-    IEnumerator SpawningCoroutine()
+    IEnumerator SpawningCoroutine(float movementTime)
     {
-        yield return new WaitForSeconds(spawnInterval);
-        if (mover != null) mover.TogglePauseMovement();
+        yield return new WaitForSeconds(movementTime);
+        if (mover != null) mover.SetPauseMovement(true);
         float preSpawnTime = spawnTime - (spawners.Count * spawnTimePerEnemy);
         yield return new WaitForSeconds(preSpawnTime);
         foreach (SubSpawnStats spawn in spawners)
@@ -51,8 +59,11 @@ public class EnemySpawnerScript : MonoBehaviour {
             Messenger<GameObject>.Invoke("CreepSpawnsEnemy", enemySpawned);
             yield return new WaitForSeconds(spawnTimePerEnemy);
         }
-        if (mover != null) mover.TogglePauseMovement();
-        StartCoroutine(SpawningCoroutine());
+        if (activatedEMP) yield break;
+        if (mover != null) mover.SetPauseMovement(false);
+        movementStartTime = Time.time;
+        spawnCoroutine = SpawningCoroutine(spawnInterval);
+        StartCoroutine(spawnCoroutine);
     }
 
     void CheckDeath(GameObject go)
@@ -75,5 +86,31 @@ public class EnemySpawnerScript : MonoBehaviour {
                 return;
             }
         }
+    }
+
+    public void EMPAction(float disableTime)
+    {
+        StartCoroutine(EMPCoroutine(disableTime));
+    }
+
+    IEnumerator EMPCoroutine(float disableTime)
+    {
+        activatedEMP = true;
+        if (mover == null) yield break;
+        float moveOffset;
+        if (mover.IsMovementPaused())
+        {
+            moveOffset = spawnInterval;
+        }
+        else
+        {
+            moveOffset = spawnInterval - Time.time + movementStartTime;
+            StopCoroutine(spawnCoroutine);
+        }
+        yield return new WaitForSeconds(disableTime);
+        activatedEMP = false;
+        movementStartTime = Time.time - moveOffset;
+        spawnCoroutine = SpawningCoroutine(moveOffset);
+        StartCoroutine(spawnCoroutine);
     }
 }

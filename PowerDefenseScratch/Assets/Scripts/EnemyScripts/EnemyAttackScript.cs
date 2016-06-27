@@ -6,8 +6,11 @@ public class EnemyAttackScript : MonoBehaviour {
     public float attackDamage;
     public float attackRecovery;
 
+    bool attacking;
+
     public void StartAttacking()
     {
+        attacking = true;
         StartCoroutine(AttackCoroutine());
     }
 
@@ -21,11 +24,17 @@ public class EnemyAttackScript : MonoBehaviour {
 
     public void StopAttacking()
     {
+        attacking = false;
         StopAllCoroutines();
     }
 
     void OnDisabled()
     {
         StopAttacking();
+    }
+
+    public bool IsAttacking()
+    {
+        return attacking;
     }
 }

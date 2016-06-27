@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: faae682833f26d04f88f3e303df53a66
-timeCreated: 1463080482
+timeCreated: 1467003757
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -18,6 +18,9 @@ TextureImporter:
     21300022: TutorialTargeter_Top
     21300024: TutorialTargeter_Bottom
     21300026: TowerBuildable_Icon
+    21300028: RoundButton_Default
+    21300030: RoundButton_Hover
+    21300032: RoundButton_Disabled
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -330,6 +333,66 @@ TextureImporter:
         - {x: 56, y: -54}
         - {x: 57, y: -50}
         - {x: 57, y: -38}
+    - name: RoundButton_Default
+      rect:
+        serializedVersion: 2
+        x: 857
+        y: 10
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31, y: 80}
+        - {x: -45, y: 80}
+        - {x: -80, y: 48}
+        - {x: -80, y: -35}
+        - {x: -46, y: -80}
+        - {x: 67, y: -80}
+        - {x: 80, y: -36}
+        - {x: 80, y: 41}
+        - {x: 54, y: 71}
+    - name: RoundButton_Hover
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 10
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31, y: 80}
+        - {x: -45, y: 80}
+        - {x: -80, y: 48}
+        - {x: -80, y: -35}
+        - {x: -46, y: -80}
+        - {x: 67, y: -80}
+        - {x: 80, y: -36}
+        - {x: 80, y: 41}
+        - {x: 54, y: 71}
+    - name: RoundButton_Disabled
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 10
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31, y: 80}
+        - {x: -45, y: 80}
+        - {x: -80, y: 48}
+        - {x: -80, y: -35}
+        - {x: -46, y: -80}
+        - {x: 67, y: -80}
+        - {x: 80, y: -36}
+        - {x: 80, y: 41}
+        - {x: 54, y: 71}
     outline: []
   spritePackingTag: 
   userData: 

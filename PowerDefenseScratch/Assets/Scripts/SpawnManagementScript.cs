@@ -52,6 +52,7 @@ public class SpawnManagementScript : MonoBehaviour {
         enemyTracker = new List<GameObject>();
         Messenger<GameObject>.AddListener("Destroy Enemy", RemoveFromTracker);
         Messenger<GameObject>.AddListener("CreepSpawnsEnemy", AddExtraEnemy);
+        Messenger<float>.AddListener("Launch EMP", EMPReaction);
         if (enemyWaves[currentWave + 1].autoAdvance && autoStart) StartCoroutine("SpawnWave");
         else {
             foreach (IncomingEnemyDisplay dis in incomings)
@@ -70,6 +71,7 @@ public class SpawnManagementScript : MonoBehaviour {
     {
         Messenger<GameObject>.RemoveListener("Destroy Enemy", RemoveFromTracker);
         Messenger<GameObject>.RemoveListener("CreepSpawnsEnemy", AddExtraEnemy);
+        Messenger<float>.RemoveListener("Launch EMP", EMPReaction);
     }
 
     public Vector2 GetWaveResources(int wave)
@@ -258,6 +260,46 @@ public class SpawnManagementScript : MonoBehaviour {
         {
             dis.ClearDisplay();
             dis.SetUpDisplay(enemyWaves[currentWave + 1]);
+        }
+    }
+
+    void EMPReaction(float disableTime)
+    {
+        StartCoroutine(EMPCoroutine(disableTime));
+    }
+
+    IEnumerator EMPCoroutine(float disableTime)
+    {
+        foreach (EnemyPartnerManager party in partnerManagers)
+        {
+            party.EMPStart();
+        }
+        foreach (GameObject enemy in enemyTracker)
+        {
+            EnemySpawnerScript spawner = enemy.GetComponent<EnemySpawnerScript>();
+            if (spawner != null)
+            {
+                spawner.EMPAction(disableTime);
+            }
+            EnemyMovement mover = enemy.GetComponent<EnemyMovement>();
+            if(mover != null)
+            {
+                mover.SetPauseMovement(true);
+            }
+        }
+        yield return new WaitForSeconds(disableTime);
+
+        foreach (EnemyPartnerManager party in partnerManagers)
+        {
+            party.EMPStop();
+        }
+        foreach (GameObject enemy in enemyTracker)
+        {
+            EnemyMovement mover = enemy.GetComponent<EnemyMovement>();
+            if (mover != null)
+            {
+                mover.SetPauseMovement(false);
+            }
         }
     }
 }

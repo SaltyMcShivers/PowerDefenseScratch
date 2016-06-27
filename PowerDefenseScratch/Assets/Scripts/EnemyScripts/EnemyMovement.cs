@@ -81,11 +81,36 @@ public class EnemyMovement : MonoBehaviour {
     public void SetPauseMovement(bool pause)
     {
         pauseMovement = pause;
+        if (!pauseMovement && targetPosition == null)
+        {
+            EnemyAttackScript attack = GetComponent<EnemyAttackScript>();
+            if (attack != null) attack.StartAttacking();
+        }
+        else if (pauseMovement)
+        {
+            EnemyAttackScript attack = GetComponent<EnemyAttackScript>();
+            if (attack != null) attack.StopAttacking();
+        }
     }
 
     public void TogglePauseMovement()
     {
         pauseMovement = !pauseMovement;
+        if(!pauseMovement && targetPosition == null)
+        {
+            EnemyAttackScript attack = GetComponent<EnemyAttackScript>();
+            if (attack != null) attack.StartAttacking();
+        }
+        else if(pauseMovement)
+        {
+            EnemyAttackScript attack = GetComponent<EnemyAttackScript>();
+            if (attack != null) attack.StopAttacking();
+        }
+    }
+
+    public bool IsMovementPaused()
+    {
+        return pauseMovement;
     }
 
     public void StartFollowing(PathNode pn, float offset, float fallBackOffset, bool keepPosition=false)

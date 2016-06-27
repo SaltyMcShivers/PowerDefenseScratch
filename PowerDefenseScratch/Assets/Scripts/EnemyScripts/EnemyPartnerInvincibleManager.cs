@@ -28,6 +28,24 @@ public class EnemyPartnerInvincibleManager : EnemyPartnerManager
         desiredNumberOfPartners = 2;
     }
 
+    public override void EMPStart()
+    {
+        base.EMPStart();
+        StopAllCoroutines();
+        foreach (EnemyPartnerScript par in partners)
+        {
+            par.StopTransition();
+            par.Revert();
+        }
+    }
+
+    public override void EMPStop()
+    {
+        base.EMPStop();
+        currentInvulnerable = (currentInvulnerable + 1) % partners.Count;
+        StartCoroutine("InvulnerableCoroutine");
+    }
+
     IEnumerator InvulnerableCoroutine()
     {
         partners[currentInvulnerable].Execute();
