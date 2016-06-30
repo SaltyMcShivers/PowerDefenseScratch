@@ -110,6 +110,7 @@
     <Compile Include="Assets\Scripts\TutorialManager.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialAction.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialActionEnableObject.cs" />
+    <Compile Include="Assets\Scripts\TutorialScripts\TutorialBuildRestrictionScript.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditional.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalANDCheck.cs" />
     <Compile Include="Assets\Scripts\TutorialScripts\TutorialConditionalORCheck.cs" />

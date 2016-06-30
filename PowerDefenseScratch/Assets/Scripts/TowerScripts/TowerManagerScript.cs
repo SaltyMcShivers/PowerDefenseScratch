@@ -26,6 +26,19 @@ public class TowerManagerScript : MonoBehaviour {
 
     public DestroyTowerButton destroyMobile;
 
+    GameObject tutorialTower;
+    public GameObject TutorialTower
+    {
+        get
+        {
+            return tutorialTower;
+        }
+        set
+        {
+            tutorialTower = value;
+        }
+    }
+
     int currentMetal;
 
     List<TowerPowerScript> allTowers;
@@ -54,7 +67,6 @@ public class TowerManagerScript : MonoBehaviour {
 
     void OnDestroy()
     {
-
         Messenger<TowerPowerScript>.RemoveListener("Tower Built", AddNewTower);
         Messenger<TowerPowerScript>.RemoveListener("Tower Destroyed", RemoveTower);
         Messenger<TowerPowerScript>.RemoveListener("Tower Off", DeactivateTower);

@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class RadialButtonScript : MonoBehaviour {
-    Animator anim;
+    protected Animator anim;
 
     void Awake()
     {

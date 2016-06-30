@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: faae682833f26d04f88f3e303df53a66
-timeCreated: 1467003757
+timeCreated: 1467303383
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -21,6 +21,12 @@ TextureImporter:
     21300028: RoundButton_Default
     21300030: RoundButton_Hover
     21300032: RoundButton_Disabled
+    21300034: MenuArrow
+    21300036: EnemyHealthMeterBG
+    21300038: EnemyHealthMeterFill
+    21300040: EnemyResistance_Energy
+    21300042: EnemyResistance_Physical
+    21300044: EnemyHealthMeterBorder
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -393,6 +399,72 @@ TextureImporter:
         - {x: 80, y: -36}
         - {x: 80, y: 41}
         - {x: 54, y: 71}
+    - name: MenuArrow
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 427
+        width: 30
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: EnemyHealthMeterBG
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 445
+        width: 64
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 22, y: 14, z: 22, w: 14}
+      outline: []
+    - name: EnemyHealthMeterFill
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 419
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: EnemyResistance_Energy
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 417
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: EnemyResistance_Physical
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 417
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: EnemyHealthMeterBorder
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 385
+        width: 64
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 22, y: 14, z: 22, w: 14}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 

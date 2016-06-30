@@ -14,8 +14,19 @@ public class TowerBaseScript : MonoBehaviour {
 
     public ElectricPathNode electricSource;
 
+    public Renderer boxModel;
+    Material boxMaterial;
+    public Color lightColor;
+
     bool preBuiltTower;
     bool disabled;
+    bool disableBuild;
+    bool canBuild;
+
+    void Awake()
+    {
+        boxMaterial = boxModel.material;
+    }
 
     void Start()
     {
@@ -36,9 +47,26 @@ public class TowerBaseScript : MonoBehaviour {
         if (pow != null)
         {
             preBuiltTower = true;
+            boxModel.gameObject.SetActive(false);
             currentTower = pow;
             currentTower.electricSource = electricSource;
             Messenger<TowerPowerScript>.Invoke("Tower Built", currentTower);
+        }
+    }
+
+    public void SetBuildDisable(bool b)
+    {
+        disableBuild = b;
+        if (canBuild)
+        {
+            if (disableBuild)
+            {
+                boxMaterial.SetColor("_EmissionColor", new Color(0f, 0f, 0f, 0f));
+            }
+            else
+            {
+                boxMaterial.SetColor("_EmissionColor", lightColor);
+            }
         }
     }
 
@@ -93,10 +121,11 @@ public class TowerBaseScript : MonoBehaviour {
         {
             if (currentTower == null && menuContainer.childCount == 0)
             {
+                if (disableBuild) return;
                 if (!manager.CanBuildTower()) return;
                 GameObject newTS = Instantiate(towerSelectionUI, transform.position, Quaternion.identity) as GameObject;
                 newTS.transform.SetParent(menuContainer);
-                newTS.GetComponent<TowerSelectionScript>().SetUpTowerSelection(this, manager.legalTowers);
+                newTS.GetComponent<TowerSelectionScript>().SetUpTowerSelection(this, manager.legalTowers, manager.TutorialTower);
                 /*
                 GameObject newTower = Instantiate(towerToBuild, transform.position, Quaternion.identity) as GameObject;
                 currentTower = newTower.GetComponent<TowerPowerScript>();
@@ -136,7 +165,7 @@ public class TowerBaseScript : MonoBehaviour {
         GameObject oldTower = currentTower.gameObject;
         currentTower = null;
         Destroy(oldTower);
-        
+        boxModel.gameObject.SetActive(true);
     }
 
     public void BuildTower(GameObject tower)
@@ -147,11 +176,21 @@ public class TowerBaseScript : MonoBehaviour {
         newTower.transform.SetParent(transform);
         if (!manager.CanBuildTower()) SetBuildReadyIcon();
         Messenger<TowerPowerScript>.Invoke("Tower Built", currentTower);
+        boxModel.gameObject.SetActive(false);
     }
 
     public void SetBuildReadyIcon(bool makeActive = false)
     {
-        towerReadyIcon.SetActive(makeActive && currentTower == null);
+        canBuild = makeActive && currentTower == null;
+        if (makeActive && !disableBuild)
+        {
+            boxMaterial.SetColor("_EmissionColor", lightColor);
+        }
+        else
+        {
+            boxMaterial.SetColor("_EmissionColor", new Color(0f, 0f, 0f, 0f));
+        }
+        //towerReadyIcon.SetActive(makeActive && currentTower == null);
     }
 
     public void RemoveTowerReset()
@@ -159,5 +198,6 @@ public class TowerBaseScript : MonoBehaviour {
         GameObject oldTower = currentTower.gameObject;
         currentTower = null;
         DestroyImmediate(oldTower);
+        boxModel.gameObject.SetActive(true);
     }
 }

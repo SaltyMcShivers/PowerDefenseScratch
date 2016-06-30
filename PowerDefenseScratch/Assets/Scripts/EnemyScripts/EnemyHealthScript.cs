@@ -16,6 +16,8 @@ public class EnemyHealthScript : MonoBehaviour {
 
     public Slider healthSlider;
     public Image healthMeter;
+    public Image physResistMeter;
+    public Image energyResistMeter;
 
     public float minMeterWidth;
     public float meterWidth;
@@ -36,7 +38,8 @@ public class EnemyHealthScript : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        healthSlider.transform.parent.GetComponent<RectTransform>().localScale = new Vector2(minMeterWidth + (1.0f * maxHealth) / meterWidth, 1.0f);
+        healthSlider.transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(minMeterWidth + (1.0f * maxHealth) / meterWidth, 1.0f);
+        //healthSlider.transform.parent.GetComponent<RectTransform>().localScale = new Vector2(minMeterWidth + (1.0f * maxHealth) / meterWidth, 1.0f);
         currentHealth = maxHealth;
         healthSlider.value = (float) currentHealth / (float) maxHealth;
         healthSlider.gameObject.SetActive(false);

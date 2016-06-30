@@ -8,16 +8,31 @@ public class TowerSelectionScript : MonoBehaviour {
     int lastPick = -1;
     public Vector2 limits;
 
+    public RectTransform tutorialTransform;
     public List<TowerButtonScript> buttons;
+    GameObject tutorialTower;
 
     TowerBaseScript baseForTower;
 
-    public void SetUpTowerSelection(TowerBaseScript towerBase, List<GameObject> legalTowers)
+    public void SetUpTowerSelection(TowerBaseScript towerBase, List<GameObject> legalTowers, GameObject tutTower = null)
     {
         baseForTower = towerBase;
+        tutorialTower = tutTower;
+        if (tutorialTower == null) tutorialTransform.gameObject.SetActive(false);
         foreach (TowerButtonScript tow in buttons)
         {
             if (tow.GetTower() == null || !legalTowers.Contains(tow.GetTower())) tow.DisableButton();
+            if (tutorialTower != null && legalTowers.Contains(tow.GetTower()))
+            {
+                if (tutorialTower == tow.GetTower())
+                {
+                    tutorialTransform.localRotation = tow.GetComponent<RectTransform>().rotation;
+                }
+                else
+                {
+                    tow.TutorialCancel();
+                }
+            }
         }
         PointerEnter();
     }
@@ -37,12 +52,16 @@ public class TowerSelectionScript : MonoBehaviour {
             int hoverPick = FindPick(currentMousePosition);
             if (hoverPick >= 0)
             {
-                if (!buttons[hoverPick].isDisabled())
+                if (!buttons[hoverPick].TowerButtonDisabled())
                 {
                     baseForTower.BuildTower(buttons[hoverPick].GetTower());
+                    StartCoroutine("KillOffMenu");
                 }
             }
-            StartCoroutine("KillOffMenu");
+            else
+            {
+                StartCoroutine("KillOffMenu");
+            }
         }
 
         if (cursorOver)
