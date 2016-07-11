@@ -25,7 +25,7 @@ public class EnemyAOEScript : MonoBehaviour {
         GameObject newBoom = Instantiate(slowEffectPrefab, transform.position + Vector3.forward, Quaternion.identity) as GameObject;
         newBoom.transform.SetParent(transform);
         ExplosionScript boomCS = newBoom.GetComponent<ExplosionScript>();
-        boomCS.SetUpExplosion(0f, explosionSize, speedUpAmount);
+        boomCS.SetUpExplosion(0f, explosionSize, speedUpAmount, TowerFiringScript.TowerDamageType.Status);
         yield return new WaitForSeconds(fireRate);
         StartCoroutine(SlowDownCoroutine());
     }

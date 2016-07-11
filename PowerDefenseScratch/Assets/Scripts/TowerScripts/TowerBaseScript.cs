@@ -23,6 +23,8 @@ public class TowerBaseScript : MonoBehaviour {
     bool disableBuild;
     bool canBuild;
 
+    int touchValue = -1;
+
     void Awake()
     {
         boxMaterial = boxModel.material;
@@ -83,32 +85,52 @@ public class TowerBaseScript : MonoBehaviour {
     void Update()
     {
         if (Application.platform != RuntimePlatform.IPhonePlayer) return;
-        foreach(Touch t in Input.touches)
-        {
-            Vector3 wp = Camera.main.ScreenToWorldPoint(t.position);
-            Vector2 touchPos = new Vector2(wp.x, wp.y);
-            if (gameObject.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
+        if(touchValue == -1) {
+            foreach (Touch t in Input.touches)
             {
-                if (currentTower == null && menuContainer.childCount == 0)
+                Vector3 wp = Camera.main.ScreenToWorldPoint(t.position);
+                Vector2 touchPos = new Vector2(wp.x, wp.y);
+                if (gameObject.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
                 {
-                    if (!manager.CanBuildTower()) return;
-                    GameObject newTS = Instantiate(towerSelectionUI, transform.position + Vector3.back * menuContainer.position.z, Quaternion.identity) as GameObject;
-                    newTS.transform.SetParent(menuContainer);
-                    newTS.GetComponent<TowerSelectionScript>().SetUpTowerSelection(this, manager.legalTowers);
+                    if (t.phase == TouchPhase.Began)
+                    {
+                        touchValue = t.fingerId;
+                        if (currentTower == null && menuContainer.childCount == 0)
+                        {
+                            if (!manager.CanBuildTower()) return;
+                            GameObject newTS = Instantiate(towerSelectionUI, transform.position + Vector3.back * menuContainer.position.z, Quaternion.identity) as GameObject;
+                            newTS.transform.SetParent(menuContainer);
+                            newTS.GetComponent<TowerSelectionScript>().SetUpTowerSelection(this, manager.legalTowers);
+                        }
+                        else if (menuContainer.childCount == 1)
+                        {
+                            menuContainer.GetComponentInChildren<TowerSelectionScript>().RemoveMenu();
+                        }
+                        else if (manager.IsTowerDeleting())
+                        {
+                            RemoveTower();
+                        }
+                        else
+                        {
+                            currentTower.TogglePower();
+                        }
+                    }
+                    return;
                 }
-                else if (menuContainer.childCount == 1)
+            }
+        }
+        else
+        {
+            foreach (Touch t in Input.touches)
+            {
+                if(t.fingerId == touchValue)
                 {
-                    menuContainer.GetComponentInChildren<TowerSelectionScript>().RemoveMenu();
+                    if(t.phase == TouchPhase.Ended || t.phase == TouchPhase.Canceled)
+                    {
+                        touchValue = -1;
+                    }
+                    return;
                 }
-                else if (manager.IsTowerDeleting())
-                {
-                    RemoveTower();
-                }
-                else
-                {
-                    currentTower.TogglePower();
-                }
-                return;
             }
         }
     }

@@ -14,6 +14,8 @@ public class EnemyMovement : MonoBehaviour {
     public int streaksAmountLow;
     public int streaksAmountHigh;
 
+    public Vector3 targDest;
+
     float speedMultiplier = 1f;
 
     float slowAmount = 1f;
@@ -63,7 +65,18 @@ public class EnemyMovement : MonoBehaviour {
         }
 
         transform.position += distanceToTravel * travelVector;
-
+        targDest = targetDetination;
+        /*
+        if(Mathf.Abs(Vector3.Angle(travelVector, targetDetination - transform.position)) > 170f)
+        {
+            Debug.Log("BROKE");
+            GoToNextNode(targetPosition);
+            if (targetPosition == null)
+            {
+                return;
+            }
+        }
+        */
         //Error check to make sure it doesn't overshoot
         /*
         if (Vector3.Normalize(travelVector) != Vector3.Normalize(targetDetination - transform.position))
@@ -133,7 +146,7 @@ public class EnemyMovement : MonoBehaviour {
         else
         {
             Vector3 nextTarget = next.GetPathTarget(this, pn);
-            travelScale = Vector3.Distance(nextTarget, pn.GetPathTarget(this)) / Vector3.Distance(pn.transform.position, next.transform.position);
+            travelScale = Vector3.Distance(nextTarget, pn.GetPathTarget(this, previousTarget)) / Vector3.Distance(pn.transform.position, next.transform.position);
             travelVector = next.transform.position - pn.transform.position;
             travelVector.Normalize();
         }

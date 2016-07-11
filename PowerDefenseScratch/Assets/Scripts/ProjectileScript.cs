@@ -22,13 +22,14 @@ public class ProjectileScript : MonoBehaviour {
     public List<ParticleAdjustments> parts;
     float bulletSpeed;
     float energyPower;
+    TowerFiringScript.TowerDamageType damageType;
 
     public void SetSpeed(float speed)
     {
         bulletSpeed = speed;
     }
 
-    public void SetUpBullet(float damage, float boom, float rad, float slow, float pow=0, GameObject targ=null)
+    public void SetUpBullet(float damage, float boom, float rad, float slow, TowerFiringScript.TowerDamageType dType, float pow=0, GameObject targ=null)
     {
         projectileDamage = damage;
         detonationTime = boom;
@@ -40,6 +41,7 @@ public class ProjectileScript : MonoBehaviour {
             StartCoroutine(ExplodeCoroutine());
         }
         energyPower = pow;
+        damageType = dType;
         foreach (ParticleAdjustments part in parts)
         {
             part.sys.startColor = Color32.Lerp(part.lowColor, part.highColor, energyPower);
@@ -57,7 +59,7 @@ public class ProjectileScript : MonoBehaviour {
             ExplosionScript exp = deadObject.GetComponent<ExplosionScript>();
             if (exp != null)
             {
-                exp.SetUpExplosion(projectileDamage, explosionRadius, slowDownRate);
+                exp.SetUpExplosion(projectileDamage, explosionRadius, slowDownRate, damageType);
             }
             DeathParticleScript deathPart = deadObject.GetComponent<DeathParticleScript>();
             if (deathPart != null)
@@ -108,7 +110,7 @@ public class ProjectileScript : MonoBehaviour {
         EnemyHealthScript health = target.GetComponent<EnemyHealthScript>();
         if(health != null)
         {
-            health.DoDamage(projectileDamage);
+            health.DoDamage(projectileDamage, damageType);
         }
         ClearProjectile();
     }

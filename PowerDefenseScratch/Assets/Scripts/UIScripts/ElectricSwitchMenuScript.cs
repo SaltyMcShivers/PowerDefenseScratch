@@ -1,16 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ElectricSwitchMenuScript : MonoBehaviour {
-
-    public ElectricPathNode source;
+    
     public List<ElectricSwitchButtonScript> buttons;
     public PowerSwitchScript switchScript;
+    public Sprite sourceSprite;
 
     bool cursorOver = false;
     int lastPick = -1;
     public Vector2 limits;
+
+    public void SetBaseButton(ElectricPathNode source)
+    {
+        foreach (ElectricSwitchButtonScript button in buttons)
+        {
+            if (button.GetSource() == source.previousNode)
+            {
+                button.transform.GetChild(0).GetComponentInChildren<Image>().sprite = sourceSprite;
+                return;
+            }
+        }
+    }
 
     public void RemoveMenu()
     {

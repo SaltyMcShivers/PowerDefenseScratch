@@ -91,12 +91,39 @@ public class TowerRangeScript : MonoBehaviour {
         RemoveEnemy(col.gameObject);
     }
 
-    public List<GameObject> GetEnemies(int i)
+    public List<GameObject> GetEnemies(int i,TowerFiringScript.TowerDamageType dType)
     {
         EnemyMantenance();
         if (i >= enemies.Count)
         {
             return enemies;
+        }
+        switch (dType)
+        {
+            case TowerFiringScript.TowerDamageType.Status:
+                return enemies.GetRange(0, i);
+            case TowerFiringScript.TowerDamageType.Physical:
+                List<GameObject> physEn = enemies;
+                physEn.Sort(delegate (GameObject a, GameObject b) {
+                    EnemyHealthScript aH = a.GetComponent<EnemyHealthScript>();
+                    EnemyHealthScript bH = b.GetComponent<EnemyHealthScript>();
+                    int res = aH.GetPriorityLevel().CompareTo(bH.GetPriorityLevel());
+                    if (res == 0) res = bH.GetResistance(true).CompareTo(aH.GetResistance(true));
+                    if (res == 0) return physEn.IndexOf(a).CompareTo(physEn.IndexOf(b));
+                    return res;
+                });
+                return physEn.GetRange(0, i);
+            case TowerFiringScript.TowerDamageType.Electric:
+                List<GameObject> enerEn = enemies;
+                enerEn.Sort(delegate (GameObject a, GameObject b) {
+                    EnemyHealthScript aH = a.GetComponent<EnemyHealthScript>();
+                    EnemyHealthScript bH = b.GetComponent<EnemyHealthScript>();
+                    int res = aH.GetPriorityLevel().CompareTo(bH.GetPriorityLevel());
+                    if (res == 0) res = bH.GetResistance(false).CompareTo(aH.GetResistance(false));
+                    if (res == 0) return enerEn.IndexOf(a).CompareTo(enerEn.IndexOf(b));
+                    return res;
+                });
+                return enerEn.GetRange(0, i);
         }
         return enemies.GetRange(0, i);
     }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class EnemyHealthScript : MonoBehaviour {
@@ -21,6 +22,9 @@ public class EnemyHealthScript : MonoBehaviour {
 
     public float minMeterWidth;
     public float meterWidth;
+
+    float physicalResistance = 1.0f;
+    float energyResistance = 1.0f;
 
     bool invulnerable;
 
@@ -77,17 +81,17 @@ public class EnemyHealthScript : MonoBehaviour {
         //Destroy(proj.gameObject);
     }
 
-    public void DoDamage(float damageToDo)
+    public void DoDamage(float damageToDo, TowerFiringScript.TowerDamageType dType)
     {
-        DamageWithDelay(damageToDo, 0f);
+        DamageWithDelay(damageToDo, dType, 0f);
     }
 
-    public void DamageWithDelay(float damageToDo, float damageDelay)
+    public void DamageWithDelay(float damageToDo, TowerFiringScript.TowerDamageType dType, float damageDelay)
     {
-        StartCoroutine(DoDCoroutine(Mathf.RoundToInt(damageToDo), damageDelay));
+        StartCoroutine(DoDCoroutine(Mathf.RoundToInt(damageToDo), dType, damageDelay));
     }
 
-    IEnumerator DoDCoroutine(int damageToDo, float damageDelay)
+    IEnumerator DoDCoroutine(int damageToDo, TowerFiringScript.TowerDamageType dType, float damageDelay)
     {
         yield return new WaitForSeconds(damageDelay);
         if (currentHealth <= 0) yield break;
@@ -96,7 +100,10 @@ public class EnemyHealthScript : MonoBehaviour {
         {
             healthSlider.gameObject.SetActive(true);
         }
-        currentHealth -= damageToDo;
+        float resistance = 1.0f;
+        if (dType == TowerFiringScript.TowerDamageType.Physical) resistance = physicalResistance;
+        else if (dType == TowerFiringScript.TowerDamageType.Electric) resistance = energyResistance;
+        currentHealth -= Mathf.RoundToInt(damageToDo * resistance);
         healthSlider.value = (float)currentHealth / (float)maxHealth;
         if (currentHealth <= 0) StartCoroutine("KillEnemyCoroutine");
     }
@@ -126,8 +133,27 @@ public class EnemyHealthScript : MonoBehaviour {
         return currentPriority;
     }
 
+    public void SetResistance(float resistAmount, TowerFiringScript.TowerDamageType dType)
+    {
+        if(dType == TowerFiringScript.TowerDamageType.Physical)
+        {
+            physicalResistance *= resistAmount;
+            physResistMeter.fillAmount = 0.5f * (1.0f - physicalResistance);
+        }
+        else
+        {
+            energyResistance *= resistAmount;
+            energyResistMeter.fillAmount = 0.5f * (1.0f - energyResistance);
+        }
+    }
+
+    public float GetResistance(bool isPhys)
+    {
+        return isPhys ? physicalResistance : energyResistance;
+    }
+
     public void KillEnemy()
     {
-        DoDamage(maxHealth);
+        DoDamage(maxHealth, TowerFiringScript.TowerDamageType.Status);
     }
 }

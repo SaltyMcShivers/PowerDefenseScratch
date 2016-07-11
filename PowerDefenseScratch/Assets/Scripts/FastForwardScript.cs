@@ -17,4 +17,16 @@ public class FastForwardScript : MonoBehaviour {
             Time.timeScale = 1f;
         }
 	}
+
+    public void SetSpeed(bool speedUp)
+    {
+        if (speedUp)
+        {
+            Time.timeScale = fastForwardSpeed;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
 }

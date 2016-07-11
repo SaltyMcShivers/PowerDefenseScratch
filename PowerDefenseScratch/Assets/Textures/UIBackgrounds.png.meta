@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: faae682833f26d04f88f3e303df53a66
-timeCreated: 1467303383
+timeCreated: 1468246599
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -27,6 +27,8 @@ TextureImporter:
     21300040: EnemyResistance_Energy
     21300042: EnemyResistance_Physical
     21300044: EnemyHealthMeterBorder
+    21300046: PlayIcon
+    21300048: FastForwardButton
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -465,6 +467,47 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 22, y: 14, z: 22, w: 14}
       outline: []
+    - name: PlayIcon
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 395
+        width: 70
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -35, y: 39}
+        - {x: -35, y: -39}
+        - {x: -27, y: -39}
+        - {x: 35, y: -5}
+        - {x: 35, y: 5}
+        - {x: -29, y: 39}
+    - name: FastForwardButton
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 395
+        width: 70
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -35, y: 39}
+        - {x: -35, y: -39}
+        - {x: -26, y: -39}
+        - {x: -3, y: -8}
+        - {x: -3, y: 13}
+        - {x: -31, y: 39}
+      - - {x: 9, y: 39}
+        - {x: 3, y: 39}
+        - {x: 3, y: -39}
+        - {x: 9, y: -39}
+        - {x: 35, y: -9}
+        - {x: 35, y: 7}
+        - {x: 33, y: 12}
     outline: []
   spritePackingTag: 
   userData: 

@@ -5,12 +5,13 @@ public class ExplosionScript : MonoBehaviour {
 
     float explosionDamage;
     float slowAmount;
+    TowerFiringScript.TowerDamageType damageType;
 
     public float explosionTime;
     public float explosionLinger = 2.0f;
     public float slowTime;
 
-    public void SetUpExplosion(float damage, float size, float slow)
+    public void SetUpExplosion(float damage, float size, float slow, TowerFiringScript.TowerDamageType dType)
     {
         transform.localScale = Vector3.one * size;
         explosionDamage = damage;
@@ -31,7 +32,7 @@ public class ExplosionScript : MonoBehaviour {
         EnemyHealthScript health = col.gameObject.GetComponent<EnemyHealthScript>();
         if (health != null)
         {
-            health.DoDamage(explosionDamage);
+            health.DoDamage(explosionDamage, damageType);
         }
         if (slowTime != 0)
         {

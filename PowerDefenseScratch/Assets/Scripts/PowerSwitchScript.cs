@@ -40,6 +40,7 @@ public class PowerSwitchScript : MonoBehaviour {
                 directionIcons.Add(nGO.GetComponent<LineRenderer>());
             }
         }
+        menu.SetBaseButton(sourceNode);
         menu.gameObject.SetActive(false);
         Messenger.AddListener("Switch Flipped", UpdateVisual);
     }

@@ -29,33 +29,34 @@ public class PathNode : MonoBehaviour {
 
     public Vector3 GetPathTarget(EnemyMovement mover, PathNode oldNode = null)
     {
+        if (mover.edgeOffset == 0) return transform.position;
         if (nextNode == null)
         {
-            Vector3 directionPath = Vector3.Normalize(transform.position - oldNode.transform.position);
-            Quaternion rot = Quaternion.Euler(0f, 0f, Vector3.Angle(Vector3.right, directionPath));
-            Vector3 offset = Vector3.up * mover.edgeOffset * Mathf.Sign(directionPath.y - directionPath.x);
-            return rot * offset + transform.position;
+            Vector3 directionPath = Vector3.Normalize(transform.position - oldNode.transform.position) * -1f;
+            return new Vector3(-directionPath.y, directionPath.x) * mover.edgeOffset + transform.position;
         }
         else if (oldNode == null)
         {
-            Quaternion rot = Quaternion.Euler(0f, 0f, Vector3.Angle(Vector3.right, Vector3.Normalize(nextNode.transform.position - transform.position)));
-            Vector3 offset = Vector3.up * mover.edgeOffset;
-            return rot * offset + transform.position;
+            Vector3 upcomingPath = Vector3.Normalize(nextNode.transform.position - transform.position);
+            return new Vector3(upcomingPath.y, -upcomingPath.x) * mover.edgeOffset + transform.position;
         }
         Vector3 nextPath = Vector3.Normalize(nextNode.transform.position - transform.position);
         Vector3 prevPath = Vector3.Normalize(oldNode.transform.position- transform.position);
         Vector3 offsetVector;
-        if (Vector3.Angle(nextPath, prevPath) > Vector3.Angle(nextPath, transform.position - mover.transform.position))
+        if(nextPath == -1f * prevPath)
+        {
+            offsetVector = new Vector3(nextPath.y, -nextPath.x);
+            return transform.position + offsetVector * mover.edgeOffset;
+        }
+        else if (Vector3.Angle(nextPath, prevPath) > Vector3.Angle(nextPath, transform.position - mover.transform.position))
         {
             //Inside the curve
             offsetVector = - prevPath - nextPath;
-            //Debug.Log("Inside: " + offsetVector.ToString());
         }
         else
         {
             //Outside the Curve
             offsetVector = nextPath + prevPath;
-            //Debug.Log("Outside: " + offsetVector.ToString());
         }
         return transform.position + offsetVector * Mathf.Abs(mover.edgeOffset);
     }

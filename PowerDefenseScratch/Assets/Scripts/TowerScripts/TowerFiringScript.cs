@@ -102,7 +102,7 @@ public class TowerFiringScript : MonoBehaviour {
 
     void CalculateModelRotations()
     {
-        List<GameObject> targets = rangeManagement.GetEnemies(targetsToHit);
+        List<GameObject> targets = rangeManagement.GetEnemies(targetsToHit, damageType);
         if (targets.Count == 0) return;
         float rotDifference = Vector3.Angle(Vector3.left, transform.position - targets[0].transform.position) * -Mathf.Sign(transform.position.y - targets[0].transform.position.y);
         turretJoint.localEulerAngles = new Vector3(rotDifference, 0f, 0f);
@@ -110,7 +110,7 @@ public class TowerFiringScript : MonoBehaviour {
 
     void FireAtTargets(float overTime=0f)
     {
-        List<GameObject> targets = rangeManagement.GetEnemies(targetsToHit);
+        List<GameObject> targets = rangeManagement.GetEnemies(targetsToHit, damageType);
         if (targets.Count == 0)
         {
             lastEnemyHit = null;
@@ -174,14 +174,13 @@ public class TowerFiringScript : MonoBehaviour {
 
         float slowAmount = Mathf.Lerp(minimumSlow, maximumSlow, GetPowerPercent());
         ProjectileScript proj = projectile.GetComponent<ProjectileScript>();
-        proj.SetUpBullet(projectileDamage, explosionTime, explodeSize, slowAmount, GetPowerPercent(), targets[0].GetComponentInChildren<Rigidbody2D>().gameObject);
+        proj.SetUpBullet(projectileDamage, explosionTime, explodeSize, slowAmount, damageType, GetPowerPercent(), targets[0].GetComponentInChildren<Rigidbody2D>().gameObject);
         if (explosionTime < 0.2f) proj.SetSpeed(projectileForce / 50f);
         else
         {
             proj.SetSpeed(distance.magnitude / explosionTime);
         }
         EnemyHealthScript health = targets[0].GetComponentInChildren<EnemyHealthScript>();
-        //if(minimumExplosionSize == 0f) health.DamageWithDelay(projectileDamage, distance.magnitude / projectileForce);
     }
 
     bool CheckIfCrit()

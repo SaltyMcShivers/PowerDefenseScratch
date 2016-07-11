@@ -127,7 +127,7 @@ public class SpawnManagementScript : MonoBehaviour {
         if (enemyTracker.Count == 0)
         {
             if (disableWaveCheck) return;
-            Messenger.Invoke("WaveCompleted");
+            Messenger<int>.Invoke("WaveCompleted", currentWave+1);
             if(allWavesSpawned && autoEnd)
             {
                 if(enemyWaves[enemyWaves.Count-1].autoAdvance) Messenger<bool>.Invoke("End Game", true);

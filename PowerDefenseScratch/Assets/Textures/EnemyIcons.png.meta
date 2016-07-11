@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1288d765513deca498a5296f8eb39734
-timeCreated: 1463076746
+timeCreated: 1468246430
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -9,6 +9,8 @@ TextureImporter:
     21300004: HiveIcon
     21300006: GeminiIcon
     21300008: RallyBotIcon
+    21300010: ShieldPhysIcon
+    21300012: ShieldEnergyEnergy
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -145,6 +147,42 @@ TextureImporter:
         - {x: 16, y: -14}
         - {x: 16, y: 8}
         - {x: 14, y: 14}
+    - name: ShieldPhysIcon
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 88
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9, y: 17}
+        - {x: -14, y: 17}
+        - {x: -14, y: -4}
+        - {x: -5, y: -17}
+        - {x: 3, y: -17}
+        - {x: 14, y: -4}
+        - {x: 14, y: 15}
+    - name: ShieldEnergyEnergy
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9, y: 17}
+        - {x: -14, y: 17}
+        - {x: -14, y: -4}
+        - {x: -5, y: -17}
+        - {x: 3, y: -17}
+        - {x: 14, y: -4}
+        - {x: 14, y: 15}
     outline: []
   spritePackingTag: 
   userData: 

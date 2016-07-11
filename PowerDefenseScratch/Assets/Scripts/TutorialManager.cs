@@ -15,6 +15,7 @@ public struct TutorialStep
 [System.Serializable]
 public struct TutorialSection
 {
+    public int waveToEnd;
     public List<TutorialStep> steps;
 }
 
@@ -47,18 +48,28 @@ public class TutorialManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        Messenger.AddListener("WaveCompleted", MoveOnWithTutorial);
+        Messenger<int>.AddListener("WaveCompleted", WaveEndCheck);
         MoveOnWithTutorial();
     }
 
     void OnDestroy()
     {
-        Messenger.RemoveListener("WaveCompleted", MoveOnWithTutorial);
+        Messenger<int>.RemoveListener("WaveCompleted", WaveEndCheck);
         RemoveTriggers();
     }
 
     public void ActivateTutorial()
     {
+        MoveOnWithTutorial();
+    }
+
+    void WaveEndCheck(int wv)
+    {
+        if (sections[currentSection].waveToEnd != wv)
+        {
+            Debug.Log(sections[currentSection].waveToEnd.ToString() + " " + wv.ToString());
+            return;
+        }
         MoveOnWithTutorial();
     }
 
