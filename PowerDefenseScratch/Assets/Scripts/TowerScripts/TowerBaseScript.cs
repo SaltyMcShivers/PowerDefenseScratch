@@ -81,7 +81,7 @@ public class TowerBaseScript : MonoBehaviour {
     {
         disabled = true;
     }
-
+    /*
     void Update()
     {
         if (Application.platform != RuntimePlatform.IPhonePlayer) return;
@@ -134,7 +134,7 @@ public class TowerBaseScript : MonoBehaviour {
             }
         }
     }
-
+    */
     void OnMouseOver()
     {
         if (disabled) return;
