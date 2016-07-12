@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1288d765513deca498a5296f8eb39734
-timeCreated: 1468246430
+timeCreated: 1468346006
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -61,128 +61,171 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 88
-        width: 40
-        height: 40
+        y: 176
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 19, y: 11}
-        - {x: 16, y: 16}
-        - {x: -14, y: 16}
-        - {x: -19, y: 7}
-        - {x: -19, y: -11}
-        - {x: -17, y: -16}
-        - {x: 13, y: -16}
-        - {x: 16, y: -12}
-        - {x: 19, y: -3}
+      - - {x: 36, y: 19}
+        - {x: 26, y: 30}
+        - {x: 19, y: 30}
+        - {x: 13, y: 28}
+        - {x: 4, y: 30}
+        - {x: -27, y: 30}
+        - {x: -29, y: 29}
+        - {x: -36, y: 9}
+        - {x: -36, y: 2}
+        - {x: -34, y: 0}
+        - {x: -24, y: 4}
+        - {x: -27, y: -10}
+        - {x: -25, y: -30}
+        - {x: 36, y: -30}
     - name: ToughIcon
       rect:
         serializedVersion: 2
-        x: 40
-        y: 88
-        width: 40
-        height: 40
+        x: 80
+        y: 176
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -10, y: 15}
-        - {x: -17, y: 14}
-        - {x: -17, y: -16}
-        - {x: -13, y: -17}
-        - {x: 14, y: -17}
-        - {x: 17, y: -11}
-        - {x: 17, y: 10}
-        - {x: 9, y: 15}
+      - - {x: -25, y: 28}
+        - {x: -31, y: 19}
+        - {x: -32, y: 8}
+        - {x: -32, y: -24}
+        - {x: -21, y: -30}
+        - {x: -10, y: -32}
+        - {x: 20, y: -32}
+        - {x: 32, y: -12}
+        - {x: 32, y: 16}
+        - {x: 14, y: 28}
     - name: HiveIcon
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
-        width: 40
-        height: 40
+        y: 96
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -13, y: 18}
-        - {x: -19, y: -6}
-        - {x: -19, y: -20}
-        - {x: 20, y: -20}
-        - {x: 20, y: 14}
-        - {x: 10, y: 18}
+      - - {x: 35, y: -12}
+        - {x: -36, y: -12}
+        - {x: -36, y: -38}
+        - {x: 38, y: -38}
+        - {x: 38, y: -25}
+        - {x: 36, y: -14}
+      - - {x: 26, y: 12}
+        - {x: -22, y: 12}
+        - {x: -25, y: 8}
+        - {x: -26, y: 3}
+        - {x: -26, y: -12}
+        - {x: 30, y: -12}
+        - {x: 30, y: 0}
+        - {x: 29, y: 8}
+      - - {x: -14, y: 34}
+        - {x: -17, y: 33}
+        - {x: -18, y: 23}
+        - {x: -18, y: 12}
+        - {x: 22, y: 12}
+        - {x: 22, y: 27}
+        - {x: 20, y: 32}
+        - {x: 18, y: 34}
     - name: GeminiIcon
       rect:
         serializedVersion: 2
-        x: 40
-        y: 48
-        width: 40
-        height: 40
+        x: 80
+        y: 96
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -18, y: 18}
-        - {x: -20, y: 15}
-        - {x: -20, y: -18}
-        - {x: 18, y: -18}
-        - {x: 19, y: -16}
-        - {x: 19, y: 13}
-        - {x: 18, y: 18}
+      - - {x: -2, y: -23}
+        - {x: -2, y: 34}
+        - {x: -38, y: 34}
+        - {x: -38, y: -20}
+        - {x: -34, y: -28}
+        - {x: -19, y: -34}
+        - {x: -9, y: -34}
+        - {x: -5, y: -27}
+        - {x: -6, y: -23}
+        - {x: -10, y: -19}
+      - - {x: 29, y: 29}
+        - {x: 15, y: 34}
+        - {x: 4, y: 34}
+        - {x: 0, y: 32}
+        - {x: 0, y: -34}
+        - {x: 24, y: -34}
+        - {x: 36, y: -22}
+        - {x: 36, y: 15}
     - name: RallyBotIcon
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
-        width: 40
-        height: 40
+        y: 16
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -18, y: 14}
-        - {x: -18, y: -14}
-        - {x: 16, y: -14}
-        - {x: 16, y: 8}
-        - {x: 14, y: 14}
+      - - {x: -34, y: 26}
+        - {x: -34, y: -26}
+        - {x: -8, y: -26}
+        - {x: 1, y: -10}
+        - {x: 1, y: 10}
+        - {x: -8, y: 26}
+      - - {x: -5, y: -26}
+        - {x: 30, y: -26}
+        - {x: 30, y: 26}
+        - {x: -5, y: 26}
     - name: ShieldPhysIcon
       rect:
         serializedVersion: 2
-        x: 80
-        y: 88
-        width: 40
-        height: 40
+        x: 160
+        y: 176
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 9, y: 17}
-        - {x: -14, y: 17}
-        - {x: -14, y: -4}
-        - {x: -5, y: -17}
-        - {x: 3, y: -17}
-        - {x: 14, y: -4}
-        - {x: 14, y: 15}
+      - - {x: -23, y: 32}
+        - {x: -26, y: 29}
+        - {x: -26, y: -9}
+        - {x: -19, y: -18}
+        - {x: -2, y: -32}
+        - {x: 6, y: -32}
+        - {x: 18, y: -21}
+        - {x: 26, y: 2}
+        - {x: 26, y: 32}
     - name: ShieldEnergyEnergy
       rect:
         serializedVersion: 2
-        x: 80
-        y: 48
-        width: 40
-        height: 40
+        x: 160
+        y: 96
+        width: 80
+        height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 9, y: 17}
-        - {x: -14, y: 17}
-        - {x: -14, y: -4}
-        - {x: -5, y: -17}
-        - {x: 3, y: -17}
-        - {x: 14, y: -4}
-        - {x: 14, y: 15}
+      - - {x: -23, y: 32}
+        - {x: -26, y: 29}
+        - {x: -26, y: -9}
+        - {x: -19, y: -18}
+        - {x: -2, y: -32}
+        - {x: 6, y: -32}
+        - {x: 18, y: -21}
+        - {x: 26, y: 2}
+        - {x: 26, y: 32}
     outline: []
   spritePackingTag: 
   userData: 
