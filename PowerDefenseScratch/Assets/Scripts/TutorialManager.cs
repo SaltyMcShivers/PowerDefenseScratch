@@ -36,8 +36,21 @@ public class TutorialManager : MonoBehaviour {
 
     public void SetCurrentSection(int i)
     {
-        currentSection = i - 1;
+
         currentStep = 0;
+        currentSection = 0;
+        while (sections[currentSection].waveToEnd < i-1)
+        {
+            currentSection++;
+        }
+        if(sections[currentSection].waveToEnd < i - 1)
+        {
+            MoveOnWithTutorial();
+        }
+        else
+        {
+            spawner.SendNextWave();
+        }
     }
 
     void Awake()
@@ -49,7 +62,7 @@ public class TutorialManager : MonoBehaviour {
     void Start ()
     {
         Messenger<int>.AddListener("WaveCompleted", WaveEndCheck);
-        MoveOnWithTutorial();
+        if(currentSection < 0) MoveOnWithTutorial();
     }
 
     void OnDestroy()
@@ -67,7 +80,6 @@ public class TutorialManager : MonoBehaviour {
     {
         if (sections[currentSection].waveToEnd != wv)
         {
-            Debug.Log(sections[currentSection].waveToEnd.ToString() + " " + wv.ToString());
             return;
         }
         MoveOnWithTutorial();

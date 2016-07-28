@@ -13,6 +13,7 @@ public class TowerSelectionScript : MonoBehaviour {
     GameObject tutorialTower;
 
     TowerBaseScript baseForTower;
+    bool selectionMade;
 
     public void SetUpTowerSelection(TowerBaseScript towerBase, List<GameObject> legalTowers, GameObject tutTower = null)
     {
@@ -45,6 +46,7 @@ public class TowerSelectionScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (selectionMade) return;
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + Vector3.forward * 10f;
@@ -90,6 +92,7 @@ public class TowerSelectionScript : MonoBehaviour {
     IEnumerator KillOffMenu()
     {
         GetComponent<Animator>().SetTrigger("SelectionMade");
+        selectionMade = true;
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
